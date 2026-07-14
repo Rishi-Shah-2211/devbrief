@@ -1,4 +1,4 @@
-import { formatFiles, formatTree, runWorker, SHARED_RULES, type WorkerSpec } from "./shared";
+import { formatFiles, formatTree, runWorker, selectSource, SHARED_RULES, type WorkerSpec } from "./shared";
 import type { EmitEvent, PipelineContext } from "@/orchestrator/types";
 
 const spec: WorkerSpec = {
@@ -15,7 +15,7 @@ File tree:
 ${formatTree(ctx.tree)}
 
 Key files:
-${formatFiles(ctx)}
+${formatFiles(selectSource(ctx))}
 
 Write a "Project Structure" section:
 1. A short paragraph on the overall architecture and what kind of project this is.

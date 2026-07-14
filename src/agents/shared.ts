@@ -26,12 +26,23 @@ export function formatTree(tree: string[], limit = 200): string {
   return shown.join("\n") + suffix;
 }
 
-/** Renders sampled file contents as labelled code blocks. */
-export function formatFiles(ctx: PipelineContext): string {
-  return ctx.files
-    .map((f) => `--- ${f.path} ---\n${f.content}`)
-    .join("\n\n");
+/** Renders the given files as labelled code blocks. */
+export function formatFiles(files: PipelineContext["files"]): string {
+  if (files.length === 0) return "(no relevant files were found)";
+  return files.map((f) => `--- ${f.path} ---\n${f.content}`).join("\n\n");
 }
+
+/**
+ * Per-worker file selectors. Sending each agent only the files it needs keeps
+ * requests well under the free-tier token budget and sharpens its focus.
+ */
+const MANIFEST = /(^|\/)(package\.json|requirements\.txt|pyproject\.toml|go\.mod|cargo\.toml|composer\.json|gemfile|.*\.config\.[jt]s)$/i;
+const DOCS = /(readme|contributing|\.md$|(^|\/)docs\/)/i;
+
+export const selectManifests = (ctx: PipelineContext) => ctx.files.filter((f) => MANIFEST.test(f.path));
+export const selectDocs = (ctx: PipelineContext) => ctx.files.filter((f) => DOCS.test(f.path));
+/** Code-oriented agents get a capped slice of source files to stay within budget. */
+export const selectSource = (ctx: PipelineContext, limit = 6) => ctx.files.slice(0, limit);
 
 /**
  * Grounds citations in reality: rather than trusting the model to report which

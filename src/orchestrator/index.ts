@@ -26,13 +26,31 @@ export interface PipelineOutput {
   results: AgentResult[];
 }
 
-/** Runs the named workers concurrently and collects their results. */
+/** How many workers may call the model at once. Tuned to the free-tier token budget. */
+const MAX_CONCURRENCY = 2;
+
+/**
+ * Runs the named workers with a bounded concurrency. True parallelism would
+ * exceed the free tier's tokens-per-minute limit, so we cap in-flight calls
+ * while still overlapping work.
+ */
 async function runWorkers(
   names: WorkerName[],
   ctx: PipelineContext,
   emit: EmitEvent,
 ): Promise<AgentResult[]> {
-  return Promise.all(names.map((name) => WORKERS[name](ctx, emit)));
+  const results: AgentResult[] = [];
+  const queue = [...names];
+
+  async function worker() {
+    let name: WorkerName | undefined;
+    while ((name = queue.shift())) {
+      results.push(await WORKERS[name](ctx, emit));
+    }
+  }
+
+  await Promise.all(Array.from({ length: Math.min(MAX_CONCURRENCY, names.length) }, worker));
+  return results;
 }
 
 /**

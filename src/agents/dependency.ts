@@ -1,4 +1,4 @@
-import { formatFiles, runWorker, SHARED_RULES, type WorkerSpec } from "./shared";
+import { formatFiles, runWorker, selectManifests, SHARED_RULES, type WorkerSpec } from "./shared";
 import type { EmitEvent, PipelineContext } from "@/orchestrator/types";
 
 const spec: WorkerSpec = {
@@ -10,7 +10,7 @@ versions, heavy or unusual choices, or potential security concerns.${SHARED_RULE
   buildPrompt: (ctx: PipelineContext) => `Repository: ${ctx.owner}/${ctx.repo}
 
 Manifest and config files:
-${formatFiles(ctx)}
+${formatFiles(selectManifests(ctx))}
 
 Write a "Dependencies" section:
 1. A Markdown table of the most important dependencies with columns: Package | Purpose | Version.

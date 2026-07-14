@@ -1,4 +1,4 @@
-import { formatFiles, runWorker, SHARED_RULES, type WorkerSpec } from "./shared";
+import { formatFiles, runWorker, selectDocs, SHARED_RULES, type WorkerSpec } from "./shared";
 import type { EmitEvent, PipelineContext } from "@/orchestrator/types";
 
 const spec: WorkerSpec = {
@@ -11,7 +11,7 @@ separate documented intent from what the code appears to do, and flag missing do
 Description: ${ctx.description ?? "none"}
 
 Documentation and source files:
-${formatFiles(ctx)}
+${formatFiles(selectDocs(ctx))}
 
 Write a "What the Project Documents" section:
 1. A concise summary of what the project says it is and does.
