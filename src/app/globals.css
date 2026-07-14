@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  --color-canvas: #0a0a0f;
+  --color-surface: #14141c;
+  --color-border: #26263440;
+  --color-text: #e8e8f0;
+  --color-muted: #8a8a99;
+  --color-accent: #8e75ff;
+  --color-accent-soft: #8e75ff1a;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  background: var(--color-canvas);
+  color: #e8e8f0;
+  -webkit-font-smoothing: antialiased;
+}
