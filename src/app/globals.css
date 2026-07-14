@@ -1,22 +1,122 @@
 @import "tailwindcss";
 
+/*
+ * DevBrief design system — warm editorial light theme, matched to the author's
+ * portfolio brand (cream canvas, wine + gold accents, Instrument Serif display).
+ * Status colors are reserved exclusively for agent state so they read as meaningful.
+ */
 @theme {
-  --color-canvas: #0a0a0f;
-  --color-surface: #14141c;
-  --color-border: #26263440;
-  --color-text: #e8e8f0;
-  --color-muted: #8a8a99;
-  --color-accent: #8e75ff;
-  --color-accent-soft: #8e75ff1a;
+  --color-canvas: #faf8f6;
+  --color-surface: #f3f0ee;
+  --color-surface-2: #ffffff;
+  --color-hairline: #e7e1dd;
+  --color-hairline-strong: #d8cfc9;
+  --color-ink: #161214;
+
+  --color-text: #161214;
+  --color-muted: #585056;
+  --color-faint: #978f95;
+
+  --color-wine: #6e2746;
+  --color-wine-bright: #8c3159;
+  --color-wine-glow: rgba(110, 39, 70, 0.22);
+  --color-gold: #ad8754;
+  --color-gold-soft: rgba(173, 135, 84, 0.16);
+
+  --color-working: #b9822b;
+  --color-done: #3f7d5a;
+  --color-error: #b23b3b;
+
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-instrument), "Times New Roman", serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 html,
 body {
   background: var(--color-canvas);
-  color: #e8e8f0;
+  color: var(--color-text);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Ambient warmth: a faint wine aura top-center, gold whisper at the base. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(110% 70% at 50% -10%, rgba(110, 39, 70, 0.06), transparent 60%),
+    radial-gradient(90% 50% at 50% 108%, rgba(173, 135, 84, 0.05), transparent 55%);
+  pointer-events: none;
+}
+
+.glass {
+  background: color-mix(in srgb, var(--color-surface-2) 72%, transparent);
+  border: 1px solid var(--color-hairline);
+  backdrop-filter: blur(8px);
+}
+
+.font-serif { font-family: var(--font-serif); }
+
+/* Rendered onboarding brief — editorial typography. */
+.brief { line-height: 1.7; color: var(--color-text); }
+.brief h1 {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.75rem;
+}
+.brief h2 {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 400;
+  margin: 1.75rem 0 0.6rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--color-hairline);
+}
+.brief h3 { font-size: 1rem; font-weight: 600; margin: 1.25rem 0 0.4rem; }
+.brief p { margin: 0.6rem 0; color: var(--color-muted); }
+.brief strong { color: var(--color-text); font-weight: 600; }
+.brief a { color: var(--color-wine); text-decoration: underline; text-underline-offset: 2px; }
+.brief a:hover { color: var(--color-wine-bright); }
+.brief ul, .brief ol { margin: 0.6rem 0; padding-left: 1.25rem; color: var(--color-muted); }
+.brief li { margin: 0.3rem 0; }
+.brief code {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  background: var(--color-surface);
+  border: 1px solid var(--color-hairline);
+  border-radius: 5px;
+  padding: 0.1rem 0.35rem;
+  color: var(--color-wine);
+}
+.brief table {
+  width: 100%; border-collapse: collapse; margin: 0.85rem 0;
+  font-size: 0.88rem; display: block; overflow-x: auto;
+}
+.brief th, .brief td { border: 1px solid var(--color-hairline); padding: 0.5rem 0.75rem; text-align: left; }
+.brief th { background: var(--color-surface); color: var(--color-text); font-weight: 600; }
+.brief td { color: var(--color-muted); }
+
+/* Marching energy along an active cable, flowing source → target. */
+@keyframes cable-flow {
+  to { stroke-dashoffset: -24; }
+}
+.cable-flow { animation: cable-flow 0.9s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
 }

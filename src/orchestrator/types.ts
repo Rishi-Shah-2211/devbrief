@@ -56,3 +56,9 @@ export interface AgentEvent {
 }
 
 export type EmitEvent = (event: Omit<AgentEvent, "ts">) => void;
+
+/** Messages streamed from the generate endpoint to the client, newline-delimited. */
+export type StreamMessage =
+  | { type: "event"; event: AgentEvent }
+  | { type: "result"; repo: string; brief: string; tokensUsed: number }
+  | { type: "error"; error: string };

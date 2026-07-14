@@ -1,8 +1,7 @@
-import { NextResponse } from "next/server";
 import { z } from "zod";
 import { fetchRepoContext, RepoFetchError } from "@/lib/github";
 import { runPipeline } from "@/orchestrator";
-import type { AgentEvent } from "@/orchestrator/types";
+import type { AgentEvent, StreamMessage } from "@/orchestrator/types";
 
 // Agent runs exceed the default edge limit; use the Node.js runtime.
 export const runtime = "nodejs";
@@ -13,35 +12,54 @@ const bodySchema = z.object({
 });
 
 /**
- * Runs the full onboarding pipeline for a repository and returns the brief.
- * Events are collected and returned alongside the result; Phase 6 upgrades this
- * to stream events live to the client.
+ * Streams the onboarding pipeline as newline-delimited JSON so the client can
+ * animate each agent's progress live. Every agent event is flushed the moment
+ * it happens; a final "result" (or "error") message closes the stream.
  */
 export async function POST(request: Request) {
   const parsed = bodySchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) {
-    return NextResponse.json({ error: parsed.error.issues[0].message }, { status: 400 });
+    return Response.json({ error: parsed.error.issues[0].message }, { status: 400 });
   }
 
-  try {
-    const ctx = await fetchRepoContext(parsed.data.repoUrl);
+  const encoder = new TextEncoder();
 
-    const events: AgentEvent[] = [];
-    const emit = (event: Omit<AgentEvent, "ts">) => events.push({ ...event, ts: Date.now() });
+  const stream = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      const send = (message: StreamMessage) =>
+        controller.enqueue(encoder.encode(`${JSON.stringify(message)}\n`));
 
-    const { brief, results } = await runPipeline(ctx, emit);
+      const emit = (event: Omit<AgentEvent, "ts">) =>
+        send({ type: "event", event: { ...event, ts: Date.now() } });
 
-    return NextResponse.json({
-      repo: `${ctx.owner}/${ctx.repo}`,
-      brief,
-      events,
-      tokensUsed: results.reduce((sum, r) => sum + r.tokensUsed, 0),
-    });
-  } catch (error) {
-    if (error instanceof RepoFetchError) {
-      return NextResponse.json({ error: error.message }, { status: error.status ?? 400 });
-    }
-    const message = error instanceof Error ? error.message : "Something went wrong.";
-    return NextResponse.json({ error: message }, { status: 500 });
-  }
+      try {
+        const ctx = await fetchRepoContext(parsed.data.repoUrl);
+        const { brief, results } = await runPipeline(ctx, emit);
+
+        send({
+          type: "result",
+          repo: `${ctx.owner}/${ctx.repo}`,
+          brief,
+          tokensUsed: results.reduce((sum, r) => sum + r.tokensUsed, 0),
+        });
+      } catch (error) {
+        const message =
+          error instanceof RepoFetchError
+            ? error.message
+            : error instanceof Error
+              ? error.message
+              : "Something went wrong.";
+        send({ type: "error", error: message });
+      } finally {
+        controller.close();
+      }
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      "Content-Type": "application/x-ndjson; charset=utf-8",
+      "Cache-Control": "no-cache, no-transform",
+    },
+  });
 }
