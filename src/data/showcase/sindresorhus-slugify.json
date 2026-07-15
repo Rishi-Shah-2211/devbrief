@@ -1,0 +1,61 @@
+{
+  "slug": "sindresorhus-slugify",
+  "repo": "sindresorhus/slugify",
+  "description": "Slugify a string",
+  "brief": "# slugify — Onboarding Brief\n\n**slugify** is a lightweight JavaScript library that turns arbitrary strings into URL‑safe slugs, supporting a wide range of languages (German, Vietnamese, Arabic, Russian, etc.). It’s designed for use in URLs, filenames, and identifiers, and is published as `@sindresorhus/slugify` on npm.\n\n---\n\n## 1. Overview\n\n- **Purpose** – Convert any string into a slug suitable for URLs, filenames, or IDs.  \n- **Languages** – Handles German, Vietnamese, Arabic, Russian, and many others via transliteration.  \n- **Installation** – `npm install @sindresorhus/slugify`.  \n- **Import** – `import slugify from '@sindresorhus/slugify';`\n\n---\n\n## 2. Usage\n\n```js\nimport slugify from '@sindresorhus/slugify';\n\nslugify('Hello, World!');          // → 'hello-world'\nslugify('Café', { decamelize: true }); // → 'cafe'\n```\n\nSee the usage examples in [readme.md](readme.md#usage).\n\n---\n\n## 3. Setup & Scripts\n\n- **Installation** – `npm install @sindresorhus/slugify` (see [readme.md](readme.md#install)).  \n- **Test** – `npm test` runs the test suite defined in `test.js`.  \n- No additional setup scripts are required.\n\n---\n\n## 4. Documentation Gaps\n\n- **Edge‑case handling** – How extremely long strings or unusual characters are processed is not fully documented.  \n- **Performance** – No benchmarks or memory‑usage details are provided.  \n- **Security** – While a [security policy](.github/security.md) exists, specific security considerations of the slugification process are not described.\n\n---\n\n## 5. Project Structure\n\n| File | Purpose | Key References |\n|------|---------|----------------|\n| `index.js` | Main entry point; exports `slugify` and contains core logic. | [index.js](index.js) |\n| `overridable-replacements.js` | Default custom replacements merged with user options. | [index.js](index.js), [package.json](package.json) |\n| `package.json` | Metadata, dependencies, scripts, and `engines` field. | [package.json](package.json) |\n| `test.js` | Test suite exercising the API. | [package.json](package.json) |\n| `readme.md` | Documentation, usage examples, and API details. | [readme.md](readme.md) |\n| `index.d.ts` | TypeScript type definitions for the public API. | [index.d.ts](index.d.ts) |\n\nThe slugification flow starts in `index.js`, which imports `overridable-replacements.js` and uses `@sindresorhus/transliterate` to convert Unicode to ASCII before applying replacements and formatting.\n\n---\n\n## 6. Dependencies\n\n| Package | Purpose | Version |\n|---------|---------|---------|\n| **@sindresorhus/transliterate** | Unicode → ASCII conversion. | `^2.0.0` |\n| **escape-string-regexp** | Safely escape strings for regex usage. | `^5.0.0` |\n| **ava** | Test runner. | `^6.4.1` |\n| **xo** | Linter. | `^1.2.2` |\n\n> **Core libraries** – `@sindresorhus/transliterate`, `escape-string-regexp`  \n> **Testing & linting** – `ava`, `xo`\n\nAll dependencies are current, and the package targets **Node ≥ 20** (see `engines` in `package.json`).\n\n---\n\n## 7. Notes\n\n- The project remains lightweight; no heavy or unusual dependencies are used.  \n- Transliteration logic is delegated to `@sindresorhus/transliterate`, keeping the core implementation concise.  \n- The `test.js` file contains real‑world cases that illustrate edge‑case handling and expected outputs.\n\n---\n\n## 8. Suggested Reading Path\n\n1. **`readme.md`** – High‑level overview, usage examples, and API options.  \n2. **`index.js`** – Core implementation; see how options, transliteration, and replacements are applied.  \n3. **`overridable-replacements.js`** – Default replacements and how to override them.  \n4. **`package.json`** – Entry points, dependencies, and build configuration.  \n5. **`index.d.ts`** – TypeScript definitions for precise API signatures.  \n6. **`test.js`** – Real‑world test cases that reveal edge‑case handling and expected outputs.\n\nFollow this order to quickly grasp the library’s purpose, usage, internal structure, and testing strategy.",
+  "tokensUsed": 11542,
+  "analytics": {
+    "totalFiles": 13,
+    "maxDepth": 3,
+    "languages": [
+      {
+        "name": "Other",
+        "files": 5,
+        "pct": 38
+      },
+      {
+        "name": "JavaScript",
+        "files": 3,
+        "pct": 23
+      },
+      {
+        "name": "Markdown",
+        "files": 2,
+        "pct": 15
+      },
+      {
+        "name": "YAML",
+        "files": 1,
+        "pct": 8
+      },
+      {
+        "name": "TypeScript",
+        "files": 1,
+        "pct": 8
+      },
+      {
+        "name": "JSON",
+        "files": 1,
+        "pct": 8
+      }
+    ],
+    "topDirs": [
+      {
+        "name": ".github",
+        "files": 2
+      }
+    ],
+    "dependencyCount": 4,
+    "signals": {
+      "readme": true,
+      "license": true,
+      "tests": true,
+      "ci": true,
+      "docs": false,
+      "contributing": false
+    },
+    "healthScore": 80,
+    "onboardingDifficulty": "gentle"
+  },
+  "generatedAt": "2026-07-15"
+}

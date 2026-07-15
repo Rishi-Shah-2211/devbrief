@@ -1,0 +1,77 @@
+{
+  "slug": "axios-axios",
+  "repo": "axios/axios",
+  "description": "Promise based HTTP client for the browser and node.js",
+  "brief": "# axios — Onboarding Brief\n\nAxios is a promise‑based HTTP client that works seamlessly in both browsers and Node.js. It abstracts the intricacies of network requests, offering a unified API for making GET/POST calls, handling interceptors, and managing cancellations and timeouts.\n\n---\n\n## What the Project Documents Say\n\n### What the project is and does  \n- The repository describes itself as a “Promise based HTTP client for the browser and node.js”【README.md#L1-L2】.  \n- Its documented features include making XMLHttpRequests from the browser, http requests from Node.js, using the Promise API, intercepting requests/responses, transforming data, canceling requests, serializing/parsing JSON, serializing to `multipart/form-data` or `application/x-www-form-urlencoded`, and adding CSRF protection【README.md#features】.\n\n### How to run or use it (as documented)  \n- **Installation** via package managers: `npm install axios`, `yarn add axios`, `pnpm add axios`, `bun add axios`, `deno add axios`【README.md#installing】.  \n- **CDN usage**: `<script src=\"https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js\"></script>`【README.md#cdn】.  \n- **Basic usage**: `import axios from 'axios'` and `await axios.get(...)` or `axios.get(...).then(...).catch(...)`【README.md#example】.  \n- The README also covers creating instances (`axios.create([config])`), request config options, response schema, interceptors, error handling, timeouts, cancellation (AbortController and legacy CancelToken), form data handling, file uploads, progress tracking, rate limiting, headers, fetch adapter, HTTP/2 support, TypeScript support, and more【README.md#table-of-contents】.\n\n### Documentation gaps (based on the provided files)  \n- The README references a **CONTRIBUTORS.md** badge, but that file is not present in the supplied tree, so contribution guidelines beyond the brief “Contributing” section are not visible.  \n- A **SECURITY.md** file is mentioned in **AGENTS.md** (e.g., “see SECURITY.md”) but is not included in the supplied files, so the detailed security policy and vulnerability reporting process are not visible.  \n- **THREATMODEL.md** is also referenced in **AGENTS.md** but is not supplied, leaving the threat‑model details undocumented in the provided set.  \n- While the README contains a high‑level feature list and usage examples, a comprehensive API reference (detailed description of every config option, interceptor API, header utilities, etc.) is not present in the supplied files; only a brief overview is given in the README.  \n- The **CHANGELOG.md** file is provided, so version history is documented, but any separate migration guide or upgrade notes beyond the changelog are not visible in the supplied tree.\n\nAll factual statements are tied to the files that were actually provided: README.md, AGENTS.md, and CHANGELOG.md. Any missing documentation is noted as “not present in the supplied files.”\n\n---\n\n## Project Structure\n\nAxios is organized to keep source, distribution, documentation, and tooling in separate top‑level folders.\n\n| Folder | Purpose | Key Files |\n|--------|---------|-----------|\n| **lib/** | Core source code | `index.js`, `axios.js`, adapters (`xhr.js`, `http.js`), platform entries (`browser/index.js`, `node/index.js`) |\n| **dist/** | Compiled bundles | `node/axios.cjs`, `esm/axios.js`, `axios.min.js` (UMD) |\n| **docs/** | Documentation source | `index.md`, `.vitepress/config.mts`, translations (`es/`, `fr/`, `zh/`), English pages (`pages/`) |\n| **examples/** | Runnable demos | Sub‑projects such as `abort-controller/`, `interceptors/`, `file-upload/` |\n| **.github/** | GitHub automation | Workflows (`run-ci.yml`), issue/PR templates |\n| **.husky/** | Git hooks | `commit-msg` |\n| **.devcontainer/** | Development container | `devcontainer.json` |\n\nWhen a consumer imports axios from `index.js`, the module creates an Axios instance that selects the appropriate adapter (`xhr` for browsers, `http` for Node) and returns a promise‑based client for making requests.\n\n---\n\n## Dependencies\n\n### Runtime Dependencies  \n\n| Package | Purpose | Version |\n|---------|---------|---------|\n| follow-redirects | Handles HTTP redirects automatically | ^1.16.0 |\n| form-data | Builds `multipart/form-data` payloads for file uploads | ^4.0.6 |\n| https-proxy-agent | Provides HTTPS proxy support for Node.js environments | ^5.0.1 |\n| proxy-from-env | Reads proxy configuration from environment variables | ^2.1.0 |\n\n### Selected Dev Dependencies  \n\n| Package | Purpose | Version |\n|---------|---------|---------|\n| vitest | Test runner (unit, browser, smoke tests) | ^4.1.9 |\n| rollup | Bundles the library for various formats (CJS, ESM, browser) | ^4.60.4 |\n| eslint | Lints JavaScript/TypeScript source files | ^10.6.0 |\n| typescript | TypeScript compiler for type checking and emit | ^5.9.3 |\n| playwright | End‑to‑end browser testing (used in vitest browser projects) | ^1.61.1 |\n| gulp | Task runner invoked by the `build` and `version` scripts | ^5.0.1 |\n| husky | Installs Git hooks (e.g., `prepare` runs husky) | ^9.1.7 |\n| prettier | Code formatter used by `lint-staged` | ^3.9.4 |\n\nAll listed versions are the ones declared in the repository’s `package.json` (axios v1.18.1). No runtime dependency appears markedly outdated; each is within a recent minor/patch range at the time of this release.\n\n---\n\n## Start Here\n\n1. **README.md** – high‑level description, features, installation commands, and a quick usage example.  \n2. **index.js** – the library’s entry point; shows what is exported and how the public API is assembled.  \n3. **package.json** – metadata, version, scripts (build, test, lint), dependencies, and the `exports` field that defines entry points for different environments.  \n4. **CONTRIBUTING.md** – guide for setting up a development environment, running the test suite, and building the project.  \n5. **docs/pages/getting-started/first-steps.md** – step‑by‑step tutorial for newcomers on how to use Axios in a project.  \n6. **examples/README.md** – instructions for running the code examples that demonstrate Axios in various scenarios.  \n7. **.gitignore** – lists files and directories (like `node_modules`, `dist`, coverage) that are intentionally excluded from version control.  \n8. **eslint.config.js** – the project’s ESLint configuration, revealing the coding style and rules enforced on the source.  \n\nFollow these resources to understand Axios, contribute, and explore its capabilities.",
+  "tokensUsed": 56680,
+  "analytics": {
+    "totalFiles": 454,
+    "maxDepth": 6,
+    "languages": [
+      {
+        "name": "JavaScript",
+        "files": 203,
+        "pct": 45
+      },
+      {
+        "name": "Markdown",
+        "files": 160,
+        "pct": 35
+      },
+      {
+        "name": "TypeScript",
+        "files": 27,
+        "pct": 6
+      },
+      {
+        "name": "Other",
+        "files": 26,
+        "pct": 6
+      },
+      {
+        "name": "JSON",
+        "files": 18,
+        "pct": 4
+      },
+      {
+        "name": "YAML",
+        "files": 10,
+        "pct": 2
+      }
+    ],
+    "topDirs": [
+      {
+        "name": "docs",
+        "files": 158
+      },
+      {
+        "name": "tests",
+        "files": 158
+      },
+      {
+        "name": "lib",
+        "files": 70
+      },
+      {
+        "name": "examples",
+        "files": 17
+      },
+      {
+        "name": ".github",
+        "files": 14
+      }
+    ],
+    "dependencyCount": 43,
+    "signals": {
+      "readme": true,
+      "license": true,
+      "tests": true,
+      "ci": true,
+      "docs": true,
+      "contributing": true
+    },
+    "healthScore": 100,
+    "onboardingDifficulty": "moderate"
+  },
+  "generatedAt": "2026-07-15"
+}

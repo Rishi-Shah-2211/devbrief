@@ -1,0 +1,73 @@
+{
+  "slug": "expressjs-express",
+  "repo": "expressjs/express",
+  "description": "Fast, unopinionated, minimalist web framework for node.",
+  "brief": "# express — Onboarding Brief  \n\nExpress is a fast, unopinionated, minimalist web framework for Node.js. It provides robust routing, HTTP helpers, and a tiny core that lets you build web apps and APIs with minimal overhead.  \n\n## What the project documents  \n- **Core claim** – “Fast, unopinionated, minimalist web framework for Node.js” (opening paragraph of `Readme.md`).  \n- **Advertised features** – robust routing, high performance, extensive test coverage, HTTP helpers, support for 14+ template engines, content negotiation, and a CLI generator for scaffolding apps (`Readme.md` → “Features”).  \n\n## How to run / use  \n| Task | Documented command / script | Where documented |\n|------|----------------------------|------------------|\n| Install the library | `npm install express` (requires Node ≥ 18) | `Readme.md` → “Installation” |\n| Create a new app with the generator | `npm install -g express-generator@4` → `express /tmp/foo && cd /tmp/foo` → `npm install` → `npm start` | `Readme.md` → “Quick Start” |\n| Run an example | `node examples/<example‑name>` (e.g., `node examples/content-negotiation`) after cloning the repo and running `npm install` | `Readme.md` → “Examples” and `examples/README.md` |\n| Run the test suite | `npm test` (after `npm install`) | `Readme.md` → “Running Tests” |\n| Start a simple server (code snippet) | `import express from 'express'; const app = express(); app.get('/', (req, res) => res.send('Hello World')); app.listen(3000);` | `Readme.md` → code block at top |\n\n## Project structure  \n- **`lib/`** – Core implementation  \n  - `lib/express.js` – exports `createApplication()` (the Express factory)  \n  - `lib/application.js` – defines the `Application` class (middleware, routing, view rendering)  \n  - `lib/request.js` & `lib/response.js` – augment Node’s `IncomingMessage` and `ServerResponse` with Express helpers  \n  - `lib/utils.js` – shared utilities  \n  - `lib/view.js` – view rendering support for template engines  \n- **`index.js`** – entry point that re‑exports `./lib/express` (`module.exports = require('./lib/express');`).  \n- **`package.json`** – declares dependencies, publishable files (`LICENSE`, `Readme.md`, `index.js`, `lib/`), and npm scripts (linting, testing).  \n- **`test/`** – unit‑style files (`test/Route.js`, `test/Router.js`) and acceptance tests under `test/acceptance/`.  \n- **`examples/`** – runnable demo applications (each with its own `index.js` and assets).  \n- **`.github/workflows/`** – CI configuration (GitHub Actions) for linting, testing, coverage.  \n- **`.eslintrc.yml` & `.eslintignore`** – ESLint rules and ignored paths.  \n- **`.editorconfig`** – editor formatting defaults.  \n\n## How the pieces fit together at runtime  \nWhen a program imports Express (`import express from 'express'`), `index.js` loads `lib/express`, which creates an `Application` instance (`lib/application.js`). Incoming HTTP requests are wrapped by the objects in `lib/request.js` and `lib/response.js` to provide the familiar Express API, while middleware and routing are managed by the `Application` class.  \n\n## Dependencies  \n\n| Package | Purpose (used by Express) | Version |\n|---------|---------------------------|---------|\n| body-parser | request body parsing | ^2.2.1 |\n| cookie | cookie parsing | ^0.7.1 |\n| debug | debugging utility | ^4.4.0 |\n| qs | query string parsing | ^6.15.2 |\n| mime-types | content‑type handling | ^3.0.0 |\n| send | streaming static files | ^1.1.0 |\n| serve-static | serving static assets | ^2.2.0 |\n| router | core routing | ^2.2.0 |\n| finalhandler | final request handler | ^2.1.0 |\n| http-errors | HTTP error creation | ^2.0.0 |\n| vary | Vary header manipulation | ^1.1.2 |\n| type-is | content‑type negotiation | ^2.1.0 |\n\nAll dependencies are within typical version ranges; none appear conspicuously outdated. The project requires Node ≥ 18 (see `engines.node` in `package.json`).  \n\n## Documentation gaps  \n- No high‑level API reference (detailed method signatures, option objects, usage examples for `app.use`, `app.get`, `res.sendFile`, etc.).  \n- Missing build/CI instructions – only badge links point to workflows; no step‑by‑step guide for running CI locally.  \n- No explicit version‑upgrade guide (only a brief note with a link to a migration guide to v5).  \n- No description of the internal project structure (files like `lib/express.js`, `router`, etc., are not referenced in the docs).  \n- Limited guidance on configuring the generator – options for customizing the generated scaffold are undocumented.  \n- No mention of TypeScript typings (whether they are bundled or where to obtain them).  \n\n## Key files to review first  \n- `Readme.md` – overview, installation, quick start, features.  \n- `index.js` – main entry point (re‑exports `./lib/express`).  \n- `package.json` – dependencies, scripts, metadata.  \n- `lib/express.js` – core factory function.  \n- `lib/application.js` – `Application` class with routing/middleware methods.  \n\nThese files give you a concrete map of where Express’s public API begins and how its core behavior is implemented.",
+  "tokensUsed": 34077,
+  "analytics": {
+    "totalFiles": 213,
+    "maxDepth": 6,
+    "languages": [
+      {
+        "name": "JavaScript",
+        "files": 141,
+        "pct": 66
+      },
+      {
+        "name": "Other",
+        "files": 49,
+        "pct": 23
+      },
+      {
+        "name": "HTML",
+        "files": 8,
+        "pct": 4
+      },
+      {
+        "name": "YAML",
+        "files": 6,
+        "pct": 3
+      },
+      {
+        "name": "Markdown",
+        "files": 4,
+        "pct": 2
+      },
+      {
+        "name": "CSS",
+        "files": 4,
+        "pct": 2
+      }
+    ],
+    "topDirs": [
+      {
+        "name": "test",
+        "files": 112
+      },
+      {
+        "name": "examples",
+        "files": 80
+      },
+      {
+        "name": "lib",
+        "files": 6
+      },
+      {
+        "name": ".github",
+        "files": 5
+      }
+    ],
+    "dependencyCount": 44,
+    "signals": {
+      "readme": true,
+      "license": true,
+      "tests": true,
+      "ci": true,
+      "docs": false,
+      "contributing": false
+    },
+    "healthScore": 80,
+    "onboardingDifficulty": "moderate"
+  },
+  "generatedAt": "2026-07-15"
+}

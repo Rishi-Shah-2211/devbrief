@@ -7,7 +7,8 @@ import type { GenerateResult } from "@/lib/use-generate";
 
 interface Props {
   result: GenerateResult;
-  onReset: () => void;
+  /** Omitted on showcase pages, where there is no run to reset. */
+  onReset?: () => void;
 }
 
 function saveBlob(blob: Blob, filename: string) {
@@ -84,12 +85,14 @@ export function BriefView({ result, onReset }: Props) {
           >
             .md
           </button>
-          <button
-            onClick={onReset}
-            className="rounded-lg border border-[var(--color-hairline-strong)] px-4 py-2 text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-text)]"
-          >
-            New brief
-          </button>
+          {onReset ? (
+            <button
+              onClick={onReset}
+              className="rounded-lg border border-[var(--color-hairline-strong)] px-4 py-2 text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-text)]"
+            >
+              New brief
+            </button>
+          ) : null}
         </div>
       </div>
 

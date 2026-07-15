@@ -177,7 +177,7 @@ export function Landing() {
 }
 
 /** A calm, static diagram of the agent pipeline for the hero. */
-function HeroPipeline() {
+export function HeroPipeline() {
   return (
     <svg viewBox="0 0 640 260" className="w-full" role="img" aria-label="DevBrief agent pipeline">
       <defs>
