@@ -1,7 +1,13 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import type { AgentEvent, AgentName, AgentStatus, StreamMessage } from "@/orchestrator/types";
+import type {
+  AgentEvent,
+  AgentName,
+  AgentStatus,
+  RepoAnalytics,
+  StreamMessage,
+} from "@/orchestrator/types";
 
 export type Phase = "idle" | "running" | "done" | "error";
 
@@ -13,8 +19,10 @@ export interface AgentState {
 
 export interface GenerateResult {
   repo: string;
+  description: string | null;
   brief: string;
   tokensUsed: number;
+  analytics: RepoAnalytics;
 }
 
 type AgentStates = Partial<Record<AgentName, AgentState>>;
@@ -38,7 +46,13 @@ export function useGenerate() {
         break;
       }
       case "result":
-        setResult({ repo: message.repo, brief: message.brief, tokensUsed: message.tokensUsed });
+        setResult({
+          repo: message.repo,
+          description: message.description,
+          brief: message.brief,
+          tokensUsed: message.tokensUsed,
+          analytics: message.analytics,
+        });
         setPhase("done");
         break;
       case "error":

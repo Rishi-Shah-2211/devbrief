@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import type { GenerateResult } from "@/lib/use-generate";
@@ -9,16 +10,51 @@ interface Props {
   onReset: () => void;
 }
 
+function saveBlob(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 export function BriefView({ result, onReset }: Props) {
-  const download = () => {
-    const blob = new Blob([result.brief], { type: "text/markdown" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `DevBrief-${result.repo.replace("/", "-")}.md`;
-    a.click();
-    URL.revokeObjectURL(url);
+  const [building, setBuilding] = useState(false);
+  const slug = result.repo.replace("/", "-");
+
+  const downloadMarkdown = () => {
+    saveBlob(new Blob([result.brief], { type: "text/markdown" }), `DevBrief-${slug}.md`);
   };
+
+  /** The PDF renderer is heavy, so it loads only when someone actually asks for it. */
+  const downloadPdf = async () => {
+    setBuilding(true);
+    try {
+      const [{ pdf }, { BriefDocument }] = await Promise.all([
+        import("@react-pdf/renderer"),
+        import("./pdf/BriefDocument"),
+      ]);
+      const blob = await pdf(
+        <BriefDocument
+          repo={result.repo}
+          description={result.description}
+          brief={result.brief}
+          analytics={result.analytics}
+          generatedAt={new Date().toLocaleDateString("en-CA", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        />,
+      ).toBlob();
+      saveBlob(blob, `DevBrief-${slug}.pdf`);
+    } finally {
+      setBuilding(false);
+    }
+  };
+
+  const a = result.analytics;
 
   return (
     <motion.div
@@ -36,10 +72,17 @@ export function BriefView({ result, onReset }: Props) {
         </div>
         <div className="flex gap-2">
           <button
-            onClick={download}
-            className="rounded-lg bg-[var(--color-wine)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+            onClick={downloadPdf}
+            disabled={building}
+            className="rounded-lg bg-[var(--color-wine)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-60"
           >
-            Download .md
+            {building ? "Preparing PDF…" : "Download PDF report"}
+          </button>
+          <button
+            onClick={downloadMarkdown}
+            className="rounded-lg border border-[var(--color-hairline-strong)] px-4 py-2 text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-text)]"
+          >
+            .md
           </button>
           <button
             onClick={onReset}
@@ -48,6 +91,21 @@ export function BriefView({ result, onReset }: Props) {
             New brief
           </button>
         </div>
+      </div>
+
+      {/* Compact analytics strip — the full dashboard lands with the UI overhaul. */}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {[
+          ["Health", `${a.healthScore}/100`],
+          ["Files", a.totalFiles.toLocaleString()],
+          ["Dependencies", a.dependencyCount?.toString() ?? "—"],
+          ["Onboarding", a.onboardingDifficulty],
+        ].map(([label, value]) => (
+          <div key={label} className="glass rounded-xl px-4 py-3">
+            <div className="text-[10px] uppercase tracking-wider text-[var(--color-faint)]">{label}</div>
+            <div className="font-serif text-xl text-[var(--color-wine)]">{value}</div>
+          </div>
+        ))}
       </div>
 
       <article className="brief glass rounded-2xl px-6 py-6 sm:px-8">

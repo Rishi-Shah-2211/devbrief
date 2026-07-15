@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { fetchRepoContext, RepoFetchError } from "@/lib/github";
+import { computeAnalytics } from "@/lib/analytics";
 import { runPipeline } from "@/orchestrator";
 import type { AgentEvent, StreamMessage } from "@/orchestrator/types";
 
@@ -39,8 +40,10 @@ export async function POST(request: Request) {
         send({
           type: "result",
           repo: `${ctx.owner}/${ctx.repo}`,
+          description: ctx.description,
           brief,
           tokensUsed: results.reduce((sum, r) => sum + r.tokensUsed, 0),
+          analytics: computeAnalytics(ctx),
         });
       } catch (error) {
         const message =

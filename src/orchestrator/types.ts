@@ -57,8 +57,38 @@ export interface AgentEvent {
 
 export type EmitEvent = (event: Omit<AgentEvent, "ts">) => void;
 
+/** Code-intelligence metrics computed from the repo tree — no LLM involved. */
+export interface RepoAnalytics {
+  totalFiles: number;
+  maxDepth: number;
+  /** Share of files per language, largest first. */
+  languages: { name: string; files: number; pct: number }[];
+  /** First-level directories by file count, largest first. */
+  topDirs: { name: string; files: number }[];
+  /** Names of runtime + dev dependencies, when a package.json was sampled. */
+  dependencyCount: number | null;
+  signals: {
+    readme: boolean;
+    license: boolean;
+    tests: boolean;
+    ci: boolean;
+    docs: boolean;
+    contributing: boolean;
+  };
+  /** Composite 0–100 score from the signals above. */
+  healthScore: number;
+  onboardingDifficulty: "gentle" | "moderate" | "steep";
+}
+
 /** Messages streamed from the generate endpoint to the client, newline-delimited. */
 export type StreamMessage =
   | { type: "event"; event: AgentEvent }
-  | { type: "result"; repo: string; brief: string; tokensUsed: number }
+  | {
+      type: "result";
+      repo: string;
+      description: string | null;
+      brief: string;
+      tokensUsed: number;
+      analytics: RepoAnalytics;
+    }
   | { type: "error"; error: string };
