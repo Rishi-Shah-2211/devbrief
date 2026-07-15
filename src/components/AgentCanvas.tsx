@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { AGENTS, WORKERS, type AgentMeta } from "@/lib/agents-meta";
 import type { AgentState } from "@/lib/use-generate";
 import type { AgentName } from "@/orchestrator/types";
@@ -15,7 +16,6 @@ const ORCHESTRATOR: AgentMeta = {
   tier: "orchestrator",
 };
 
-/** Directed edges of the orchestration graph, drawn as cables. */
 const EDGES: { from: AgentName | "orchestrator"; to: AgentName }[] = [
   ...WORKERS.map((w) => ({ from: "orchestrator" as const, to: w.name })),
   ...WORKERS.map((w) => ({ from: w.name, to: "critic" as const })),
@@ -32,6 +32,43 @@ interface Anchor {
 
 interface Props {
   agents: Partial<Record<AgentName, AgentState>>;
+}
+
+/** Elapsed run time + live token meter + completion count — the mission strip. */
+function MissionBar({ agents }: Props) {
+  const [elapsed, setElapsed] = useState(0);
+  const finished = agents.synthesizer?.status === "done" || agents.synthesizer?.status === "error";
+
+  useEffect(() => {
+    if (finished) return;
+    const t = setInterval(() => setElapsed((s) => s + 1), 1000);
+    return () => clearInterval(t);
+  }, [finished]);
+
+  const tokens = Object.values(agents).reduce((sum, a) => sum + (a?.tokensUsed ?? 0), 0);
+  const done = Object.values(agents).filter((a) => a?.status === "done").length;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="mx-auto mb-8 flex w-fit items-center gap-6 rounded-full border border-[var(--color-hairline)] bg-[var(--color-surface-2)] px-5 py-2 font-mono text-[11px] text-[var(--color-muted)] shadow-[0_8px_30px_-16px_var(--color-wine-glow)]"
+    >
+      <span className="flex items-center gap-1.5">
+        <motion.span
+          className="h-1.5 w-1.5 rounded-full bg-[var(--color-wine)]"
+          animate={finished ? {} : { opacity: [1, 0.3, 1] }}
+          transition={{ duration: 1.2, repeat: Infinity }}
+        />
+        {finished ? "COMPLETE" : "LIVE"}
+      </span>
+      <span>
+        T+{String(Math.floor(elapsed / 60)).padStart(2, "0")}:{String(elapsed % 60).padStart(2, "0")}
+      </span>
+      <span className="text-[var(--color-gold)]">{tokens.toLocaleString()} tokens</span>
+      <span>{done}/6 agents</span>
+    </motion.div>
+  );
 }
 
 export function AgentCanvas({ agents }: Props) {
@@ -97,67 +134,81 @@ export function AgentCanvas({ agents }: Props) {
   const strokeFor = (s: EdgeState) =>
     s === "idle" ? "var(--color-hairline-strong)" : "var(--color-wine)";
 
-  return (
-    <div ref={containerRef} className="relative w-full">
-      {/* Cable layer sits behind the windows. */}
-      <svg
-        className="pointer-events-none absolute inset-0 h-full w-full"
-        width={size.w}
-        height={size.h}
-        aria-hidden
-      >
-        <defs>
-          <marker id="arrow-wine" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M0,0 L10,5 L0,10 z" fill="var(--color-wine)" />
-          </marker>
-          <marker id="arrow-idle" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M0,0 L10,5 L0,10 z" fill="var(--color-hairline-strong)" />
-          </marker>
-        </defs>
+  const anyWorking = Object.values(agents).some((a) => a?.status === "working");
 
-        {edges.map((e) => (
-          <g key={e.key}>
-            {/* Base cable */}
-            <path
-              d={e.d}
-              fill="none"
-              stroke={strokeFor(e.state)}
-              strokeWidth={e.state === "idle" ? 1 : 1.5}
-              strokeDasharray={e.state === "idle" ? "3 5" : "none"}
-              markerEnd={`url(#arrow-${e.state === "idle" ? "idle" : "wine"})`}
-              opacity={e.state === "idle" ? 0.6 : 1}
-            />
-            {/* Flowing energy on active cables */}
-            {e.state === "flowing" ? (
+  return (
+    <div>
+      <MissionBar agents={agents} />
+
+      <div ref={containerRef} className="relative w-full">
+        {/* Cable layer sits behind the windows. */}
+        <svg
+          className="pointer-events-none absolute inset-0 h-full w-full"
+          width={size.w}
+          height={size.h}
+          aria-hidden
+        >
+          <defs>
+            <marker id="arrow-wine" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--color-wine)" />
+            </marker>
+            <marker id="arrow-idle" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--color-hairline-strong)" />
+            </marker>
+          </defs>
+
+          {edges.map((e) => (
+            <g key={e.key}>
+              {/* Base cable */}
               <path
-                className="cable-flow"
                 d={e.d}
                 fill="none"
-                stroke="var(--color-gold)"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeDasharray="1 23"
+                stroke={strokeFor(e.state)}
+                strokeWidth={e.state === "idle" ? 1 : 1.5}
+                strokeDasharray={e.state === "idle" ? "3 5" : "none"}
+                markerEnd={`url(#arrow-${e.state === "idle" ? "idle" : "wine"})`}
+                opacity={e.state === "idle" ? 0.6 : 1}
+              />
+              {/* Glowing data packets racing down active cables */}
+              {e.state === "flowing"
+                ? [0, 0.45, 0.9].map((delay) => (
+                    <circle key={delay} r="3.2" fill="var(--color-gold)" opacity="0.95">
+                      <animateMotion dur="1.35s" begin={`${delay}s`} repeatCount="indefinite" path={e.d} />
+                    </circle>
+                  ))
+                : null}
+            </g>
+          ))}
+        </svg>
+
+        {/* Node layer */}
+        <div className="relative flex flex-col items-center gap-y-10 sm:gap-y-14">
+          <div className="relative">
+            {/* Pulse ring radiating from the core while the fleet works */}
+            {anyWorking ? (
+              <motion.div
+                className="pointer-events-none absolute inset-0 rounded-xl border-2 border-[var(--color-wine)]"
+                animate={{ scale: [1, 1.18], opacity: [0.5, 0] }}
+                transition={{ duration: 1.6, repeat: Infinity, ease: "easeOut" }}
               />
             ) : null}
-          </g>
-        ))}
-      </svg>
+            <AgentWindow
+              ref={setNode("orchestrator")}
+              meta={ORCHESTRATOR}
+              variant="hub"
+              state={{ status: Object.keys(agents).length > 0 ? "done" : "idle" }}
+            />
+          </div>
 
-      {/* Node layer */}
-      <div className="relative flex flex-col items-center gap-y-10 sm:gap-y-14">
-        <AgentWindow
-          ref={setNode("orchestrator")}
-          meta={ORCHESTRATOR}
-          variant="hub"
-          state={{ status: Object.keys(agents).length > 0 ? "done" : "idle" }}
-        />
-        <div className="grid w-full max-w-2xl grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4 sm:gap-x-4">
-          {WORKERS.map((w) => (
-            <AgentWindow key={w.name} ref={setNode(w.name)} meta={w} state={agents[w.name]} />
-          ))}
+          <div className="grid w-full max-w-2xl grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4 sm:gap-x-4">
+            {WORKERS.map((w) => (
+              <AgentWindow key={w.name} ref={setNode(w.name)} meta={w} state={agents[w.name]} />
+            ))}
+          </div>
+
+          <AgentWindow ref={setNode("critic")} meta={meta("critic")} variant="hub" state={agents.critic} />
+          <AgentWindow ref={setNode("synthesizer")} meta={meta("synthesizer")} variant="hub" state={agents.synthesizer} />
         </div>
-        <AgentWindow ref={setNode("critic")} meta={meta("critic")} variant="hub" state={agents.critic} />
-        <AgentWindow ref={setNode("synthesizer")} meta={meta("synthesizer")} variant="hub" state={agents.synthesizer} />
       </div>
     </div>
   );

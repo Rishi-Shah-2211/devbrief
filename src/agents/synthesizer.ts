@@ -31,12 +31,21 @@ natural reading order. Keep it tight and skimmable.
 Sections:
 ${body}`;
 
+  let lastPreview = 0;
+  const onDelta = (textSoFar: string) => {
+    const now = Date.now();
+    if (now - lastPreview < 150) return;
+    lastPreview = now;
+    emit({ agent: "synthesizer", status: "working", preview: textSoFar.slice(-160) });
+  };
+
   try {
     // The provider layer walks its own fallback chain (OpenRouter → Cerebras → Groq).
     const { text, tokensUsed, provider } = await callSynthLLM({
       system: SYSTEM,
       prompt,
       temperature: 0.35,
+      onDelta,
     });
     emit({ agent: "synthesizer", status: "done", detail: `via ${provider}`, tokensUsed });
     return text.trim();

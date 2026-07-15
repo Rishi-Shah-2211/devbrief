@@ -59,10 +59,21 @@ export async function runWorker(
 ): Promise<AgentResult> {
   emit({ agent: spec.name, status: "working", detail: spec.workingLabel });
 
+  // Throttled typewriter feed: stream the tail of what the agent is writing
+  // to the UI without flooding the event channel.
+  let lastPreview = 0;
+  const onDelta = (textSoFar: string) => {
+    const now = Date.now();
+    if (now - lastPreview < 150) return;
+    lastPreview = now;
+    emit({ agent: spec.name, status: "working", preview: textSoFar.slice(-160) });
+  };
+
   try {
     const { text, tokensUsed, provider } = await callWorkerLLM({
       system: spec.system,
       prompt: spec.buildPrompt(ctx),
+      onDelta,
     });
 
     const result: AgentResult = {

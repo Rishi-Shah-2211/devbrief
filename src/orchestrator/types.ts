@@ -51,6 +51,8 @@ export interface AgentEvent {
   agent: AgentName;
   status: AgentStatus;
   detail?: string;
+  /** Rolling tail of the text the agent is generating right now (typewriter feed). */
+  preview?: string;
   tokensUsed?: number;
   ts: number;
 }

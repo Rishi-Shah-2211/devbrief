@@ -13,6 +13,11 @@ export interface LLMCall {
   system: string;
   prompt: string;
   temperature?: number;
+  /**
+   * When provided, the request streams (SSE) and this fires with the text
+   * accumulated so far — powering the live typewriter in each agent window.
+   */
+  onDelta?: (textSoFar: string) => void;
 }
 
 export interface LLMResponse {
@@ -92,6 +97,8 @@ async function callProvider(p: Provider, call: LLMCall): Promise<LLMResponse> {
   const key = p.key();
   if (!key) throw new ProviderError(p.name, 0, "no API key configured");
 
+  const streaming = Boolean(call.onDelta);
+
   const res = await fetch(p.url, {
     method: "POST",
     headers: {
@@ -106,6 +113,7 @@ async function callProvider(p: Provider, call: LLMCall): Promise<LLMResponse> {
         { role: "system", content: call.system },
         { role: "user", content: call.prompt },
       ],
+      ...(streaming ? { stream: true, stream_options: { include_usage: true } } : {}),
       ...p.extraBody,
     }),
   });
@@ -115,19 +123,63 @@ async function callProvider(p: Provider, call: LLMCall): Promise<LLMResponse> {
     throw new ProviderError(p.name, res.status, body.slice(0, 300));
   }
 
-  const data = (await res.json()) as {
-    choices?: { message?: { content?: string } }[];
-    usage?: { total_tokens?: number };
-    error?: { message?: string };
-  };
-
-  // Some gateways (OpenRouter) return 200 with an embedded error object.
-  const text = data.choices?.[0]?.message?.content;
-  if (!text) {
-    throw new ProviderError(p.name, 200, data.error?.message ?? "empty response");
+  if (!streaming) {
+    const data = (await res.json()) as {
+      choices?: { message?: { content?: string } }[];
+      usage?: { total_tokens?: number };
+      error?: { message?: string };
+    };
+    // Some gateways (OpenRouter) return 200 with an embedded error object.
+    const text = data.choices?.[0]?.message?.content;
+    if (!text) {
+      throw new ProviderError(p.name, 200, data.error?.message ?? "empty response");
+    }
+    return { text, tokensUsed: data.usage?.total_tokens ?? 0, provider: p.name };
   }
 
-  return { text, tokensUsed: data.usage?.total_tokens ?? 0, provider: p.name };
+  // SSE stream: accumulate deltas, surface progress, pick up usage from the tail chunk.
+  if (!res.body) throw new ProviderError(p.name, 200, "no stream body");
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+  let text = "";
+  let tokensUsed = 0;
+
+  for (;;) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+
+    let newline: number;
+    while ((newline = buffer.indexOf("\n")) !== -1) {
+      const line = buffer.slice(0, newline).trim();
+      buffer = buffer.slice(newline + 1);
+      if (!line.startsWith("data:")) continue;
+      const payload = line.slice(5).trim();
+      if (payload === "[DONE]") continue;
+
+      try {
+        const chunk = JSON.parse(payload) as {
+          choices?: { delta?: { content?: string } }[];
+          usage?: { total_tokens?: number };
+        };
+        const delta = chunk.choices?.[0]?.delta?.content;
+        if (delta) {
+          text += delta;
+          call.onDelta?.(text);
+        }
+        if (chunk.usage?.total_tokens) tokensUsed = chunk.usage.total_tokens;
+      } catch {
+        // Ignore malformed keep-alive lines.
+      }
+    }
+  }
+
+  if (!text) throw new ProviderError(p.name, 200, "empty stream");
+  // Providers that omit usage on streams get a serviceable estimate.
+  if (!tokensUsed) tokensUsed = Math.ceil((call.system.length + call.prompt.length + text.length) / 4);
+
+  return { text, tokensUsed, provider: p.name };
 }
 
 async function callWithFallback(chain: ProviderName[], call: LLMCall): Promise<LLMResponse> {

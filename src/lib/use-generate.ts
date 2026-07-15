@@ -14,6 +14,8 @@ export type Phase = "idle" | "running" | "done" | "error";
 export interface AgentState {
   status: AgentStatus;
   detail?: string;
+  /** Rolling tail of the agent's live output (typewriter feed). */
+  preview?: string;
   tokensUsed?: number;
 }
 
@@ -41,8 +43,18 @@ export function useGenerate() {
   const apply = useCallback((message: StreamMessage) => {
     switch (message.type) {
       case "event": {
-        const { agent, status, detail, tokensUsed } = message.event as AgentEvent;
-        setAgents((prev) => ({ ...prev, [agent]: { status, detail, tokensUsed } }));
+        const { agent, status, detail, preview, tokensUsed } = message.event as AgentEvent;
+        setAgents((prev) => ({
+          ...prev,
+          // Merge so a preview-only tick doesn't wipe the detail line (and vice versa).
+          [agent]: {
+            ...prev[agent],
+            status,
+            detail: detail ?? prev[agent]?.detail,
+            preview: preview ?? (status === "working" ? prev[agent]?.preview : undefined),
+            tokensUsed: tokensUsed ?? prev[agent]?.tokensUsed,
+          },
+        }));
         break;
       }
       case "result":
