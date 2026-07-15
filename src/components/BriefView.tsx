@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
+import { ChatPanel } from "./ChatPanel";
 import type { GenerateResult } from "@/lib/use-generate";
 
 interface Props {
@@ -130,6 +131,8 @@ export function BriefView({ result, onReset }: Props) {
       <article className="brief glass rounded-2xl px-6 py-6 sm:px-8">
         <ReactMarkdown>{result.brief}</ReactMarkdown>
       </article>
+
+      <ChatPanel repo={result.repo} brief={result.brief} />
     </motion.div>
   );
 }
