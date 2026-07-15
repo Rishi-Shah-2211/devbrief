@@ -1,4 +1,4 @@
-import { callGroq } from "@/lib/llm/groq";
+import { callWorkerLLM } from "@/lib/llm/providers";
 import type {
   AgentResult,
   EmitEvent,
@@ -60,7 +60,7 @@ export async function runWorker(
   emit({ agent: spec.name, status: "working", detail: spec.workingLabel });
 
   try {
-    const { text, tokensUsed } = await callGroq({
+    const { text, tokensUsed, provider } = await callWorkerLLM({
       system: spec.system,
       prompt: spec.buildPrompt(ctx),
     });
@@ -72,7 +72,7 @@ export async function runWorker(
       tokensUsed,
     };
 
-    emit({ agent: spec.name, status: "done", tokensUsed });
+    emit({ agent: spec.name, status: "done", detail: `via ${provider}`, tokensUsed });
     return result;
   } catch (error) {
     emit({

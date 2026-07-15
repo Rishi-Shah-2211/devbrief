@@ -8,12 +8,19 @@ const optional = () =>
     .transform((v) => (v === "" ? undefined : v))
     .optional();
 
-const schema = z.object({
-  GEMINI_API_KEY: z.string().min(1, "GEMINI_API_KEY is required"),
-  GROQ_API_KEY: z.string().min(1, "GROQ_API_KEY is required"),
-  DATABASE_URL: optional().pipe(z.string().url().optional()),
-  GITHUB_TOKEN: optional(),
-});
+const schema = z
+  .object({
+    GROQ_API_KEY: optional(),
+    CEREBRAS_API_KEY: optional(),
+    OPENROUTER_API_KEY: optional(),
+    GEMINI_API_KEY: optional(),
+    DATABASE_URL: optional().pipe(z.string().url().optional()),
+    GITHUB_TOKEN: optional(),
+  })
+  .refine((e) => e.GROQ_API_KEY || e.CEREBRAS_API_KEY || e.OPENROUTER_API_KEY, {
+    message:
+      "At least one LLM provider key is required (GROQ_API_KEY, CEREBRAS_API_KEY, or OPENROUTER_API_KEY).",
+  });
 
 type Env = z.infer<typeof schema>;
 

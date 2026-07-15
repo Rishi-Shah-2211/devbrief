@@ -1,5 +1,4 @@
-import { callGemini } from "@/lib/llm/gemini";
-import { callGroq } from "@/lib/llm/groq";
+import { callSynthLLM } from "@/lib/llm/providers";
 import type { AgentResult, EmitEvent, PipelineContext } from "@/orchestrator/types";
 
 const SYSTEM = `You are the editor assembling a final codebase onboarding brief from sections
@@ -32,26 +31,21 @@ natural reading order. Keep it tight and skimmable.
 Sections:
 ${body}`;
 
-  // Primary path: Gemini's large context produces the most cohesive merge.
   try {
-    const { text, tokensUsed } = await callGemini({ system: SYSTEM, prompt, temperature: 0.35 });
-    emit({ agent: "synthesizer", status: "done", tokensUsed });
+    // The provider layer walks its own fallback chain (OpenRouter → Cerebras → Groq).
+    const { text, tokensUsed, provider } = await callSynthLLM({
+      system: SYSTEM,
+      prompt,
+      temperature: 0.35,
+    });
+    emit({ agent: "synthesizer", status: "done", detail: `via ${provider}`, tokensUsed });
     return text.trim();
-  } catch (geminiError) {
-    // Fallback: if Gemini is unavailable, synthesize on Groq so a working key on
-    // one provider is enough to produce a brief. Resilience over a hard failure.
-    emit({ agent: "synthesizer", status: "working", detail: "Gemini unavailable — using Groq…" });
-    try {
-      const { text, tokensUsed } = await callGroq({ system: SYSTEM, prompt, temperature: 0.35 });
-      emit({ agent: "synthesizer", status: "done", detail: "Synthesized via Groq", tokensUsed });
-      return text.trim();
-    } catch {
-      emit({
-        agent: "synthesizer",
-        status: "error",
-        detail: geminiError instanceof Error ? geminiError.message : "Synthesis failed",
-      });
-      throw geminiError;
-    }
+  } catch (error) {
+    emit({
+      agent: "synthesizer",
+      status: "error",
+      detail: error instanceof Error ? error.message : "Synthesis failed",
+    });
+    throw error;
   }
 }

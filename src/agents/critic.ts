@@ -1,4 +1,4 @@
-import { callGroq } from "@/lib/llm/groq";
+import { callWorkerLLM } from "@/lib/llm/providers";
 import type {
   AgentResult,
   CriticGap,
@@ -56,7 +56,7 @@ export async function runCritic(
     .join("\n\n");
 
   try {
-    const { text, tokensUsed } = await callGroq({
+    const { text, tokensUsed } = await callWorkerLLM({
       system: SYSTEM,
       prompt: `Repository: ${ctx.owner}/${ctx.repo}\n\nSections to review:\n\n${sections}`,
     });

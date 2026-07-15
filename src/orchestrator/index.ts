@@ -26,14 +26,14 @@ export interface PipelineOutput {
   results: AgentResult[];
 }
 
-/** How many workers may call the model at once. Tuned to the free-tier token budget. */
-const MAX_CONCURRENCY = 2;
-
 /**
- * Runs the named workers with a bounded concurrency. True parallelism would
- * exceed the free tier's tokens-per-minute limit, so we cap in-flight calls
- * while still overlapping work.
+ * How many workers may call the model at once. With the multi-provider fallback
+ * layer (Cerebras's large quota in front), all four workers can run truly in
+ * parallel; the cap remains as a safety valve.
  */
+const MAX_CONCURRENCY = 4;
+
+/** Runs the named workers with bounded concurrency. */
 async function runWorkers(
   names: WorkerName[],
   ctx: PipelineContext,

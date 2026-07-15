@@ -1,5 +1,5 @@
-import { DevBriefApp } from "@/components/DevBriefApp";
+import { Landing } from "@/components/site/Landing";
 
 export default function HomePage() {
-  return <DevBriefApp />;
+  return <Landing />;
 }
