@@ -54,10 +54,10 @@ const PROVIDERS: Record<ProviderName, Provider> = {
     // through automatically when a free upstream is saturated.
     model: "nvidia/nemotron-3-super-120b-a12b:free",
     extraBody: {
+      // OpenRouter caps the fallback list at 3 models.
       models: [
         "nvidia/nemotron-3-super-120b-a12b:free",
         "qwen/qwen3-next-80b-a3b-instruct:free",
-        "google/gemma-4-31b-it:free",
         "openai/gpt-oss-20b:free",
       ],
     },
