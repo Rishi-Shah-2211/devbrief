@@ -25,6 +25,7 @@ export interface GenerateResult {
   brief: string;
   tokensUsed: number;
   analytics: RepoAnalytics;
+  briefId?: string;
 }
 
 type AgentStates = Partial<Record<AgentName, AgentState>>;
@@ -64,6 +65,7 @@ export function useGenerate() {
           brief: message.brief,
           tokensUsed: message.tokensUsed,
           analytics: message.analytics,
+          briefId: message.briefId,
         });
         setPhase("done");
         break;

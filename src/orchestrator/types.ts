@@ -92,5 +92,7 @@ export type StreamMessage =
       brief: string;
       tokensUsed: number;
       analytics: RepoAnalytics;
+      /** Permalink id when the run was persisted; absent if the database is unavailable. */
+      briefId?: string;
     }
   | { type: "error"; error: string };

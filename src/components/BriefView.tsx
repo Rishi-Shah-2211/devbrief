@@ -22,7 +22,15 @@ function saveBlob(blob: Blob, filename: string) {
 
 export function BriefView({ result, onReset }: Props) {
   const [building, setBuilding] = useState(false);
+  const [copied, setCopied] = useState(false);
   const slug = result.repo.replace("/", "-");
+
+  const copyLink = async () => {
+    if (!result.briefId) return;
+    await navigator.clipboard.writeText(`${window.location.origin}/brief/${result.briefId}`);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const downloadMarkdown = () => {
     saveBlob(new Blob([result.brief], { type: "text/markdown" }), `DevBrief-${slug}.md`);
@@ -79,6 +87,14 @@ export function BriefView({ result, onReset }: Props) {
           >
             {building ? "Preparing PDF…" : "Download PDF report"}
           </button>
+          {result.briefId ? (
+            <button
+              onClick={copyLink}
+              className="rounded-lg border border-[var(--color-hairline-strong)] px-4 py-2 text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-text)]"
+            >
+              {copied ? "Copied ✓" : "Copy link"}
+            </button>
+          ) : null}
           <button
             onClick={downloadMarkdown}
             className="rounded-lg border border-[var(--color-hairline-strong)] px-4 py-2 text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-text)]"

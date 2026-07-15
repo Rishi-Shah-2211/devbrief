@@ -1,8 +1,11 @@
+import { randomBytes } from "node:crypto";
 import { z } from "zod";
 import { fetchRepoContext, RepoFetchError } from "@/lib/github";
 import { computeAnalytics } from "@/lib/analytics";
+import { getDb } from "@/lib/db";
+import { briefs } from "@/db/schema";
 import { runPipeline } from "@/orchestrator";
-import type { AgentEvent, StreamMessage } from "@/orchestrator/types";
+import type { AgentEvent, RepoAnalytics, StreamMessage } from "@/orchestrator/types";
 
 // Agent runs exceed the default edge limit; use the Node.js runtime.
 export const runtime = "nodejs";
@@ -11,6 +14,28 @@ export const maxDuration = 120;
 const bodySchema = z.object({
   repoUrl: z.string().min(1, "A repository URL is required."),
 });
+
+/**
+ * Persists a finished run and returns its permalink id. Best-effort by design:
+ * a missing or unreachable database costs the permalink, never the brief.
+ */
+async function persistBrief(input: {
+  repo: string;
+  description: string | null;
+  brief: string;
+  tokensUsed: number;
+  analytics: RepoAnalytics;
+}): Promise<string | undefined> {
+  const db = getDb();
+  if (!db) return undefined;
+  const id = `${input.repo.replace("/", "-").toLowerCase()}-${randomBytes(4).toString("hex")}`;
+  try {
+    await db.insert(briefs).values({ id, ...input });
+    return id;
+  } catch {
+    return undefined;
+  }
+}
 
 /**
  * Streams the onboarding pipeline as newline-delimited JSON so the client can
@@ -37,14 +62,15 @@ export async function POST(request: Request) {
         const ctx = await fetchRepoContext(parsed.data.repoUrl);
         const { brief, results } = await runPipeline(ctx, emit);
 
-        send({
-          type: "result",
+        const payload = {
           repo: `${ctx.owner}/${ctx.repo}`,
           description: ctx.description,
           brief,
           tokensUsed: results.reduce((sum, r) => sum + r.tokensUsed, 0),
           analytics: computeAnalytics(ctx),
-        });
+        };
+
+        send({ type: "result", ...payload, briefId: await persistBrief(payload) });
       } catch (error) {
         const message =
           error instanceof RepoFetchError
