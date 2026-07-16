@@ -16,6 +16,9 @@ const schema = z
     GEMINI_API_KEY: optional(),
     DATABASE_URL: optional().pipe(z.string().url().optional()),
     GITHUB_TOKEN: optional(),
+    /** OAuth app credentials — enable "connect GitHub" for private repositories. */
+    GITHUB_CLIENT_ID: optional(),
+    GITHUB_CLIENT_SECRET: optional(),
   })
   .refine((e) => e.GROQ_API_KEY || e.CEREBRAS_API_KEY || e.OPENROUTER_API_KEY, {
     message:

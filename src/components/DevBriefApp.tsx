@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useGenerate } from "@/lib/use-generate";
 import { AgentCanvas } from "./AgentCanvas";
+import { GitHubConnect } from "./GitHubConnect";
 import { BriefView } from "./BriefView";
 
 const EXAMPLES = [
@@ -76,6 +77,10 @@ export function DevBriefApp() {
           </div>
         ) : null}
       </form>
+
+      <div className="mt-4">
+        <GitHubConnect />
+      </div>
 
       <div className="mt-12">
         <AnimatePresence mode="wait">

@@ -50,20 +50,26 @@ export function parseRepoUrl(input: string): { owner: string; repo: string } {
   return { owner: match[1], repo: match[2] };
 }
 
-function headers(): HeadersInit {
+function headers(userToken?: string): HeadersInit {
   const base: HeadersInit = {
     Accept: "application/vnd.github+json",
     "X-GitHub-Api-Version": "2022-11-28",
   };
-  if (env.GITHUB_TOKEN) base.Authorization = `Bearer ${env.GITHUB_TOKEN}`;
+  const token = userToken ?? env.GITHUB_TOKEN;
+  if (token) base.Authorization = `Bearer ${token}`;
   return base;
 }
 
-async function github<T>(path: string): Promise<T> {
-  const res = await fetch(`${GITHUB_API}${path}`, { headers: headers() });
+async function github<T>(path: string, userToken?: string): Promise<T> {
+  const res = await fetch(`${GITHUB_API}${path}`, { headers: headers(userToken) });
 
   if (res.status === 404) {
-    throw new RepoFetchError("Repository not found. Is it public and spelled correctly?", 404);
+    throw new RepoFetchError(
+      userToken
+        ? "Repository not found — check the URL, or your GitHub account may lack access to it."
+        : "Repository not found. If it's private, connect GitHub to analyze it.",
+      404,
+    );
   }
   if (res.status === 403) {
     throw new RepoFetchError("GitHub rate limit reached. Add a GITHUB_TOKEN or retry shortly.", 403);
@@ -104,9 +110,20 @@ function rankFiles(paths: string[]): string[] {
     });
 }
 
-async function fetchFile(owner: string, repo: string, path: string, branch: string): Promise<RepoFile | null> {
-  const url = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${path}`;
-  const res = await fetch(url);
+async function fetchFile(
+  owner: string,
+  repo: string,
+  path: string,
+  branch: string,
+  userToken?: string,
+): Promise<RepoFile | null> {
+  // Private repos need the authenticated contents API; public ones use the raw CDN.
+  const res = userToken
+    ? await fetch(
+        `${GITHUB_API}/repos/${owner}/${repo}/contents/${encodeURIComponent(path)}?ref=${branch}`,
+        { headers: { ...headers(userToken), Accept: "application/vnd.github.raw+json" } },
+      )
+    : await fetch(`https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${path}`);
   if (!res.ok) return null;
 
   const text = await res.text();
@@ -119,20 +136,23 @@ async function fetchFile(owner: string, repo: string, path: string, branch: stri
 /**
  * Builds the full PipelineContext for a repository: metadata, the complete file
  * tree for structural reasoning, and the contents of the highest-value files.
+ * A user OAuth token (from the connect-GitHub flow) unlocks private repos; it is
+ * used per-request only and never persisted server-side.
  */
-export async function fetchRepoContext(input: string): Promise<PipelineContext> {
+export async function fetchRepoContext(input: string, userToken?: string): Promise<PipelineContext> {
   const { owner, repo } = parseRepoUrl(input);
 
-  const meta = await github<RepoMeta>(`/repos/${owner}/${repo}`);
+  const meta = await github<RepoMeta>(`/repos/${owner}/${repo}`, userToken);
   const treeRes = await github<TreeResponse>(
     `/repos/${owner}/${repo}/git/trees/${meta.default_branch}?recursive=1`,
+    userToken,
   );
 
   const allPaths = treeRes.tree.filter((n) => n.type === "blob").map((n) => n.path);
   const ranked = rankFiles(allPaths);
 
   const sampled = await Promise.all(
-    ranked.slice(0, MAX_FILES).map((path) => fetchFile(owner, repo, path, meta.default_branch)),
+    ranked.slice(0, MAX_FILES).map((path) => fetchFile(owner, repo, path, meta.default_branch, userToken)),
   );
 
   return {

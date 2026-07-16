@@ -1,6 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { z } from "zod";
 import { fetchRepoContext, RepoFetchError } from "@/lib/github";
+import { getGitHubToken } from "@/lib/auth";
 import { computeAnalytics } from "@/lib/analytics";
 import { getDb } from "@/lib/db";
 import { briefs } from "@/db/schema";
@@ -59,7 +60,7 @@ export async function POST(request: Request) {
         send({ type: "event", event: { ...event, ts: Date.now() } });
 
       try {
-        const ctx = await fetchRepoContext(parsed.data.repoUrl);
+        const ctx = await fetchRepoContext(parsed.data.repoUrl, await getGitHubToken());
         const { brief, results } = await runPipeline(ctx, emit);
 
         const payload = {

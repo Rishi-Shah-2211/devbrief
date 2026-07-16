@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { fetchRepoContext, RepoFetchError } from "@/lib/github";
+import { getGitHubToken } from "@/lib/auth";
 import { callWorkerLLM } from "@/lib/llm/providers";
 import type { PipelineContext } from "@/orchestrator/types";
 import { formatFiles, formatTree } from "@/agents/shared";
@@ -22,10 +23,10 @@ const bodySchema = z.object({
 const contextCache = new Map<string, { ctx: PipelineContext; at: number }>();
 const CACHE_TTL_MS = 10 * 60 * 1000;
 
-async function getContext(repo: string): Promise<PipelineContext> {
+async function getContext(repo: string, token?: string): Promise<PipelineContext> {
   const cached = contextCache.get(repo);
   if (cached && Date.now() - cached.at < CACHE_TTL_MS) return cached.ctx;
-  const ctx = await fetchRepoContext(`https://github.com/${repo}`);
+  const ctx = await fetchRepoContext(`https://github.com/${repo}`, token);
   contextCache.set(repo, { ctx, at: Date.now() });
   return ctx;
 }
@@ -53,7 +54,7 @@ export async function POST(request: Request) {
 
   let ctx: PipelineContext;
   try {
-    ctx = await getContext(repo);
+    ctx = await getContext(repo, await getGitHubToken());
   } catch (error) {
     const message = error instanceof RepoFetchError ? error.message : "Could not load the repository.";
     return Response.json({ error: message }, { status: 502 });
