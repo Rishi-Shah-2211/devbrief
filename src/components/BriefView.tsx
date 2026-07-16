@@ -102,13 +102,18 @@ export function BriefView({ result, onReset }: Props) {
         </div>
       </div>
 
-      <AnalyticsDashboard analytics={a} />
-
-      <article className="brief glass rounded-2xl px-6 py-6 sm:px-8">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{result.brief}</ReactMarkdown>
-      </article>
-
-      <ChatPanel repo={result.repo} brief={result.brief} />
+      {/* Report left, chat docked beside it — visible without scrolling. */}
+      <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="order-last flex min-w-0 flex-col gap-4 lg:order-none">
+          <AnalyticsDashboard analytics={a} />
+          <article className="brief glass rounded-2xl px-6 py-6 sm:px-8">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{result.brief}</ReactMarkdown>
+          </article>
+        </div>
+        <div className="lg:sticky lg:top-20">
+          <ChatPanel repo={result.repo} brief={result.brief} />
+        </div>
+      </div>
     </motion.div>
   );
 }

@@ -29,7 +29,7 @@ export default async function ShowcaseDetailPage({
   if (!entry) notFound();
 
   return (
-    <main className="mx-auto w-full max-w-3xl px-6 py-16 sm:py-20">
+    <main className="mx-auto w-full max-w-6xl px-6 py-16 sm:py-20">
       <Link href="/showcase" className="text-sm text-[var(--color-faint)] hover:text-[var(--color-text)]">
         ← Showcase
       </Link>

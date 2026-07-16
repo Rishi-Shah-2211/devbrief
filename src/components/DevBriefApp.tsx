@@ -15,16 +15,23 @@ const EXAMPLES = [
 export function DevBriefApp() {
   const { phase, agents, result, error, start, reset } = useGenerate();
   const [url, setUrl] = useState("");
+  const [intro, setIntro] = useState(false);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (url.trim()) start(url.trim());
+    if (!url.trim()) return;
+    // A beat of black with the repo name — the cut into mission mode.
+    setIntro(true);
+    setTimeout(() => setIntro(false), 1600);
+    start(url.trim());
   };
+
+  const repoLabel = url.replace("https://github.com/", "").replace(/\/$/, "");
 
   return (
     <main
       className={`mx-auto flex w-full flex-col px-6 py-16 transition-[max-width] duration-700 sm:py-20 ${
-        phase === "running" ? "max-w-6xl" : "max-w-3xl"
+        phase === "running" || result ? "max-w-6xl" : "max-w-3xl"
       }`}
     >
       <header className="flex flex-col items-center gap-4 text-center">
@@ -82,14 +89,56 @@ export function DevBriefApp() {
         <GitHubConnect />
       </div>
 
+      {/* Fullscreen mission takeover: the entire viewport becomes the stage. */}
+      <AnimatePresence>
+        {phase === "running" ? (
+          <motion.div
+            key="mission"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, scale: 1.03, transition: { duration: 0.6 } }}
+            className="fixed inset-0 z-[100] overflow-y-auto"
+            style={{ background: "var(--color-stage-deep)" }}
+          >
+            {intro ? (
+              <div className="flex h-full min-h-screen flex-col items-center justify-center gap-3">
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="font-mono text-xs tracking-[0.3em] text-[var(--color-gold)]"
+                >
+                  INITIALIZING AGENTS
+                </motion.span>
+                <motion.span
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.25 }}
+                  className="font-mono text-2xl text-[#f4efe8]"
+                >
+                  {repoLabel}
+                  <motion.span
+                    className="ml-1 inline-block h-5 w-2.5 translate-y-0.5 bg-[var(--color-gold)]"
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ duration: 0.8, repeat: Infinity }}
+                  />
+                </motion.span>
+              </div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-8"
+              >
+                <AgentCanvas agents={agents} />
+              </motion.div>
+            )}
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+
       <div className="mt-12">
         <AnimatePresence mode="wait">
-          {(phase === "running" || phase === "done") && !result ? (
-            <motion.div key="graph" exit={{ opacity: 0 }}>
-              <AgentCanvas agents={agents} />
-            </motion.div>
-          ) : null}
-
           {result ? (
             <motion.div key="brief">
               <BriefView result={result} onReset={reset} />

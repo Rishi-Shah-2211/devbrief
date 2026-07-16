@@ -87,6 +87,43 @@ export function useGenerate() {
       setResult(null);
       setError(null);
 
+      /*
+       * Theatrical pacing: the pipeline often finishes a small repo in ~8s,
+       * too fast to read the stage. Messages are therefore released against a
+       * 15s minimum show timeline — real arrivals later than their milestone
+       * pass straight through, so large repos run at true speed and the
+       * backend is never artificially delayed.
+       */
+      const SHOW_MS = 15_000;
+      const t0 = Date.now();
+      const floors = new Map<string, number>();
+      let workingCount = 0;
+      let doneCount = 0;
+
+      const milestoneFor = (ev: AgentEvent): number => {
+        if (ev.preview) return 0; // typewriter ticks ride on the agent floor
+        if (ev.agent === "critic") return ev.status === "working" ? 10_200 : 11_800;
+        if (ev.agent === "synthesizer") return ev.status === "working" ? 12_300 : 14_000;
+        if (ev.status === "working") return 400 + 700 * Math.min(workingCount++, 12);
+        if (ev.status === "done" || ev.status === "error") return 6_200 + 1_100 * Math.min(doneCount++, 12);
+        return 0;
+      };
+
+      const schedule = (message: StreamMessage) => {
+        const offset = Date.now() - t0;
+        let at = offset;
+        if (message.type === "event") {
+          const floor = floors.get(message.event.agent) ?? 0;
+          at = Math.max(offset, milestoneFor(message.event), floor + 40);
+          floors.set(message.event.agent, at);
+        } else if (message.type === "result") {
+          at = Math.max(offset, SHOW_MS);
+        }
+        setTimeout(() => {
+          if (!controller.signal.aborted) apply(message);
+        }, Math.max(0, at - offset));
+      };
+
       try {
         const res = await fetch("/api/generate", {
           method: "POST",
@@ -116,7 +153,7 @@ export function useGenerate() {
           while ((newline = buffer.indexOf("\n")) !== -1) {
             const line = buffer.slice(0, newline).trim();
             buffer = buffer.slice(newline + 1);
-            if (line) apply(JSON.parse(line) as StreamMessage);
+            if (line) schedule(JSON.parse(line) as StreamMessage);
           }
         }
       } catch (err) {
