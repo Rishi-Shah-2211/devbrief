@@ -109,7 +109,25 @@ export function useGenerate() {
         return 0;
       };
 
+      // Watchdog: a run that goes silent (dropped connection, killed function)
+      // must surface as an error, never as an eternally spinning stage.
+      let gotTerminal = false;
+      let watchdog: ReturnType<typeof setTimeout> | undefined;
+      const kickWatchdog = () => {
+        clearTimeout(watchdog);
+        watchdog = setTimeout(() => {
+          if (controller.signal.aborted || gotTerminal) return;
+          controller.abort();
+          setError("The run stalled — no data arrived for two minutes. Please try again.");
+          setPhase("error");
+        }, 120_000);
+      };
+      kickWatchdog();
+
       const schedule = (message: StreamMessage) => {
+        kickWatchdog();
+        if (message.type === "ping") return;
+        if (message.type === "result" || message.type === "error") gotTerminal = true;
         const offset = Date.now() - t0;
         let at = offset;
         if (message.type === "event") {
@@ -156,7 +174,17 @@ export function useGenerate() {
             if (line) schedule(JSON.parse(line) as StreamMessage);
           }
         }
+
+        // Stream closed: if no result or error ever arrived, the run was cut.
+        clearTimeout(watchdog);
+        if (!gotTerminal && !controller.signal.aborted) {
+          setError(
+            "The analysis ended unexpectedly — the server may have hit its time limit. Please try again.",
+          );
+          setPhase("error");
+        }
       } catch (err) {
+        clearTimeout(watchdog);
         if (controller.signal.aborted) return;
         setError(err instanceof Error ? err.message : "Connection failed.");
         setPhase("error");

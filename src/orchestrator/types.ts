@@ -95,4 +95,6 @@ export type StreamMessage =
       /** Permalink id when the run was persisted; absent if the database is unavailable. */
       briefId?: string;
     }
-  | { type: "error"; error: string };
+  | { type: "error"; error: string }
+  /** Keep-alive so proxies don't idle-close long runs; carries no data. */
+  | { type: "ping" };

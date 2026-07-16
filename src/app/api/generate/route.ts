@@ -10,7 +10,7 @@ import type { AgentEvent, RepoAnalytics, StreamMessage } from "@/orchestrator/ty
 
 // Agent runs exceed the default edge limit; use the Node.js runtime.
 export const runtime = "nodejs";
-export const maxDuration = 120;
+export const maxDuration = 300;
 
 const bodySchema = z.object({
   repoUrl: z.string().min(1, "A repository URL is required."),
@@ -56,6 +56,11 @@ export async function POST(request: Request) {
       const send = (message: StreamMessage) =>
         controller.enqueue(encoder.encode(`${JSON.stringify(message)}\n`));
 
+      // Heartbeat keeps proxies from idle-closing long analyses.
+      const ping = setInterval(() => {
+        try { send({ type: "ping" }); } catch { clearInterval(ping); }
+      }, 15_000);
+
       const emit = (event: Omit<AgentEvent, "ts">) =>
         send({ type: "event", event: { ...event, ts: Date.now() } });
 
@@ -81,6 +86,7 @@ export async function POST(request: Request) {
               : "Something went wrong.";
         send({ type: "error", error: message });
       } finally {
+        clearInterval(ping);
         controller.close();
       }
     },
