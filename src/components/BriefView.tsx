@@ -61,6 +61,9 @@ export function BriefView({ result, onReset }: Props) {
         />,
       ).toBlob();
       saveBlob(blob, `DevBrief-${slug}.pdf`);
+    } catch (err) {
+      // Surface the real failure instead of a silently dead button.
+      alert(`PDF generation failed: ${err instanceof Error ? err.message : String(err)}`);
     } finally {
       setBuilding(false);
     }

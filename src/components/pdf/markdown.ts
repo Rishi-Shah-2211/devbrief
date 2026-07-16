@@ -73,7 +73,14 @@ export function parseMarkdown(md: string): Block[] {
       i += 2;
       const rows: string[][] = [];
       while (i < lines.length && lines[i].includes("|") && lines[i].trim() !== "") rows.push(cells(lines[i++]));
-      blocks.push({ kind: "table", header, rows });
+      // Normalize ragged rows to the header width so the renderer never sees holes.
+      const width = Math.max(header.length, 1);
+      const padded = rows.map((r) => {
+        const row = r.slice(0, width);
+        while (row.length < width) row.push("");
+        return row;
+      });
+      if (width > 0 && header.some((h) => h !== "")) blocks.push({ kind: "table", header, rows: padded });
       continue;
     }
 
