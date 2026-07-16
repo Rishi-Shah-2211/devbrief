@@ -84,7 +84,6 @@ export const AgentWindow = forwardRef<HTMLDivElement, Props>(function AgentWindo
   return (
     <motion.div
       ref={ref}
-      layout
       initial={{ opacity: 0, y: 10, scale: 0.98 }}
       animate={{
         opacity: status === "idle" ? 0.68 : 1,

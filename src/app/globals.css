@@ -187,6 +187,10 @@ body::before {
 }
 .cable-flow { animation: cable-flow 0.9s linear infinite; }
 
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
