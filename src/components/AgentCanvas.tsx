@@ -67,6 +67,7 @@ function MissionBar({ agents }: Props) {
       </span>
       <span className="text-[var(--color-gold)]">{tokens.toLocaleString()} tokens</span>
       <span>{done}/6 agents</span>
+      <span className="hidden text-[rgba(244,239,232,0.4)] sm:inline">drag to explore</span>
     </motion.div>
   );
 }
@@ -211,7 +212,11 @@ export function AgentCanvas({ agents }: Props) {
       {/* Camera rig */}
       <div className="flex flex-1 items-center">
       <motion.div
-        className="w-full"
+        className="w-full cursor-grab active:cursor-grabbing"
+        drag
+        dragMomentum={false}
+        dragElastic={0.12}
+        dragConstraints={{ left: -900, right: 900, top: -500, bottom: 500 }}
         animate={{ x: camera.x, y: camera.y, scale: camera.scale }}
         transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
       >
