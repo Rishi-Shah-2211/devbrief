@@ -9,26 +9,31 @@
  * up the new identity without a mass rename.
  */
 @theme {
-  --color-canvas: #f8f9fb;
-  --color-surface: #f1f3f7;
-  --color-surface-2: #ffffff;
-  --color-hairline: #e5e8ef;
-  --color-hairline-strong: #d4d9e3;
-  --color-ink: #0f172a;
+  --color-canvas: #f6f3ec;
+  --color-surface: #efe9dd;
+  --color-surface-2: #fffdf8;
+  --color-hairline: #e2dccd;
+  --color-hairline-strong: #cfc7b4;
+  --color-ink: #0b2e33;
 
-  --color-text: #0f172a;
-  --color-muted: #475569;
-  --color-faint: #8a94a8;
+  --color-text: #122b2f;
+  --color-muted: #47605e;
+  --color-faint: #8b9a94;
 
-  --color-wine: #4f46e5;
-  --color-wine-bright: #6366f1;
-  --color-wine-glow: rgba(79, 70, 229, 0.22);
-  --color-gold: #818cf8;
-  --color-gold-soft: rgba(129, 140, 248, 0.14);
+  --color-wine: #0f4a52;
+  --color-wine-bright: #17616b;
+  --color-wine-glow: rgba(15, 74, 82, 0.25);
+  --color-gold: #ff6a45;
+  --color-gold-soft: rgba(255, 106, 69, 0.14);
 
-  --color-working: #d97706;
-  --color-done: #059669;
-  --color-error: #dc2626;
+  /* Mission-mode stage */
+  --color-stage: #0b2e33;
+  --color-stage-deep: #081f23;
+  --color-stage-line: rgba(244, 239, 232, 0.14);
+
+  --color-working: #ff6a45;
+  --color-done: #2e9e6b;
+  --color-error: #c93b3b;
 
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-serif: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
@@ -58,18 +63,18 @@ body {
 }
 
 ::selection {
-  background: rgba(79, 70, 229, 0.14);
+  background: rgba(255, 106, 69, 0.22);
 }
 
-/* Ambient depth: a faint indigo wash at the top, dissolving into neutral canvas. */
+/* Ambient depth: a faint petrol wash at the top, an ember whisper at the base. */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(90% 55% at 50% -12%, rgba(79, 70, 229, 0.07), transparent 62%),
-    radial-gradient(70% 40% at 85% 110%, rgba(129, 140, 248, 0.05), transparent 55%);
+    radial-gradient(90% 55% at 50% -12%, rgba(15, 74, 82, 0.08), transparent 62%),
+    radial-gradient(70% 40% at 85% 110%, rgba(255, 106, 69, 0.05), transparent 55%);
   pointer-events: none;
 }
 
@@ -160,6 +165,21 @@ body::before {
 .brief th, .brief td { border: 1px solid var(--color-hairline); padding: 0.5rem 0.75rem; text-align: left; }
 .brief th { background: var(--color-surface); color: var(--color-text); font-weight: 600; }
 .brief td { color: var(--color-muted); }
+
+/* GFM task lists render as real checklists, not asterisk soup. */
+.brief li:has(> input[type="checkbox"]) { list-style: none; margin-left: -1.25rem; }
+.brief input[type="checkbox"] {
+  appearance: none;
+  width: 0.95rem; height: 0.95rem;
+  margin-right: 0.5rem;
+  border: 1.5px solid var(--color-hairline-strong);
+  border-radius: 4px;
+  vertical-align: -2px;
+}
+.brief input[type="checkbox"]:checked {
+  background: var(--color-done);
+  border-color: var(--color-done);
+}
 
 /* Marching energy along an active cable, flowing source → target. */
 @keyframes cable-flow {

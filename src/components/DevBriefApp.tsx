@@ -21,7 +21,11 @@ export function DevBriefApp() {
   };
 
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-col px-6 py-16 sm:py-20">
+    <main
+      className={`mx-auto flex w-full flex-col px-6 py-16 transition-[max-width] duration-700 sm:py-20 ${
+        phase === "running" ? "max-w-6xl" : "max-w-3xl"
+      }`}
+    >
       <header className="flex flex-col items-center gap-4 text-center">
         <span className="font-mono text-xs tracking-[0.2em] text-[var(--color-wine)]">
           AI AGENT ORCHESTRATION

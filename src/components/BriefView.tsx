@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { AnalyticsDashboard } from "./AnalyticsDashboard";
 import { ChatPanel } from "./ChatPanel";
 import type { GenerateResult } from "@/lib/use-generate";
@@ -104,7 +105,7 @@ export function BriefView({ result, onReset }: Props) {
       <AnalyticsDashboard analytics={a} />
 
       <article className="brief glass rounded-2xl px-6 py-6 sm:px-8">
-        <ReactMarkdown>{result.brief}</ReactMarkdown>
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>{result.brief}</ReactMarkdown>
       </article>
 
       <ChatPanel repo={result.repo} brief={result.brief} />

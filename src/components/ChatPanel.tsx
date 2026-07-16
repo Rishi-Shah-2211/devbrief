@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface Message {
   role: "user" | "assistant";
@@ -112,7 +113,7 @@ export function ChatPanel({ repo, brief }: Props) {
               ) : (
                 <div key={i} className="brief self-start rounded-xl border border-[var(--color-hairline)] bg-[var(--color-surface-2)] px-4 py-2 text-sm">
                   {m.text ? (
-                    <ReactMarkdown>{m.text}</ReactMarkdown>
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{m.text}</ReactMarkdown>
                   ) : (
                     <motion.span
                       className="inline-block text-[var(--color-faint)]"
