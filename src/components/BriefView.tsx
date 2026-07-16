@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
+import { AnalyticsDashboard } from "./AnalyticsDashboard";
 import { ChatPanel } from "./ChatPanel";
 import type { GenerateResult } from "@/lib/use-generate";
 
@@ -81,52 +82,26 @@ export function BriefView({ result, onReset }: Props) {
           </div>
         </div>
         <div className="flex gap-2">
-          <button
-            onClick={downloadPdf}
-            disabled={building}
-            className="rounded-lg bg-[var(--color-wine)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-60"
-          >
+          <button onClick={downloadPdf} disabled={building} className="btn-primary px-4 py-2 text-sm">
             {building ? "Preparing PDF…" : "Download PDF report"}
           </button>
           {result.briefId ? (
-            <button
-              onClick={copyLink}
-              className="rounded-lg border border-[var(--color-hairline-strong)] px-4 py-2 text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-text)]"
-            >
+            <button onClick={copyLink} className="btn-secondary px-4 py-2 text-sm">
               {copied ? "Copied ✓" : "Copy link"}
             </button>
           ) : null}
-          <button
-            onClick={downloadMarkdown}
-            className="rounded-lg border border-[var(--color-hairline-strong)] px-4 py-2 text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-text)]"
-          >
+          <button onClick={downloadMarkdown} className="btn-secondary px-4 py-2 text-sm">
             .md
           </button>
           {onReset ? (
-            <button
-              onClick={onReset}
-              className="rounded-lg border border-[var(--color-hairline-strong)] px-4 py-2 text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-text)]"
-            >
+            <button onClick={onReset} className="btn-secondary px-4 py-2 text-sm">
               New brief
             </button>
           ) : null}
         </div>
       </div>
 
-      {/* Compact analytics strip — the full dashboard lands with the UI overhaul. */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {[
-          ["Health", `${a.healthScore}/100`],
-          ["Files", a.totalFiles.toLocaleString()],
-          ["Dependencies", a.dependencyCount?.toString() ?? "—"],
-          ["Onboarding", a.onboardingDifficulty],
-        ].map(([label, value]) => (
-          <div key={label} className="glass rounded-xl px-4 py-3">
-            <div className="text-[10px] uppercase tracking-wider text-[var(--color-faint)]">{label}</div>
-            <div className="font-serif text-xl text-[var(--color-wine)]">{value}</div>
-          </div>
-        ))}
-      </div>
+      <AnalyticsDashboard analytics={a} />
 
       <article className="brief glass rounded-2xl px-6 py-6 sm:px-8">
         <ReactMarkdown>{result.brief}</ReactMarkdown>

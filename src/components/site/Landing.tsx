@@ -27,7 +27,7 @@ const FEATURES = [
   { icon: "📊", title: "Code-intelligence analytics", body: "Health score, dependency freshness, contributor concentration, and an onboarding-difficulty score." },
   { icon: "🎬", title: "Live, cinematic pipeline", body: "Watch every agent work in real time — streamed states, flowing data, and a mission-control feel." },
   { icon: "🎯", title: "Grounded, not hallucinated", body: "Every claim cites a real file path; a critic pass verifies completeness." },
-  { icon: "⚡", title: "Cost-aware by design", body: "Fast workers on Groq, large-context reasoning on Gemini — routed to balance speed and cost." },
+  { icon: "⚡", title: "Provider-resilient by design", body: "Every call walks a fallback chain across three providers — a rate-limited model never kills a run." },
   { icon: "🔗", title: "Shareable briefs", body: "Every result gets a permalink you can hand to a teammate or a hiring manager." },
 ];
 
@@ -65,13 +65,13 @@ export function Landing() {
           >
             <Link
               href="/analyze"
-              className="rounded-lg bg-[var(--color-wine)] px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+              className="btn-primary px-6 py-3 text-sm"
             >
               Analyze a repository
             </Link>
             <Link
               href="/showcase"
-              className="rounded-lg border border-[var(--color-hairline-strong)] px-6 py-3 text-sm font-medium text-[var(--color-text)] transition-colors hover:bg-[var(--color-surface)]"
+              className="btn-secondary px-6 py-3 text-sm"
             >
               See the showcase
             </Link>
@@ -94,7 +94,7 @@ export function Landing() {
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
           {[
             ["5", "specialized agents"],
-            ["2", "LLM providers"],
+            ["3", "LLM providers"],
             ["<60s", "to a full brief"],
             ["$0", "on the free tier"],
           ].map(([n, l]) => (
@@ -117,7 +117,7 @@ export function Landing() {
               key={s.n}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.06 }}
-              className="glass rounded-xl p-5"
+              className="card p-5 transition-shadow hover:shadow-[var(--shadow-2)]"
             >
               <div className="font-mono text-sm text-[var(--color-gold)]">{s.n}</div>
               <div className="mt-2 font-serif text-xl">{s.title}</div>
@@ -138,7 +138,7 @@ export function Landing() {
               key={f.title}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: (i % 3) * 0.06 }}
-              className="rounded-xl border border-[var(--color-hairline)] bg-[var(--color-surface-2)] p-6 transition-shadow hover:shadow-[0_12px_40px_-16px_var(--color-wine-glow)]"
+              className="card p-6 transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-3)]"
             >
               <div className="text-2xl">{f.icon}</div>
               <div className="mt-3 font-serif text-xl">{f.title}</div>
@@ -156,17 +156,17 @@ export function Landing() {
         >
           <div
             className="pointer-events-none absolute inset-0"
-            style={{ background: "radial-gradient(80% 120% at 50% 0%, rgba(173,135,84,0.18), transparent 60%)" }}
+            style={{ background: "radial-gradient(80% 120% at 50% 0%, rgba(129,140,248,0.22), transparent 60%)" }}
           />
           <h2 className="relative font-serif text-3xl text-[#faf8f6] sm:text-4xl">
             Point it at a repository.
           </h2>
-          <p className="relative mx-auto mt-3 max-w-md text-[#c9c2c6]">
+          <p className="relative mx-auto mt-3 max-w-md text-[#c7cbd8]">
             See the agents work, read the brief, and never lose a day to onboarding again.
           </p>
           <Link
             href="/analyze"
-            className="relative mt-6 inline-block rounded-lg bg-[var(--color-gold)] px-6 py-3 text-sm font-medium text-[var(--color-ink)] transition-opacity hover:opacity-90"
+            className="relative mt-6 inline-block rounded-lg bg-white px-6 py-3 text-sm font-medium text-[var(--color-ink)] shadow-[var(--shadow-2)] transition-opacity hover:opacity-90"
           >
             Start analyzing →
           </Link>
@@ -211,20 +211,20 @@ export function HeroPipeline() {
       {/* orchestrator */}
       <g>
         <rect x="256" y="24" width="128" height="34" rx="8" fill="var(--color-surface-2)" stroke="var(--color-hairline-strong)" />
-        <text x="320" y="45" textAnchor="middle" fontSize="13" fill="var(--color-text)" fontFamily="serif">Orchestrator</text>
+        <text x="320" y="45" textAnchor="middle" fontSize="13" fill="var(--color-text)" fontWeight="600">Orchestrator</text>
       </g>
       {/* workers */}
       {[["Architect", 140], ["Dependency", 260], ["Docs", 380], ["Start Here", 500]].map(([label, x]) => (
         <g key={label as string}>
           <rect x={(x as number) - 56} y="116" width="112" height="52" rx="8" fill="var(--color-surface-2)" stroke="var(--color-hairline-strong)" />
           <circle cx={(x as number) - 40} cy="132" r="3" fill="var(--color-gold)" />
-          <text x={x as number} y="150" textAnchor="middle" fontSize="12" fill="var(--color-text)" fontFamily="serif">{label}</text>
+          <text x={x as number} y="150" textAnchor="middle" fontSize="12" fill="var(--color-text)" fontWeight="600">{label}</text>
         </g>
       ))}
       {/* synthesizer */}
       <g>
         <rect x="248" y="214" width="144" height="34" rx="8" fill="var(--color-wine)" />
-        <text x="320" y="235" textAnchor="middle" fontSize="13" fill="#fff" fontFamily="serif">Synthesizer → Brief</text>
+        <text x="320" y="235" textAnchor="middle" fontSize="13" fill="#fff" fontWeight="600">Synthesizer → Brief</text>
       </g>
     </svg>
   );

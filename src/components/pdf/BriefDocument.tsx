@@ -13,15 +13,15 @@ import { parseMarkdown, type Block, type Span } from "./markdown";
 
 /** Brand palette, mirrored from globals.css so the PDF reads as the same product. */
 const C = {
-  canvas: "#faf8f6",
-  surface: "#f3f0ee",
-  hairline: "#e7e1dd",
-  ink: "#161214",
-  muted: "#585056",
-  faint: "#978f95",
-  wine: "#6e2746",
-  gold: "#ad8754",
-  done: "#3f7d5a",
+  canvas: "#f8f9fb",
+  surface: "#f1f3f7",
+  hairline: "#e5e8ef",
+  ink: "#0f172a",
+  muted: "#475569",
+  faint: "#8a94a8",
+  wine: "#4f46e5",
+  gold: "#818cf8",
+  done: "#059669",
 };
 
 const s = StyleSheet.create({
@@ -45,10 +45,10 @@ const s = StyleSheet.create({
     fontSize: 8,
     color: C.faint,
   },
-  wordmark: { fontFamily: "Times-Roman", fontSize: 14, color: C.wine },
-  h1: { fontFamily: "Times-Roman", fontSize: 26, marginBottom: 6 },
+  wordmark: { fontFamily: "Helvetica-Bold", fontSize: 14, color: C.wine },
+  h1: { fontFamily: "Helvetica-Bold", fontSize: 26, marginBottom: 6 },
   h2: {
-    fontFamily: "Times-Roman",
+    fontFamily: "Helvetica-Bold",
     fontSize: 16,
     marginTop: 16,
     marginBottom: 6,
@@ -85,7 +85,7 @@ const s = StyleSheet.create({
     padding: 14,
   },
   statLabel: { fontSize: 8, color: C.faint, textTransform: "uppercase", letterSpacing: 0.5 },
-  statValue: { fontFamily: "Times-Roman", fontSize: 22, color: C.wine, marginTop: 2 },
+  statValue: { fontFamily: "Helvetica-Bold", fontSize: 22, color: C.wine, marginTop: 2 },
 });
 
 function Footer({ repo }: { repo: string }) {
@@ -116,7 +116,7 @@ function HealthDonut({ score }: { score: number }) {
         strokeLinecap="round"
         transform="rotate(-90 46 46)"
       />
-      <Text x={46} y={51} textAnchor="middle" style={{ fontFamily: "Times-Roman", fontSize: 20, color: C.ink }}>
+      <Text x={46} y={51} textAnchor="middle" style={{ fontFamily: "Helvetica-Bold", fontSize: 20, color: C.ink }}>
         {String(score)}
       </Text>
     </Svg>

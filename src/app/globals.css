@@ -1,37 +1,46 @@
 @import "tailwindcss";
 
 /*
- * DevBrief design system — warm editorial light theme, matched to the author's
- * portfolio brand (cream canvas, wine + gold accents, Instrument Serif display).
- * Status colors are reserved exclusively for agent state so they read as meaningful.
+ * DevBrief design system v2 — premium enterprise light theme.
+ * Cool neutrals, one confident indigo accent, precise hairlines, layered depth.
+ *
+ * Historical note: --color-wine / --color-gold predate the rebrand; they now
+ * hold the indigo primary / soft-indigo secondary so existing components pick
+ * up the new identity without a mass rename.
  */
 @theme {
-  --color-canvas: #faf8f6;
-  --color-surface: #f3f0ee;
+  --color-canvas: #f8f9fb;
+  --color-surface: #f1f3f7;
   --color-surface-2: #ffffff;
-  --color-hairline: #e7e1dd;
-  --color-hairline-strong: #d8cfc9;
-  --color-ink: #161214;
+  --color-hairline: #e5e8ef;
+  --color-hairline-strong: #d4d9e3;
+  --color-ink: #0f172a;
 
-  --color-text: #161214;
-  --color-muted: #585056;
-  --color-faint: #978f95;
+  --color-text: #0f172a;
+  --color-muted: #475569;
+  --color-faint: #8a94a8;
 
-  --color-wine: #6e2746;
-  --color-wine-bright: #8c3159;
-  --color-wine-glow: rgba(110, 39, 70, 0.22);
-  --color-gold: #ad8754;
-  --color-gold-soft: rgba(173, 135, 84, 0.16);
+  --color-wine: #4f46e5;
+  --color-wine-bright: #6366f1;
+  --color-wine-glow: rgba(79, 70, 229, 0.22);
+  --color-gold: #818cf8;
+  --color-gold-soft: rgba(129, 140, 248, 0.14);
 
-  --color-working: #b9822b;
-  --color-done: #3f7d5a;
-  --color-error: #b23b3b;
+  --color-working: #d97706;
+  --color-done: #059669;
+  --color-error: #dc2626;
 
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-serif: var(--font-instrument), "Times New Roman", serif;
+  --font-serif: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layered elevation — soft, never muddy. */
+  --shadow-1: 0 1px 2px rgba(15, 23, 42, 0.05), 0 1px 1px rgba(15, 23, 42, 0.03);
+  --shadow-2: 0 2px 4px rgba(15, 23, 42, 0.04), 0 6px 16px -6px rgba(15, 23, 42, 0.08);
+  --shadow-3: 0 4px 8px rgba(15, 23, 42, 0.05), 0 16px 40px -12px rgba(15, 23, 42, 0.14);
+  --shadow-accent: 0 8px 28px -10px rgba(79, 70, 229, 0.4);
 }
 
 :root {
@@ -45,41 +54,85 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  font-feature-settings: "cv11", "ss01";
 }
 
-/* Ambient warmth: a faint wine aura top-center, gold whisper at the base. */
+::selection {
+  background: rgba(79, 70, 229, 0.14);
+}
+
+/* Ambient depth: a faint indigo wash at the top, dissolving into neutral canvas. */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(110% 70% at 50% -10%, rgba(110, 39, 70, 0.06), transparent 60%),
-    radial-gradient(90% 50% at 50% 108%, rgba(173, 135, 84, 0.05), transparent 55%);
+    radial-gradient(90% 55% at 50% -12%, rgba(79, 70, 229, 0.07), transparent 62%),
+    radial-gradient(70% 40% at 85% 110%, rgba(129, 140, 248, 0.05), transparent 55%);
   pointer-events: none;
 }
 
+/* ——— Focus, the mark of a real product ——— */
+:focus-visible {
+  outline: 2px solid var(--color-wine);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ——— Display type: headings are Geist, confident and tight ——— */
+.font-serif {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+/* ——— Shared surfaces ——— */
 .glass {
-  background: color-mix(in srgb, var(--color-surface-2) 72%, transparent);
+  background: color-mix(in srgb, var(--color-surface-2) 78%, transparent);
   border: 1px solid var(--color-hairline);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
 }
 
-.font-serif { font-family: var(--font-serif); }
+.card {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-hairline);
+  border-radius: 12px;
+  box-shadow: var(--shadow-1);
+}
 
-/* Rendered onboarding brief — editorial typography. */
+/* ——— Buttons: press feedback everywhere ——— */
+.btn-primary {
+  background: var(--color-wine);
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 500;
+  box-shadow: var(--shadow-1), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+.btn-primary:hover { background: var(--color-wine-bright); box-shadow: var(--shadow-accent); }
+.btn-primary:active { transform: scale(0.98); }
+.btn-primary:disabled { opacity: 0.55; pointer-events: none; }
+
+.btn-secondary {
+  background: var(--color-surface-2);
+  color: var(--color-muted);
+  border: 1px solid var(--color-hairline-strong);
+  border-radius: 8px;
+  font-weight: 500;
+  box-shadow: var(--shadow-1);
+  transition: color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+.btn-secondary:hover { color: var(--color-text); border-color: var(--color-faint); }
+.btn-secondary:active { transform: scale(0.98); }
+
+/* ——— Rendered brief: crisp document typography ——— */
 .brief { line-height: 1.7; color: var(--color-text); }
-.brief h1 {
-  font-family: var(--font-serif);
-  font-size: 2rem;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  margin-bottom: 0.75rem;
-}
+.brief h1 { font-size: 1.7rem; font-weight: 600; letter-spacing: -0.025em; margin-bottom: 0.75rem; }
 .brief h2 {
-  font-family: var(--font-serif);
-  font-size: 1.4rem;
-  font-weight: 400;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
   margin: 1.75rem 0 0.6rem;
   padding-bottom: 0.35rem;
   border-bottom: 1px solid var(--color-hairline);
