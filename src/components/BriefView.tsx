@@ -103,7 +103,7 @@ export function BriefView({ result, onReset }: Props) {
       </div>
 
       {/* Report left, chat docked beside it — visible without scrolling. */}
-      <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_360px]">
+      <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_420px]">
         <div className="order-last flex min-w-0 flex-col gap-4 lg:order-none">
           <AnalyticsDashboard analytics={a} />
           <article className="brief glass rounded-2xl px-6 py-6 sm:px-8">

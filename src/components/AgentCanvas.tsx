@@ -52,7 +52,7 @@ function MissionBar({ agents }: Props) {
     <motion.div
       initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
-      className="mx-auto mb-10 flex w-fit items-center gap-6 rounded-full border border-[var(--color-stage-line)] bg-[rgba(8,31,35,0.6)] px-5 py-2 font-mono text-[11px] text-[rgba(244,239,232,0.65)]"
+      className="sticky top-3 z-30 mx-auto mb-8 flex w-fit items-center gap-6 rounded-full border border-[var(--color-stage-line)] bg-[rgba(8,31,35,0.92)] px-5 py-2 font-mono text-[11px] text-[rgba(244,239,232,0.65)] backdrop-blur-md"
     >
       <span className="flex items-center gap-1.5">
         <motion.span
@@ -189,7 +189,7 @@ export function AgentCanvas({ agents }: Props) {
       initial={{ opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      className="relative overflow-hidden rounded-3xl px-4 py-10 sm:px-8"
+      className="relative flex min-h-[calc(100vh-1.5rem)] flex-col overflow-hidden rounded-3xl px-4 py-5 sm:px-8"
       style={{
         background:
           "radial-gradient(120% 90% at 50% 0%, var(--color-stage) 0%, var(--color-stage-deep) 78%)",
@@ -209,7 +209,9 @@ export function AgentCanvas({ agents }: Props) {
       <MissionBar agents={agents} />
 
       {/* Camera rig */}
+      <div className="flex flex-1 items-center">
       <motion.div
+        className="w-full"
         animate={{ x: camera.x, y: camera.y, scale: camera.scale }}
         transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
       >
@@ -283,6 +285,7 @@ export function AgentCanvas({ agents }: Props) {
           </div>
         </div>
       </motion.div>
+      </div>
     </motion.div>
   );
 }

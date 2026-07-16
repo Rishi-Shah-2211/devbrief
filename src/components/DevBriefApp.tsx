@@ -31,7 +31,7 @@ export function DevBriefApp() {
   return (
     <main
       className={`mx-auto flex w-full flex-col px-6 py-16 transition-[max-width] duration-700 sm:py-20 ${
-        phase === "running" || result ? "max-w-6xl" : "max-w-3xl"
+        phase === "running" || result ? "max-w-[1440px]" : "max-w-3xl"
       }`}
     >
       <header className="flex flex-col items-center gap-4 text-center">
@@ -128,7 +128,7 @@ export function DevBriefApp() {
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-8"
+                className="w-full p-3"
               >
                 <AgentCanvas agents={agents} />
               </motion.div>

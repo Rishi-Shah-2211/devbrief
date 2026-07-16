@@ -32,7 +32,7 @@ export default async function BriefPage({ params }: { params: Promise<{ id: stri
   if (!row) notFound();
 
   return (
-    <main className="mx-auto w-full max-w-6xl px-6 py-16 sm:py-20">
+    <main className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:py-20">
       <div className="mb-6 flex items-center justify-between text-sm">
         <span className="text-[var(--color-faint)]">
           Shared brief · {row.createdAt.toISOString().slice(0, 10)}
