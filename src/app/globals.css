@@ -75,17 +75,19 @@ body::after {
   z-index: -1;
   pointer-events: none;
   will-change: transform;
+  filter: blur(28px) saturate(1.25);
 }
 body::before {
   background:
-    radial-gradient(640px 420px at 15% 22%, rgba(255, 216, 102, 0.10), transparent 62%),
-    radial-gradient(720px 520px at 86% 14%, rgba(255, 97, 136, 0.09), transparent 62%);
+    radial-gradient(760px 540px at 15% 22%, rgba(255, 216, 102, 0.22), transparent 64%),
+    radial-gradient(840px 600px at 86% 14%, rgba(255, 97, 136, 0.20), transparent 64%);
   animation: aurora-a 26s ease-in-out infinite alternate;
 }
 body::after {
   background:
-    radial-gradient(700px 500px at 78% 84%, rgba(120, 220, 232, 0.09), transparent 62%),
-    radial-gradient(620px 460px at 18% 82%, rgba(171, 157, 242, 0.10), transparent 62%);
+    radial-gradient(820px 580px at 78% 84%, rgba(120, 220, 232, 0.20), transparent 64%),
+    radial-gradient(740px 540px at 18% 82%, rgba(171, 157, 242, 0.22), transparent 64%),
+    radial-gradient(500px 380px at 50% 45%, rgba(255, 152, 103, 0.10), transparent 60%);
   animation: aurora-b 34s ease-in-out infinite alternate;
 }
 @keyframes aurora-a {
