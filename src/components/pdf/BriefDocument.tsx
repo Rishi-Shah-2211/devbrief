@@ -16,11 +16,11 @@ const C = {
   canvas: "#f8f9fc",
   surface: "#eef1f8",
   hairline: "#dfe3ee",
-  ink: "#1a1b26",
-  muted: "#4a5178",
-  faint: "#8a91b4",
-  wine: "#3d59a1",
-  gold: "#b8722c",
+  ink: "#2d2a2e",
+  muted: "#57545a",
+  faint: "#939293",
+  wine: "#9a7b00",
+  gold: "#0e7490",
   done: "#33805d",
 };
 

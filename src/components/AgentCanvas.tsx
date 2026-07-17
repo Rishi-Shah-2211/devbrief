@@ -14,6 +14,7 @@ const ORCHESTRATOR: AgentMeta = {
   label: "Orchestrator",
   role: "Delegates & coordinates",
   tier: "orchestrator",
+  color: "#ffd866",
 };
 
 /**
@@ -74,7 +75,7 @@ function MissionBar({ agents }: Props) {
     <motion.div
       initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
-      className="sticky top-3 z-30 mx-auto mb-6 flex w-fit items-center gap-6 rounded-full border border-[var(--color-stage-line)] bg-[rgba(22,22,30,0.92)] px-5 py-2 font-mono text-[11px] text-[rgba(192,202,245,0.65)] backdrop-blur-md"
+      className="sticky top-3 z-30 mx-auto mb-6 flex w-fit items-center gap-6 rounded-full border border-[var(--color-stage-line)] bg-[rgba(25,24,26,0.92)] px-5 py-2 font-mono text-[11px] text-[rgba(252,252,250,0.65)] backdrop-blur-md"
     >
       <span className="flex items-center gap-1.5">
         <motion.span
@@ -89,7 +90,7 @@ function MissionBar({ agents }: Props) {
       </span>
       <span className="text-[var(--color-gold)]">{tokens.toLocaleString()} tokens</span>
       <span>{done}/6 agents</span>
-      <span className="hidden text-[rgba(192,202,245,0.4)] sm:inline">drag to explore</span>
+      <span className="hidden text-[rgba(252,252,250,0.4)] sm:inline">drag to explore</span>
     </motion.div>
   );
 }
@@ -165,7 +166,7 @@ export function AgentCanvas({ agents }: Props) {
       style={{
         background:
           "radial-gradient(120% 90% at 50% 0%, var(--color-stage) 0%, var(--color-stage-deep) 78%)",
-        boxShadow: "inset 0 1px 0 rgba(192,202,245,0.08), 0 30px 80px -30px rgba(22,22,30,0.55)",
+        boxShadow: "inset 0 1px 0 rgba(252,252,250,0.08), 0 30px 80px -30px rgba(25,24,26,0.55)",
       }}
     >
       {/* Faint grid — the deck floor. */}
@@ -197,7 +198,7 @@ export function AgentCanvas({ agents }: Props) {
               <svg className="pointer-events-none absolute inset-0" width={BOARD.w} height={BOARD.h} aria-hidden>
                 <defs>
                   <marker id="arr-live" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-                    <path d="M0,0 L10,5 L0,10 z" fill="rgba(192,202,245,0.55)" />
+                    <path d="M0,0 L10,5 L0,10 z" fill="rgba(252,252,250,0.55)" />
                   </marker>
                   <marker id="arr-dim" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
                     <path d="M0,0 L10,5 L0,10 z" fill="var(--color-stage-line)" />
@@ -228,7 +229,7 @@ export function AgentCanvas({ agents }: Props) {
                       <path
                         d={d}
                         fill="none"
-                        stroke={st === "idle" ? "var(--color-stage-line)" : "rgba(192,202,245,0.4)"}
+                        stroke={st === "idle" ? "var(--color-stage-line)" : "rgba(252,252,250,0.4)"}
                         strokeWidth={st === "idle" ? 1 : 1.5}
                         strokeDasharray={st === "idle" ? "3 6" : "none"}
                         markerMid={`url(#${st === "idle" ? "arr-dim" : "arr-live"})`}

@@ -9,31 +9,31 @@
  * up the new identity without a mass rename.
  */
 @theme {
-  --color-canvas: #1a1b26;
-  --color-surface: #16161e;
-  --color-surface-2: #1f2335;
-  --color-hairline: #292e42;
-  --color-hairline-strong: #3b4261;
-  --color-ink: #16161e;
+  --color-canvas: #2d2a2e;
+  --color-surface: #221f22;
+  --color-surface-2: #363437;
+  --color-hairline: #403e41;
+  --color-hairline-strong: #5b595c;
+  --color-ink: #19181a;
 
-  --color-text: #c0caf5;
-  --color-muted: #9aa5ce;
-  --color-faint: #565f89;
+  --color-text: #fcfcfa;
+  --color-muted: #c1c0c0;
+  --color-faint: #939293;
 
-  --color-wine: #7aa2f7;
-  --color-wine-bright: #8caaff;
-  --color-wine-glow: rgba(122, 162, 247, 0.35);
-  --color-gold: #ff9e64;
-  --color-gold-soft: rgba(255, 158, 100, 0.14);
+  --color-wine: #ffd866;
+  --color-wine-bright: #ffe08a;
+  --color-wine-glow: rgba(255, 216, 102, 0.3);
+  --color-gold: #78dce8;
+  --color-gold-soft: rgba(120, 220, 232, 0.14);
 
   /* Mission-mode stage */
-  --color-stage: #1f2335;
-  --color-stage-deep: #16161e;
-  --color-stage-line: rgba(192, 202, 245, 0.12);
+  --color-stage: #2d2a2e;
+  --color-stage-deep: #19181a;
+  --color-stage-line: rgba(252, 252, 250, 0.12);
 
-  --color-working: #e0af68;
-  --color-done: #9ece6a;
-  --color-error: #f7768e;
+  --color-working: #fc9867;
+  --color-done: #a9dc76;
+  --color-error: #ff6188;
 
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-serif: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
@@ -45,7 +45,7 @@
   --shadow-1: 0 1px 2px rgba(0,0,0,0.35), 0 1px 1px rgba(0,0,0,0.35);
   --shadow-2: 0 2px 4px rgba(0,0,0,0.35), 0 6px 16px -6px rgba(0,0,0,0.35);
   --shadow-3: 0 4px 8px rgba(0,0,0,0.4), 0 16px 40px -12px rgba(0,0,0,0.5);
-  --shadow-accent: 0 8px 28px -10px rgba(122, 162, 247, 0.45);
+  --shadow-accent: 0 8px 28px -10px rgba(255, 216, 102, 0.4);
 }
 
 :root {
@@ -63,7 +63,7 @@ body {
 }
 
 ::selection {
-  background: rgba(122, 162, 247, 0.3);
+  background: rgba(255, 216, 102, 0.28);
 }
 
 /* Ambient depth: a faint petrol wash at the top, an ember whisper at the base. */
@@ -73,8 +73,8 @@ body::before {
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(90% 55% at 50% -12%, rgba(122, 162, 247, 0.08), transparent 62%),
-    radial-gradient(70% 40% at 85% 110%, rgba(187, 154, 247, 0.06), transparent 55%);
+    radial-gradient(90% 55% at 50% -12%, rgba(255, 216, 102, 0.06), transparent 62%),
+    radial-gradient(70% 40% at 85% 110%, rgba(255, 97, 136, 0.06), transparent 55%);
   pointer-events: none;
 }
 
@@ -109,7 +109,7 @@ body::before {
 /* ——— Buttons: press feedback everywhere ——— */
 .btn-primary {
   background: var(--color-wine);
-  color: #16161e;
+  color: #19181a;
   border-radius: 8px;
   font-weight: 500;
   box-shadow: var(--shadow-1), inset 0 1px 0 rgba(255, 255, 255, 0.12);
@@ -156,7 +156,7 @@ body::before {
   border: 1px solid var(--color-hairline);
   border-radius: 5px;
   padding: 0.1rem 0.35rem;
-  color: #7dcfff;
+  color: #ab9df2;
 }
 .brief table {
   width: 100%; border-collapse: collapse; margin: 0.85rem 0;

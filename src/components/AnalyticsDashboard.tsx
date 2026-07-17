@@ -49,7 +49,7 @@ function HealthDonut({ score }: { score: number }) {
 }
 
 /** Horizontal bar rows that fill on entry. */
-function Bars({ data }: { data: { label: string; value: number; note: string }[] }) {
+function Bars({ data, color = "var(--color-wine)" }: { data: { label: string; value: number; note: string }[]; color?: string }) {
   const max = Math.max(...data.map((d) => d.value), 1);
   return (
     <div className="flex flex-col gap-2.5">
@@ -61,7 +61,7 @@ function Bars({ data }: { data: { label: string; value: number; note: string }[]
           </div>
           <div className="h-1.5 overflow-hidden rounded-full bg-[var(--color-surface)]">
             <motion.div
-              className="h-full rounded-full bg-[var(--color-wine)]"
+              className="h-full rounded-full" style={{ background: color }}
               initial={{ width: 0 }}
               animate={{ width: `${(d.value / max) * 100}%` }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 + i * 0.06 }}
@@ -123,6 +123,7 @@ export function AnalyticsDashboard({ analytics: a }: { analytics: RepoAnalytics 
           Language composition
         </div>
         <Bars
+          color="#78dce8"
           data={a.languages.slice(0, 5).map((l) => ({
             label: l.name,
             value: l.files,
@@ -137,6 +138,7 @@ export function AnalyticsDashboard({ analytics: a }: { analytics: RepoAnalytics 
           Where the code lives
         </div>
         <Bars
+          color="#ab9df2"
           data={a.topDirs.map((d) => ({
             label: `${d.name}/`,
             value: d.files,
