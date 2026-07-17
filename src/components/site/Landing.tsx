@@ -36,7 +36,8 @@ export function Landing() {
     <div className="flex flex-col gap-28 pb-28">
       {/* Hero */}
       <Section className="pt-20 sm:pt-28">
-        <div className="flex flex-col items-center gap-6 text-center">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="flex flex-col items-start gap-6 text-left">
           <motion.span
             {...fadeUp}
             className="rounded-full border border-[var(--color-hairline)] bg-[var(--color-surface)] px-3 py-1 font-mono text-xs tracking-wide text-[var(--color-wine)]"
@@ -46,7 +47,7 @@ export function Landing() {
           <motion.h1
             {...fadeUp}
             transition={{ ...fadeUp.transition, delay: 0.05 }}
-            className="max-w-3xl font-serif text-5xl font-normal leading-[1.05] tracking-tight sm:text-7xl"
+            className="max-w-3xl font-serif text-6xl font-normal leading-[0.95] tracking-tight sm:text-8xl"
           >
             Understand any codebase in under a minute.
           </motion.h1>
@@ -61,7 +62,7 @@ export function Landing() {
           <motion.div
             {...fadeUp}
             transition={{ ...fadeUp.transition, delay: 0.15 }}
-            className="flex flex-wrap items-center justify-center gap-3 pt-2"
+            className="flex flex-wrap items-center gap-3 pt-2"
           >
             <Link
               href="/analyze"
@@ -78,15 +79,15 @@ export function Landing() {
           </motion.div>
         </div>
 
-        {/* Pipeline hero graphic */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
-          className="mx-auto mt-16 max-w-3xl"
+          className="card p-6"
         >
           <HeroPipeline />
         </motion.div>
+        </div>
       </Section>
 
       {/* Stats */}
@@ -108,9 +109,10 @@ export function Landing() {
 
       {/* How it works */}
       <Section>
-        <motion.h2 {...fadeUp} className="text-center font-serif text-3xl sm:text-4xl">
-          How it works
-        </motion.h2>
+        <motion.div {...fadeUp} className="flex items-baseline gap-4 border-t border-[var(--color-hairline)] pt-6">
+          <span className="font-mono text-sm text-[var(--color-gold)]">01</span>
+          <h2 className="font-serif text-3xl sm:text-5xl">How it works</h2>
+        </motion.div>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((s, i) => (
             <motion.div
@@ -129,9 +131,10 @@ export function Landing() {
 
       {/* Features */}
       <Section>
-        <motion.h2 {...fadeUp} className="text-center font-serif text-3xl sm:text-4xl">
-          Built like a product, not a demo
-        </motion.h2>
+        <motion.div {...fadeUp} className="flex items-baseline gap-4 border-t border-[var(--color-hairline)] pt-6">
+          <span className="font-mono text-sm text-[var(--color-gold)]">02</span>
+          <h2 className="font-serif text-3xl sm:text-5xl">Built like a product, not a demo</h2>
+        </motion.div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map((f, i) => (
             <motion.div
