@@ -16,15 +16,16 @@ interface Props {
 }
 
 /** Canned prompts that showcase what the guide can do — including the Day-1 checklist. */
-const QUICK_ACTIONS: { label: string; question: string }[] = [
+const QUICK_ACTIONS: { label: string; color: string; question: string }[] = [
   {
     label: "📋 Day-1 checklist",
+    color: "#a9dc76",
     question:
       "Generate a practical day-1 onboarding checklist for a developer joining this project: environment setup, the files to read in order, and a small first task to attempt. Use checkboxes.",
   },
-  { label: "🧭 Where do I start?", question: "Which single file should I open first, and why?" },
-  { label: "🏗️ Explain the architecture", question: "Explain the architecture in three short paragraphs." },
-  { label: "⚠️ What should I watch out for?", question: "What are the sharp edges or gotchas a newcomer should watch out for in this codebase?" },
+  { label: "🧭 Where do I start?", color: "#78dce8", question: "Which single file should I open first, and why?" },
+  { label: "🏗️ Explain the architecture", color: "#ab9df2", question: "Explain the architecture in three short paragraphs." },
+  { label: "⚠️ What should I watch out for?", color: "#fc9867", question: "What are the sharp edges or gotchas a newcomer should watch out for in this codebase?" },
 ];
 
 export function ChatPanel({ repo, brief }: Props) {
@@ -89,7 +90,8 @@ export function ChatPanel({ repo, brief }: Props) {
             key={qa.label}
             onClick={() => ask(qa.question)}
             disabled={busy}
-            className="rounded-full border border-[var(--color-hairline-strong)] px-3 py-1.5 text-xs text-[var(--color-muted)] transition-colors hover:border-[var(--color-wine)] hover:text-[var(--color-wine)] disabled:opacity-50"
+            className="rounded-full border px-3 py-1.5 text-xs transition-opacity hover:opacity-80 disabled:opacity-40"
+            style={{ borderColor: `${qa.color}66`, color: qa.color }}
           >
             {qa.label}
           </button>

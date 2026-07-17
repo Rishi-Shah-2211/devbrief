@@ -19,13 +19,13 @@ export function Footer() {
 
         <div className="flex gap-16 text-sm">
           <div className="flex flex-col gap-2.5">
-            <span className="text-xs font-medium uppercase tracking-wider text-[var(--color-faint)]">Product</span>
+            <span className="text-xs font-medium uppercase tracking-wider text-[#78dce8]">Product</span>
             <Link href="/analyze" className="text-[var(--color-muted)] hover:text-[var(--color-text)]">Analyze</Link>
             <Link href="/showcase" className="text-[var(--color-muted)] hover:text-[var(--color-text)]">Showcase</Link>
             <Link href="/how-it-works" className="text-[var(--color-muted)] hover:text-[var(--color-text)]">How it works</Link>
           </div>
           <div className="flex flex-col gap-2.5">
-            <span className="text-xs font-medium uppercase tracking-wider text-[var(--color-faint)]">Author</span>
+            <span className="text-xs font-medium uppercase tracking-wider text-[#ab9df2]">Author</span>
             <a href="https://github.com/Rishi-Shah-2211/devbrief" target="_blank" rel="noreferrer" className="text-[var(--color-muted)] hover:text-[var(--color-text)]">
               GitHub
             </a>

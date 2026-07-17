@@ -16,10 +16,10 @@ function Section({ children, className = "" }: { children: ReactNode; className?
 }
 
 const STEPS = [
-  { n: "01", title: "Paste a repo", body: "Drop any public GitHub URL. DevBrief fetches the tree and the highest-value files." },
-  { n: "02", title: "Agents fan out", body: "Specialized agents map structure, dependencies, docs, and a reading path — in parallel." },
-  { n: "03", title: "A critic reviews", body: "A reviewer agent checks for gaps and self-corrects before anything ships." },
-  { n: "04", title: "Get your brief", body: "One cohesive onboarding document, with analytics, ready to read or share." },
+  { n: "01", c: "#ab9df2", title: "Paste a repo", body: "Drop any public GitHub URL. DevBrief fetches the tree and the highest-value files." },
+  { n: "02", c: "#78dce8", title: "Agents fan out", body: "Specialized agents map structure, dependencies, docs, and a reading path — in parallel." },
+  { n: "03", c: "#ff6188", title: "A critic reviews", body: "A reviewer agent checks for gaps and self-corrects before anything ships." },
+  { n: "04", c: "#a9dc76", title: "Get your brief", body: "One cohesive onboarding document, with analytics, ready to read or share." },
 ];
 
 const FEATURES = [
@@ -94,13 +94,13 @@ export function Landing() {
       <Section>
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
           {[
-            ["5", "specialized agents"],
-            ["3", "LLM providers"],
-            ["<60s", "to a full brief"],
-            ["$0", "on the free tier"],
-          ].map(([n, l]) => (
+            ["5", "specialized agents", "#ab9df2"],
+            ["3", "LLM providers", "#78dce8"],
+            ["<60s", "to a full brief", "#a9dc76"],
+            ["$0", "on the free tier", "#fc9867"],
+          ].map(([n, l, c]) => (
             <div key={l} className="text-center">
-              <div className="font-serif text-4xl text-[var(--color-wine)]">{n}</div>
+              <div className="font-serif text-4xl" style={{ color: c }}>{n}</div>
               <div className="mt-1 text-sm text-[var(--color-muted)]">{l}</div>
             </div>
           ))}
@@ -110,7 +110,7 @@ export function Landing() {
       {/* How it works */}
       <Section>
         <motion.div {...fadeUp} className="flex items-baseline gap-4 border-t border-[var(--color-hairline)] pt-6">
-          <span className="font-mono text-sm text-[var(--color-gold)]">01</span>
+          <span className="font-mono text-sm text-[#ff6188]">01</span>
           <h2 className="font-serif text-3xl sm:text-5xl">How it works</h2>
         </motion.div>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -121,7 +121,7 @@ export function Landing() {
               transition={{ ...fadeUp.transition, delay: i * 0.06 }}
               className="card p-5 transition-shadow hover:shadow-[var(--shadow-2)]"
             >
-              <div className="font-mono text-sm text-[var(--color-gold)]">{s.n}</div>
+              <div className="font-mono text-sm" style={{ color: s.c }}>{s.n}</div>
               <div className="mt-2 font-serif text-xl">{s.title}</div>
               <div className="mt-1.5 text-sm leading-relaxed text-[var(--color-muted)]">{s.body}</div>
             </motion.div>
@@ -132,7 +132,7 @@ export function Landing() {
       {/* Features */}
       <Section>
         <motion.div {...fadeUp} className="flex items-baseline gap-4 border-t border-[var(--color-hairline)] pt-6">
-          <span className="font-mono text-sm text-[var(--color-gold)]">02</span>
+          <span className="font-mono text-sm text-[#78dce8]">02</span>
           <h2 className="font-serif text-3xl sm:text-5xl">Built like a product, not a demo</h2>
         </motion.div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

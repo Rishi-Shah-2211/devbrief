@@ -66,16 +66,33 @@ body {
   background: rgba(255, 216, 102, 0.28);
 }
 
-/* Ambient depth: a faint petrol wash at the top, an ember whisper at the base. */
-body::before {
+/* Living aurora: all four Monokai hues drift slowly behind every page. */
+body::before,
+body::after {
   content: "";
   position: fixed;
-  inset: 0;
+  inset: -22%;
   z-index: -1;
-  background:
-    radial-gradient(90% 55% at 50% -12%, rgba(255, 216, 102, 0.06), transparent 62%),
-    radial-gradient(70% 40% at 85% 110%, rgba(255, 97, 136, 0.06), transparent 55%);
   pointer-events: none;
+  will-change: transform;
+}
+body::before {
+  background:
+    radial-gradient(640px 420px at 15% 22%, rgba(255, 216, 102, 0.10), transparent 62%),
+    radial-gradient(720px 520px at 86% 14%, rgba(255, 97, 136, 0.09), transparent 62%);
+  animation: aurora-a 26s ease-in-out infinite alternate;
+}
+body::after {
+  background:
+    radial-gradient(700px 500px at 78% 84%, rgba(120, 220, 232, 0.09), transparent 62%),
+    radial-gradient(620px 460px at 18% 82%, rgba(171, 157, 242, 0.10), transparent 62%);
+  animation: aurora-b 34s ease-in-out infinite alternate;
+}
+@keyframes aurora-a {
+  to { transform: translate(4%, -3%) scale(1.18) rotate(4deg); }
+}
+@keyframes aurora-b {
+  to { transform: translate(-4%, 3%) scale(1.14) rotate(-5deg); }
 }
 
 /* ——— Focus, the mark of a real product ——— */
@@ -94,13 +111,17 @@ body::before {
 
 /* ——— Shared surfaces ——— */
 .glass {
-  background: color-mix(in srgb, var(--color-surface-2) 72%, transparent);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 45%),
+    color-mix(in srgb, var(--color-surface-2) 72%, transparent);
   border: 1px solid var(--color-hairline);
   backdrop-filter: blur(10px);
 }
 
 .card {
   background: var(--color-surface-2);
+  /* Glossy sheen along the top edge. */
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 42%);
   border: 1px solid var(--color-hairline);
   border-radius: 12px;
   box-shadow: var(--shadow-1);
@@ -133,6 +154,8 @@ body::before {
 
 /* ——— Rendered brief: crisp document typography ——— */
 .brief { line-height: 1.7; color: var(--color-text); }
+.brief h1::before { content: "# "; color: #ff6188; font-family: var(--font-mono); font-weight: 400; }
+.brief h2::before { content: "## "; color: #ff6188; opacity: 0.75; font-family: var(--font-mono); font-weight: 400; }
 .brief h1 { font-size: 1.7rem; font-weight: 600; letter-spacing: -0.025em; margin-bottom: 0.75rem; }
 .brief h2 {
   font-size: 1.2rem;

@@ -81,14 +81,14 @@ export function AnalyticsDashboard({ analytics: a }: { analytics: RepoAnalytics 
         <HealthDonut score={a.healthScore} />
         <div className="grid flex-1 grid-cols-2 gap-x-4 gap-y-3">
           {[
-            ["Files", a.totalFiles.toLocaleString()],
-            ["Depth", String(a.maxDepth)],
-            ["Dependencies", a.dependencyCount?.toString() ?? "—"],
-            ["Onboarding", a.onboardingDifficulty],
-          ].map(([label, value]) => (
+            ["Files", a.totalFiles.toLocaleString(), "#78dce8"],
+            ["Depth", String(a.maxDepth), "#ab9df2"],
+            ["Dependencies", a.dependencyCount?.toString() ?? "—", "#fc9867"],
+            ["Onboarding", a.onboardingDifficulty, "#ffd866"],
+          ].map(([label, value, color]) => (
             <div key={label}>
               <div className="text-[10px] uppercase tracking-wider text-[var(--color-faint)]">{label}</div>
-              <div className="text-lg font-semibold capitalize tracking-tight">{value}</div>
+              <div className="text-lg font-semibold capitalize tracking-tight" style={{ color }}>{value}</div>
             </div>
           ))}
         </div>
