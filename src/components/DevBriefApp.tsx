@@ -113,7 +113,7 @@ export function DevBriefApp() {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.25 }}
-                  className="font-mono text-2xl text-[#f4efe8]"
+                  className="font-mono text-2xl text-[#c0caf5]"
                 >
                   {repoLabel}
                   <motion.span

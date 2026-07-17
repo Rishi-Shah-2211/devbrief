@@ -9,31 +9,31 @@
  * up the new identity without a mass rename.
  */
 @theme {
-  --color-canvas: #f6f3ec;
-  --color-surface: #efe9dd;
-  --color-surface-2: #fffdf8;
-  --color-hairline: #e2dccd;
-  --color-hairline-strong: #cfc7b4;
-  --color-ink: #0b2e33;
+  --color-canvas: #1a1b26;
+  --color-surface: #16161e;
+  --color-surface-2: #1f2335;
+  --color-hairline: #292e42;
+  --color-hairline-strong: #3b4261;
+  --color-ink: #16161e;
 
-  --color-text: #122b2f;
-  --color-muted: #47605e;
-  --color-faint: #8b9a94;
+  --color-text: #c0caf5;
+  --color-muted: #9aa5ce;
+  --color-faint: #565f89;
 
-  --color-wine: #0f4a52;
-  --color-wine-bright: #17616b;
-  --color-wine-glow: rgba(15, 74, 82, 0.25);
-  --color-gold: #ff6a45;
-  --color-gold-soft: rgba(255, 106, 69, 0.14);
+  --color-wine: #7aa2f7;
+  --color-wine-bright: #8caaff;
+  --color-wine-glow: rgba(122, 162, 247, 0.35);
+  --color-gold: #ff9e64;
+  --color-gold-soft: rgba(255, 158, 100, 0.14);
 
   /* Mission-mode stage */
-  --color-stage: #0b2e33;
-  --color-stage-deep: #081f23;
-  --color-stage-line: rgba(244, 239, 232, 0.14);
+  --color-stage: #1f2335;
+  --color-stage-deep: #16161e;
+  --color-stage-line: rgba(192, 202, 245, 0.12);
 
-  --color-working: #ff6a45;
-  --color-done: #2e9e6b;
-  --color-error: #c93b3b;
+  --color-working: #e0af68;
+  --color-done: #9ece6a;
+  --color-error: #f7768e;
 
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-serif: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
@@ -42,14 +42,14 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Layered elevation — soft, never muddy. */
-  --shadow-1: 0 1px 2px rgba(15, 23, 42, 0.05), 0 1px 1px rgba(15, 23, 42, 0.03);
-  --shadow-2: 0 2px 4px rgba(15, 23, 42, 0.04), 0 6px 16px -6px rgba(15, 23, 42, 0.08);
-  --shadow-3: 0 4px 8px rgba(15, 23, 42, 0.05), 0 16px 40px -12px rgba(15, 23, 42, 0.14);
-  --shadow-accent: 0 8px 28px -10px rgba(79, 70, 229, 0.4);
+  --shadow-1: 0 1px 2px rgba(0,0,0,0.35), 0 1px 1px rgba(0,0,0,0.35);
+  --shadow-2: 0 2px 4px rgba(0,0,0,0.35), 0 6px 16px -6px rgba(0,0,0,0.35);
+  --shadow-3: 0 4px 8px rgba(0,0,0,0.4), 0 16px 40px -12px rgba(0,0,0,0.5);
+  --shadow-accent: 0 8px 28px -10px rgba(122, 162, 247, 0.45);
 }
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 html,
@@ -63,7 +63,7 @@ body {
 }
 
 ::selection {
-  background: rgba(255, 106, 69, 0.22);
+  background: rgba(122, 162, 247, 0.3);
 }
 
 /* Ambient depth: a faint petrol wash at the top, an ember whisper at the base. */
@@ -73,8 +73,8 @@ body::before {
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(90% 55% at 50% -12%, rgba(15, 74, 82, 0.08), transparent 62%),
-    radial-gradient(70% 40% at 85% 110%, rgba(255, 106, 69, 0.05), transparent 55%);
+    radial-gradient(90% 55% at 50% -12%, rgba(122, 162, 247, 0.08), transparent 62%),
+    radial-gradient(70% 40% at 85% 110%, rgba(187, 154, 247, 0.06), transparent 55%);
   pointer-events: none;
 }
 
@@ -94,7 +94,7 @@ body::before {
 
 /* ——— Shared surfaces ——— */
 .glass {
-  background: color-mix(in srgb, var(--color-surface-2) 78%, transparent);
+  background: color-mix(in srgb, var(--color-surface-2) 72%, transparent);
   border: 1px solid var(--color-hairline);
   backdrop-filter: blur(10px);
 }
@@ -109,7 +109,7 @@ body::before {
 /* ——— Buttons: press feedback everywhere ——— */
 .btn-primary {
   background: var(--color-wine);
-  color: #fff;
+  color: #16161e;
   border-radius: 8px;
   font-weight: 500;
   box-shadow: var(--shadow-1), inset 0 1px 0 rgba(255, 255, 255, 0.12);
@@ -156,7 +156,7 @@ body::before {
   border: 1px solid var(--color-hairline);
   border-radius: 5px;
   padding: 0.1rem 0.35rem;
-  color: var(--color-wine);
+  color: #7dcfff;
 }
 .brief table {
   width: 100%; border-collapse: collapse; margin: 0.85rem 0;

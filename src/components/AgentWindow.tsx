@@ -91,13 +91,13 @@ export const AgentWindow = forwardRef<HTMLDivElement, Props>(function AgentWindo
         scale: active ? 1.03 : 1,
       }}
       transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-      className="relative overflow-visible rounded-xl border bg-[rgba(255,253,248,0.05)] backdrop-blur-sm"
+      className="relative overflow-visible rounded-xl border bg-[rgba(192,202,245,0.04)] backdrop-blur-sm"
       style={{
         borderColor: status === "idle" ? "var(--color-stage-line)" : color,
         boxShadow: active
           ? `0 0 0 1.5px ${color}, 0 16px 48px -12px var(--color-wine-glow)`
           : "0 8px 30px -14px rgba(0,0,0,0.6)",
-        width: variant === "hub" ? 236 : 212,
+        width: variant === "hub" ? 204 : 186,
         zIndex: active ? 2 : 1,
       }}
     >
@@ -105,7 +105,7 @@ export const AgentWindow = forwardRef<HTMLDivElement, Props>(function AgentWindo
 
       <div className="overflow-hidden rounded-xl">
         {/* Title bar */}
-        <div className="flex items-center gap-2 border-b border-[var(--color-stage-line)] bg-[rgba(8,31,35,0.55)] px-3 py-2">
+        <div className="flex items-center gap-2 border-b border-[var(--color-stage-line)] bg-[rgba(22,22,30,0.55)] px-3 py-2">
           <div className="flex items-center gap-1.5">
             <motion.span
               className="h-2.5 w-2.5 rounded-full"
@@ -113,20 +113,20 @@ export const AgentWindow = forwardRef<HTMLDivElement, Props>(function AgentWindo
               animate={active ? { opacity: [1, 0.35, 1] } : { opacity: 1 }}
               transition={active ? { duration: 1.1, repeat: Infinity, ease: "easeInOut" } : {}}
             />
-            <span className="h-2.5 w-2.5 rounded-full bg-[rgba(244,239,232,0.18)]" />
-            <span className="h-2.5 w-2.5 rounded-full bg-[rgba(244,239,232,0.18)]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[rgba(192,202,245,0.18)]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[rgba(192,202,245,0.18)]" />
           </div>
-          <span className="ml-1 truncate font-mono text-[11px] text-[rgba(244,239,232,0.55)]">
+          <span className="ml-1 truncate font-mono text-[11px] text-[rgba(192,202,245,0.55)]">
             {meta.name}.agent
           </span>
         </div>
 
         {/* Body */}
         <div className="flex flex-col gap-1 px-3 py-2.5">
-          <span className="font-serif text-[17px] leading-none text-[#f4efe8]">
+          <span className="font-serif text-[17px] leading-none text-[#c0caf5]">
             {meta.label}
           </span>
-          <span className="text-[11px] text-[rgba(244,239,232,0.45)]">{meta.role}</span>
+          <span className="text-[11px] text-[rgba(192,202,245,0.45)]">{meta.role}</span>
 
           <div className="mt-1.5 flex items-center justify-between">
             <span className="font-mono text-[10px] uppercase tracking-wider" style={{ color }}>
@@ -150,7 +150,7 @@ export const AgentWindow = forwardRef<HTMLDivElement, Props>(function AgentWindo
                 className="overflow-hidden"
               >
                 <div className="mt-1.5 rounded-md border border-[var(--color-stage-line)] bg-[var(--color-stage-deep)] px-2 py-1.5">
-                  <p className="line-clamp-2 break-all font-mono text-[9px] leading-[1.5] text-[#d9d2d6]">
+                  <p className="line-clamp-2 break-all font-mono text-[9px] leading-[1.5] text-[#a9b1d6]">
                     {state?.preview ?? state?.detail ?? "…"}
                     <motion.span
                       className="ml-0.5 inline-block h-[9px] w-[5px] translate-y-[1px] bg-[var(--color-gold)]"

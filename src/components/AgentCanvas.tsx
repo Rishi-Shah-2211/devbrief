@@ -24,13 +24,24 @@ const ORCHESTRATOR: AgentMeta = {
 const BOARD = { w: 1240, h: 640, cx: 500, cy: 320, r: 218 };
 
 const POS: Record<string, { x: number; y: number }> = {
-  orchestrator: { x: BOARD.cx, y: BOARD.cy },
-  architect: { x: BOARD.cx, y: BOARD.cy - BOARD.r },
-  dependency: { x: BOARD.cx + BOARD.r, y: BOARD.cy },
-  docs: { x: BOARD.cx, y: BOARD.cy + BOARD.r },
-  startHere: { x: BOARD.cx - BOARD.r, y: BOARD.cy },
-  critic: { x: 985, y: 165 },
-  synthesizer: { x: 1035, y: 480 },
+  orchestrator: { x: 150, y: 300 },
+  architect: { x: 405, y: 125 },
+  dependency: { x: 445, y: 480 },
+  docs: { x: 665, y: 255 },
+  startHere: { x: 655, y: 545 },
+  critic: { x: 895, y: 150 },
+  synthesizer: { x: 980, y: 440 },
+};
+
+/** Per-window resting tilt — each card floats at its own 3D attitude. */
+const TILT: Record<string, { rx: number; ry: number }> = {
+  orchestrator: { rx: 6, ry: -8 },
+  architect: { rx: -7, ry: 6 },
+  dependency: { rx: 5, ry: 9 },
+  docs: { rx: -5, ry: -7 },
+  startHere: { rx: 7, ry: 5 },
+  critic: { rx: -6, ry: 8 },
+  synthesizer: { rx: 6, ry: -6 },
 };
 
 const EDGES: { from: string; to: AgentName }[] = [
@@ -63,7 +74,7 @@ function MissionBar({ agents }: Props) {
     <motion.div
       initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
-      className="sticky top-3 z-30 mx-auto mb-6 flex w-fit items-center gap-6 rounded-full border border-[var(--color-stage-line)] bg-[rgba(8,31,35,0.92)] px-5 py-2 font-mono text-[11px] text-[rgba(244,239,232,0.65)] backdrop-blur-md"
+      className="sticky top-3 z-30 mx-auto mb-6 flex w-fit items-center gap-6 rounded-full border border-[var(--color-stage-line)] bg-[rgba(22,22,30,0.92)] px-5 py-2 font-mono text-[11px] text-[rgba(192,202,245,0.65)] backdrop-blur-md"
     >
       <span className="flex items-center gap-1.5">
         <motion.span
@@ -78,7 +89,7 @@ function MissionBar({ agents }: Props) {
       </span>
       <span className="text-[var(--color-gold)]">{tokens.toLocaleString()} tokens</span>
       <span>{done}/6 agents</span>
-      <span className="hidden text-[rgba(244,239,232,0.4)] sm:inline">drag to explore</span>
+      <span className="hidden text-[rgba(192,202,245,0.4)] sm:inline">drag to explore</span>
     </motion.div>
   );
 }
@@ -154,7 +165,7 @@ export function AgentCanvas({ agents }: Props) {
       style={{
         background:
           "radial-gradient(120% 90% at 50% 0%, var(--color-stage) 0%, var(--color-stage-deep) 78%)",
-        boxShadow: "inset 0 1px 0 rgba(244,239,232,0.08), 0 30px 80px -30px rgba(8,31,35,0.55)",
+        boxShadow: "inset 0 1px 0 rgba(192,202,245,0.08), 0 30px 80px -30px rgba(22,22,30,0.55)",
       }}
     >
       {/* Faint grid — the deck floor. */}
@@ -186,7 +197,7 @@ export function AgentCanvas({ agents }: Props) {
               <svg className="pointer-events-none absolute inset-0" width={BOARD.w} height={BOARD.h} aria-hidden>
                 <defs>
                   <marker id="arr-live" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-                    <path d="M0,0 L10,5 L0,10 z" fill="rgba(244,239,232,0.55)" />
+                    <path d="M0,0 L10,5 L0,10 z" fill="rgba(192,202,245,0.55)" />
                   </marker>
                   <marker id="arr-dim" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
                     <path d="M0,0 L10,5 L0,10 z" fill="var(--color-stage-line)" />
@@ -217,7 +228,7 @@ export function AgentCanvas({ agents }: Props) {
                       <path
                         d={d}
                         fill="none"
-                        stroke={st === "idle" ? "var(--color-stage-line)" : "rgba(244,239,232,0.4)"}
+                        stroke={st === "idle" ? "var(--color-stage-line)" : "rgba(192,202,245,0.4)"}
                         strokeWidth={st === "idle" ? 1 : 1.5}
                         strokeDasharray={st === "idle" ? "3 6" : "none"}
                         markerMid={`url(#${st === "idle" ? "arr-dim" : "arr-live"})`}
@@ -234,15 +245,35 @@ export function AgentCanvas({ agents }: Props) {
                 })}
               </svg>
 
-              {Object.entries(POS).map(([key, pos]) => (
-                <div
-                  key={key}
-                  className="absolute"
-                  style={{ left: pos.x, top: pos.y, transform: "translate(-50%, -50%)" }}
-                >
-                  {windowFor(key)}
-                </div>
-              ))}
+              {Object.entries(POS).map(([key, pos]) => {
+                const st = agents[key as AgentName]?.status;
+                const t = TILT[key];
+                const activeCard = st === "working";
+                return (
+                  <div
+                    key={key}
+                    className="absolute"
+                    style={{ left: pos.x, top: pos.y, transform: "translate(-50%, -50%)", perspective: 1200 }}
+                  >
+                    <motion.div
+                      style={{ transformStyle: "preserve-3d" }}
+                      animate={{
+                        rotateX: activeCard ? 0 : t.rx,
+                        rotateY: activeCard ? 0 : t.ry,
+                        scale: activeCard ? 1.08 : 0.92,
+                        y: activeCard ? 0 : [0, -7, 0],
+                      }}
+                      transition={
+                        activeCard
+                          ? { duration: 0.7, ease: [0.16, 1, 0.3, 1] }
+                          : { rotateX: { duration: 0.7 }, rotateY: { duration: 0.7 }, scale: { duration: 0.7 }, y: { duration: 5.5, repeat: Infinity, ease: "easeInOut" } }
+                      }
+                    >
+                      {windowFor(key)}
+                    </motion.div>
+                  </div>
+                );
+              })}
             </motion.div>
           </div>
         ) : (

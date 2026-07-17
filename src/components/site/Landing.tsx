@@ -161,10 +161,10 @@ export function Landing() {
             className="pointer-events-none absolute inset-0"
             style={{ background: "radial-gradient(80% 120% at 50% 0%, rgba(129,140,248,0.22), transparent 60%)" }}
           />
-          <h2 className="relative font-serif text-3xl text-[#faf8f6] sm:text-4xl">
+          <h2 className="relative font-serif text-3xl text-[#c0caf5] sm:text-4xl">
             Point it at a repository.
           </h2>
-          <p className="relative mx-auto mt-3 max-w-md text-[#c7cbd8]">
+          <p className="relative mx-auto mt-3 max-w-md text-[#9aa5ce]">
             See the agents work, read the brief, and never lose a day to onboarding again.
           </p>
           <Link
