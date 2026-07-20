@@ -34,7 +34,7 @@ export function Nav() {
     >
       <nav className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-2.5">
-          <span className="grid h-6 w-6 place-items-center rounded-md bg-[var(--color-wine)] text-[13px] font-semibold text-white shadow-[var(--shadow-1)]">
+          <span className="grid h-6 w-6 place-items-center rounded-md bg-[var(--color-wine)] text-[13px] font-semibold text-[#131316] shadow-[var(--shadow-1)]">
             D
           </span>
           <span className="text-[15px] font-semibold tracking-tight">DevBrief</span>

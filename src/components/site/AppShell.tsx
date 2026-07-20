@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 import { GitHubConnect } from "@/components/GitHubConnect";
 
 const NAV = [
-  { href: "/analyze", label: "Analyze", mark: "01", color: "#ffd866" },
-  { href: "/showcase", label: "Showcase", mark: "02", color: "#78dce8" },
-  { href: "/how-it-works", label: "Docs", mark: "03", color: "#ab9df2" },
+  { href: "/analyze", label: "Analyze", mark: "01", color: "#c8a96a" },
+  { href: "/showcase", label: "Showcase", mark: "02", color: "#c8a96a" },
+  { href: "/how-it-works", label: "Docs", mark: "03", color: "#c8a96a" },
 ];
 
 function crumbsFrom(pathname: string): string[] {
@@ -32,7 +32,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {/* Rail */}
       <aside className="sticky top-0 hidden h-screen w-56 shrink-0 flex-col border-r border-[var(--color-hairline)] bg-[var(--color-surface-2)] px-4 py-5 md:flex">
         <Link href="/" className="flex items-center gap-2.5 px-2">
-          <span className="grid h-6 w-6 place-items-center rounded-md bg-[var(--color-wine)] text-[13px] font-semibold text-white">
+          <span className="grid h-6 w-6 place-items-center rounded-md bg-[var(--color-wine)] text-[13px] font-semibold text-[#131316]">
             D
           </span>
           <span className="text-[15px] font-semibold tracking-tight">DevBrief</span>
@@ -57,7 +57,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                     transition={{ type: "spring", stiffness: 400, damping: 32 }}
                   />
                 ) : null}
-                <span className="relative font-mono text-[10px]" style={{ color: item.color }}>{item.mark}</span>
+                <span className="relative font-mono text-[10px] text-[var(--color-faint)]">{item.mark}</span>
                 <span className="relative font-medium">{item.label}</span>
               </Link>
             );
@@ -86,7 +86,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <Link href="/" className="text-[var(--color-muted)] hover:text-[var(--color-text)] md:hidden">
               DevBrief
             </Link>
-            <span className="hidden text-[#78dce8] md:inline">devbrief</span>
+            <span className="hidden text-[var(--color-wine)] md:inline">devbrief</span>
             {crumbs.map((c, i) => (
               <span key={i} className="flex min-w-0 items-center gap-2">
                 <span className="text-[var(--color-hairline-strong)]">/</span>

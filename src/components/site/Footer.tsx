@@ -6,7 +6,7 @@ export function Footer() {
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-10 sm:flex-row sm:items-start sm:justify-between">
         <div className="max-w-xs">
           <div className="flex items-center gap-2.5">
-            <span className="grid h-5 w-5 place-items-center rounded bg-[var(--color-wine)] text-[11px] font-semibold text-white">
+            <span className="grid h-5 w-5 place-items-center rounded bg-[var(--color-wine)] text-[11px] font-semibold text-[#131316]">
               D
             </span>
             <span className="text-sm font-semibold tracking-tight">DevBrief</span>
@@ -19,13 +19,13 @@ export function Footer() {
 
         <div className="flex gap-16 text-sm">
           <div className="flex flex-col gap-2.5">
-            <span className="text-xs font-medium uppercase tracking-wider text-[#78dce8]">Product</span>
+            <span className="text-xs font-medium uppercase tracking-wider text-[var(--color-faint)]">Product</span>
             <Link href="/analyze" className="text-[var(--color-muted)] hover:text-[var(--color-text)]">Analyze</Link>
             <Link href="/showcase" className="text-[var(--color-muted)] hover:text-[var(--color-text)]">Showcase</Link>
             <Link href="/how-it-works" className="text-[var(--color-muted)] hover:text-[var(--color-text)]">How it works</Link>
           </div>
           <div className="flex flex-col gap-2.5">
-            <span className="text-xs font-medium uppercase tracking-wider text-[#ab9df2]">Author</span>
+            <span className="text-xs font-medium uppercase tracking-wider text-[var(--color-faint)]">Author</span>
             <a href="https://github.com/Rishi-Shah-2211/devbrief" target="_blank" rel="noreferrer" className="text-[var(--color-muted)] hover:text-[var(--color-text)]">
               GitHub
             </a>

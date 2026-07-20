@@ -90,8 +90,7 @@ export function ChatPanel({ repo, brief }: Props) {
             key={qa.label}
             onClick={() => ask(qa.question)}
             disabled={busy}
-            className="rounded-full border px-3 py-1.5 text-xs transition-opacity hover:opacity-80 disabled:opacity-40"
-            style={{ borderColor: `${qa.color}66`, color: qa.color }}
+            className="rounded-full border border-[var(--color-hairline-strong)] px-3 py-1.5 text-xs text-[var(--color-muted)] transition-colors hover:border-[var(--color-wine)] hover:text-[var(--color-wine)] disabled:opacity-40"
           >
             {qa.label}
           </button>

@@ -16,10 +16,10 @@ function Section({ children, className = "" }: { children: ReactNode; className?
 }
 
 const STEPS = [
-  { n: "01", c: "#ab9df2", title: "Paste a repo", body: "Drop any public GitHub URL. DevBrief fetches the tree and the highest-value files." },
-  { n: "02", c: "#78dce8", title: "Agents fan out", body: "Specialized agents map structure, dependencies, docs, and a reading path — in parallel." },
-  { n: "03", c: "#ff6188", title: "A critic reviews", body: "A reviewer agent checks for gaps and self-corrects before anything ships." },
-  { n: "04", c: "#a9dc76", title: "Get your brief", body: "One cohesive onboarding document, with analytics, ready to read or share." },
+  { n: "01", c: "#c8a96a", title: "Paste a repo", body: "Drop any public GitHub URL. DevBrief fetches the tree and the highest-value files." },
+  { n: "02", c: "#c8a96a", title: "Agents fan out", body: "Specialized agents map structure, dependencies, docs, and a reading path — in parallel." },
+  { n: "03", c: "#c8a96a", title: "A critic reviews", body: "A reviewer agent checks for gaps and self-corrects before anything ships." },
+  { n: "04", c: "#c8a96a", title: "Get your brief", body: "One cohesive onboarding document, with analytics, ready to read or share." },
 ];
 
 const FEATURES = [
@@ -94,10 +94,10 @@ export function Landing() {
       <Section>
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
           {[
-            ["5", "specialized agents", "#ab9df2"],
-            ["3", "LLM providers", "#78dce8"],
-            ["<60s", "to a full brief", "#a9dc76"],
-            ["$0", "on the free tier", "#fc9867"],
+            ["5", "specialized agents", "#c8a96a"],
+            ["3", "LLM providers", "#c8a96a"],
+            ["<60s", "to a full brief", "#c8a96a"],
+            ["$0", "on the free tier", "#c8a96a"],
           ].map(([n, l, c]) => (
             <div key={l} className="text-center">
               <div className="font-serif text-4xl" style={{ color: c }}>{n}</div>
@@ -110,7 +110,7 @@ export function Landing() {
       {/* How it works */}
       <Section>
         <motion.div {...fadeUp} className="flex items-baseline gap-4 border-t border-[var(--color-hairline)] pt-6">
-          <span className="font-mono text-sm text-[#ff6188]">01</span>
+          <span className="font-mono text-sm text-[var(--color-wine)]">01</span>
           <h2 className="font-serif text-3xl sm:text-5xl">How it works</h2>
         </motion.div>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -132,7 +132,7 @@ export function Landing() {
       {/* Features */}
       <Section>
         <motion.div {...fadeUp} className="flex items-baseline gap-4 border-t border-[var(--color-hairline)] pt-6">
-          <span className="font-mono text-sm text-[#78dce8]">02</span>
+          <span className="font-mono text-sm text-[var(--color-wine)]">02</span>
           <h2 className="font-serif text-3xl sm:text-5xl">Built like a product, not a demo</h2>
         </motion.div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -159,12 +159,12 @@ export function Landing() {
         >
           <div
             className="pointer-events-none absolute inset-0"
-            style={{ background: "radial-gradient(80% 120% at 50% 0%, rgba(255,97,136,0.2), transparent 60%)" }}
+            style={{ background: "radial-gradient(80% 120% at 50% 0%, rgba(200,169,106,0.22), transparent 60%)" }}
           />
-          <h2 className="relative font-serif text-3xl text-[#fcfcfa] sm:text-4xl">
+          <h2 className="relative font-serif text-3xl text-[#efeadd] sm:text-4xl">
             Point it at a repository.
           </h2>
-          <p className="relative mx-auto mt-3 max-w-md text-[#c1c0c0]">
+          <p className="relative mx-auto mt-3 max-w-md text-[var(--color-muted)]">
             See the agents work, read the brief, and never lose a day to onboarding again.
           </p>
           <Link

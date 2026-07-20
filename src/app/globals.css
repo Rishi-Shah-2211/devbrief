@@ -9,35 +9,35 @@
  * up the new identity without a mass rename.
  */
 @theme {
-  --color-canvas: #2d2a2e;
-  --color-surface: #221f22;
-  --color-surface-2: #363437;
-  --color-hairline: #403e41;
-  --color-hairline-strong: #5b595c;
-  --color-ink: #19181a;
+  --color-canvas: #0e0e11;
+  --color-surface: #131316;
+  --color-surface-2: #17171c;
+  --color-hairline: #26262c;
+  --color-hairline-strong: #3a3a42;
+  --color-ink: #0a0a0d;
 
-  --color-text: #fcfcfa;
-  --color-muted: #c1c0c0;
-  --color-faint: #939293;
+  --color-text: #efeadd;
+  --color-muted: #a39f94;
+  --color-faint: #6b6862;
 
-  --color-wine: #ffd866;
-  --color-wine-bright: #ffe08a;
-  --color-wine-glow: rgba(255, 216, 102, 0.3);
+  --color-wine: #c8a96a;
+  --color-wine-bright: #dcc08a;
+  --color-wine-glow: rgba(200, 169, 106, 0.3);
   --color-gold: #78dce8;
   --color-gold-soft: rgba(120, 220, 232, 0.14);
 
   /* Mission-mode stage */
-  --color-stage: #2d2a2e;
-  --color-stage-deep: #19181a;
-  --color-stage-line: rgba(252, 252, 250, 0.12);
+  --color-stage: #131316;
+  --color-stage-deep: #0a0a0d;
+  --color-stage-line: rgba(239, 234, 221, 0.1);
 
   --color-working: #fc9867;
   --color-done: #a9dc76;
   --color-error: #ff6188;
 
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-serif: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-fraunces), Georgia, serif;
+  --font-mono: var(--font-jbmono), ui-monospace, "SF Mono", monospace;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -45,7 +45,7 @@
   --shadow-1: 0 1px 2px rgba(0,0,0,0.35), 0 1px 1px rgba(0,0,0,0.35);
   --shadow-2: 0 2px 4px rgba(0,0,0,0.35), 0 6px 16px -6px rgba(0,0,0,0.35);
   --shadow-3: 0 4px 8px rgba(0,0,0,0.4), 0 16px 40px -12px rgba(0,0,0,0.5);
-  --shadow-accent: 0 8px 28px -10px rgba(255, 216, 102, 0.4);
+  --shadow-accent: 0 8px 28px -10px rgba(200, 169, 106, 0.4);
 }
 
 :root {
@@ -63,7 +63,7 @@ body {
 }
 
 ::selection {
-  background: rgba(255, 216, 102, 0.28);
+  background: rgba(200, 169, 106, 0.3);
 }
 
 /* Living aurora: all four Monokai hues drift slowly behind every page. */
@@ -79,16 +79,15 @@ body::after {
 }
 body::before {
   background:
-    radial-gradient(760px 540px at 15% 22%, rgba(255, 216, 102, 0.22), transparent 64%),
-    radial-gradient(840px 600px at 86% 14%, rgba(255, 97, 136, 0.20), transparent 64%);
-  animation: aurora-a 26s ease-in-out infinite alternate;
+    radial-gradient(820px 560px at 18% 20%, rgba(200, 169, 106, 0.13), transparent 64%),
+    radial-gradient(760px 540px at 84% 78%, rgba(239, 234, 221, 0.05), transparent 62%);
+  animation: aurora-a 30s ease-in-out infinite alternate;
 }
 body::after {
   background:
-    radial-gradient(820px 580px at 78% 84%, rgba(120, 220, 232, 0.20), transparent 64%),
-    radial-gradient(740px 540px at 18% 82%, rgba(171, 157, 242, 0.22), transparent 64%),
-    radial-gradient(500px 380px at 50% 45%, rgba(255, 152, 103, 0.10), transparent 60%);
-  animation: aurora-b 34s ease-in-out infinite alternate;
+    radial-gradient(700px 500px at 80% 12%, rgba(200, 169, 106, 0.07), transparent 60%),
+    radial-gradient(640px 480px at 12% 86%, rgba(120, 130, 160, 0.06), transparent 60%);
+  animation: aurora-b 38s ease-in-out infinite alternate;
 }
 @keyframes aurora-a {
   to { transform: translate(4%, -3%) scale(1.18) rotate(4deg); }
@@ -106,9 +105,9 @@ body::after {
 
 /* ——— Display type: headings are Geist, confident and tight ——— */
 .font-serif {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  letter-spacing: -0.025em;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.015em;
 }
 
 /* ——— Shared surfaces ——— */
@@ -132,7 +131,7 @@ body::after {
 /* ——— Buttons: press feedback everywhere ——— */
 .btn-primary {
   background: var(--color-wine);
-  color: #19181a;
+  color: #131316;
   border-radius: 8px;
   font-weight: 500;
   box-shadow: var(--shadow-1), inset 0 1px 0 rgba(255, 255, 255, 0.12);
@@ -156,12 +155,13 @@ body::after {
 
 /* ——— Rendered brief: crisp document typography ——— */
 .brief { line-height: 1.7; color: var(--color-text); }
-.brief h1::before { content: "# "; color: #ff6188; font-family: var(--font-mono); font-weight: 400; }
-.brief h2::before { content: "## "; color: #ff6188; opacity: 0.75; font-family: var(--font-mono); font-weight: 400; }
-.brief h1 { font-size: 1.7rem; font-weight: 600; letter-spacing: -0.025em; margin-bottom: 0.75rem; }
+.brief h1::before { content: "# "; color: #c8a96a; font-family: var(--font-mono); font-weight: 400; }
+.brief h2::before { content: "## "; color: #c8a96a; opacity: 0.75; font-family: var(--font-mono); font-weight: 400; }
+.brief h1 { font-family: var(--font-serif); font-size: 1.9rem; font-weight: 400; letter-spacing: -0.025em; margin-bottom: 0.75rem; }
 .brief h2 {
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 400;
   letter-spacing: -0.015em;
   margin: 1.75rem 0 0.6rem;
   padding-bottom: 0.35rem;
