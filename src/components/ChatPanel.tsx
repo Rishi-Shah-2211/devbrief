@@ -18,14 +18,14 @@ interface Props {
 /** Canned prompts that showcase what the guide can do — including the Day-1 checklist. */
 const QUICK_ACTIONS: { label: string; color: string; question: string }[] = [
   {
-    label: "📋 Day-1 checklist",
+    label: "Day-1 checklist",
     color: "#a9dc76",
     question:
       "Generate a practical day-1 onboarding checklist for a developer joining this project: environment setup, the files to read in order, and a small first task to attempt. Use checkboxes.",
   },
-  { label: "🧭 Where do I start?", color: "#78dce8", question: "Which single file should I open first, and why?" },
-  { label: "🏗️ Explain the architecture", color: "#ab9df2", question: "Explain the architecture in three short paragraphs." },
-  { label: "⚠️ What should I watch out for?", color: "#fc9867", question: "What are the sharp edges or gotchas a newcomer should watch out for in this codebase?" },
+  { label: "Where do I start?", color: "#78dce8", question: "Which single file should I open first, and why?" },
+  { label: "Explain the architecture", color: "#ab9df2", question: "Explain the architecture in three short paragraphs." },
+  { label: "What should I watch out for?", color: "#fc9867", question: "What are the sharp edges or gotchas a newcomer should watch out for in this codebase?" },
 ];
 
 export function ChatPanel({ repo, brief }: Props) {

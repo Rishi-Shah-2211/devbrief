@@ -44,12 +44,12 @@ const STEPS = [
 ];
 
 const FEATURES = [
-  { icon: "🧠", title: "Multi-agent orchestration", body: "Five role-specialized agents coordinated by a plain-TypeScript orchestrator — no black-box framework." },
-  { icon: "📊", title: "Code-intelligence analytics", body: "Health score, dependency freshness, contributor concentration, and an onboarding-difficulty score." },
-  { icon: "🎬", title: "Live, cinematic pipeline", body: "Watch every agent work in real time — streamed states, flowing data, and a mission-control feel." },
-  { icon: "🎯", title: "Grounded, not hallucinated", body: "Every claim cites a real file path; a critic pass verifies completeness." },
-  { icon: "⚡", title: "Provider-resilient by design", body: "Every call walks a fallback chain across three providers — a rate-limited model never kills a run." },
-  { icon: "🔗", title: "Shareable briefs", body: "Every result gets a permalink you can hand to a teammate or a hiring manager." },
+  { icon: "◉", title: "Multi-agent orchestration", body: "Five role-specialized agents coordinated by a plain-TypeScript orchestrator — no black-box framework." },
+  { icon: "▤", title: "Code-intelligence analytics", body: "Health score, dependency freshness, contributor concentration, and an onboarding-difficulty score." },
+  { icon: "▶", title: "Live, cinematic pipeline", body: "Watch every agent work in real time — streamed states, flowing data, and a mission-control feel." },
+  { icon: "✛", title: "Grounded, not hallucinated", body: "Every claim cites a real file path; a critic pass verifies completeness." },
+  { icon: "↯", title: "Provider-resilient by design", body: "Every call walks a fallback chain across three providers — a rate-limited model never kills a run." },
+  { icon: "∞", title: "Shareable briefs", body: "Every result gets a permalink you can hand to a teammate or a hiring manager." },
 ];
 
 export function Landing() {
@@ -63,7 +63,7 @@ export function Landing() {
             {...fadeUp}
             className="rounded-full border border-[var(--color-hairline)] bg-[var(--color-surface)] px-3 py-1 font-mono text-xs tracking-wide text-[var(--color-wine)]"
           >
-            AI AGENT ORCHESTRATION
+            OPERATIONS MANUAL · SEC 00 — OVERVIEW
           </motion.span>
           <motion.h1
             {...fadeUp}
@@ -107,6 +107,7 @@ export function Landing() {
           className="card p-6"
         >
           <HeroPipeline />
+          <div className="mt-3 border-t border-[var(--color-hairline)] pt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-faint)]">fig. 01 — orchestration schematic · rev C</div>
         </motion.div>
         </div>
       </Section>
@@ -130,21 +131,24 @@ export function Landing() {
 
       {/* How it works */}
       <Section>
-        <motion.div {...fadeUp} className="flex items-baseline gap-4 border-t border-[var(--color-hairline)] pt-6">
-          <span className="font-mono text-sm text-[var(--color-wine)]">01</span>
-          <h2 className="font-serif text-3xl sm:text-5xl">How it works</h2>
+        <motion.div {...fadeUp} className="border border-[var(--color-hairline)] px-5 py-4">
+          <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--color-wine)]">Section 01 — Normal procedures</div>
+          <h2 className="mt-1 font-serif text-3xl sm:text-5xl">How it works</h2>
         </motion.div>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 flex flex-col">
           {STEPS.map((s, i) => (
             <motion.div
               key={s.n}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.06 }}
-              className="card p-5 transition-shadow hover:shadow-[var(--shadow-2)]"
+              className="flex items-baseline gap-4 border-b border-[var(--color-hairline)] px-2 py-5 first:border-t"
             >
-              <div className="font-mono text-sm" style={{ color: s.c }}>{s.n}</div>
-              <div className="mt-2 font-serif text-xl">{s.title}</div>
-              <div className="mt-1.5 text-sm leading-relaxed text-[var(--color-muted)]">{s.body}</div>
+              <span className="font-mono text-sm text-[var(--color-wine)]">■ 1.{s.n.slice(1)}</span>
+              <div className="min-w-0">
+                <span className="font-serif text-xl">{s.title}</span>
+                <span className="ml-3 hidden font-mono text-[10px] uppercase tracking-wider text-[var(--color-faint)] sm:inline">checked</span>
+                <p className="mt-1 max-w-2xl text-sm leading-relaxed text-[var(--color-muted)]">{s.body}</p>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -152,9 +156,9 @@ export function Landing() {
 
       {/* Features */}
       <Section>
-        <motion.div {...fadeUp} className="flex items-baseline gap-4 border-t border-[var(--color-hairline)] pt-6">
-          <span className="font-mono text-sm text-[var(--color-wine)]">02</span>
-          <h2 className="font-serif text-3xl sm:text-5xl">Built like a product, not a demo</h2>
+        <motion.div {...fadeUp} className="border border-[var(--color-hairline)] px-5 py-4">
+          <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--color-wine)]">Section 02 — Exhibit hall</div>
+          <h2 className="mt-1 font-serif text-3xl sm:text-5xl">Built like a product, not a demo</h2>
         </motion.div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map((f, i) => (
@@ -162,11 +166,16 @@ export function Landing() {
               key={f.title}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: (i % 3) * 0.06 }}
-              className="card p-6 transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-3)]"
+              className="group overflow-hidden rounded-none border border-[var(--color-hairline)] bg-[var(--color-surface)] transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-3)]"
             >
-              <div className="text-2xl">{f.icon}</div>
-              <div className="mt-3 font-serif text-xl">{f.title}</div>
-              <div className="mt-1.5 text-sm leading-relaxed text-[var(--color-muted)]">{f.body}</div>
+              <div className="grid h-36 place-items-center" style={{ background: "radial-gradient(60% 70% at 50% 35%, rgba(200,169,106,0.16), transparent 70%)" }}>
+                <span className="font-serif text-4xl text-[var(--color-wine)] transition-transform duration-300 group-hover:scale-110">{f.icon}</span>
+              </div>
+              <div className="border-t border-[var(--color-hairline)] bg-[#e9e4d6] px-5 py-4">
+                <div className="font-serif text-lg text-[#1c1a14]">{f.title}</div>
+                <div className="mt-1 text-[13px] leading-relaxed text-[#57503e]">{f.body}</div>
+                <div className="mt-2 font-mono text-[9px] uppercase tracking-[0.18em] text-[#8a8371]">Exhibit 2.{i + 1} · DevBrief collection</div>
+              </div>
             </motion.div>
           ))}
         </div>

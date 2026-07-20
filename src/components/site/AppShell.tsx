@@ -58,7 +58,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   />
                 ) : null}
                 <span className="relative font-mono text-[10px] text-[var(--color-faint)]">{item.mark}</span>
-                <span className="relative font-medium">{item.label}</span>
+                <span className="relative font-mono text-[12px] uppercase tracking-[0.14em]">{item.label}</span>
               </Link>
             );
           })}
@@ -87,6 +87,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               DevBrief
             </Link>
             <span className="hidden text-[var(--color-wine)] md:inline">devbrief</span>
+            <span className="hidden rounded border border-[var(--color-hairline)] px-1.5 py-0.5 text-[9px] uppercase tracking-widest md:inline">rev C</span>
             {crumbs.map((c, i) => (
               <span key={i} className="flex min-w-0 items-center gap-2">
                 <span className="text-[var(--color-hairline-strong)]">/</span>
