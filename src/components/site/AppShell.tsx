@@ -35,7 +35,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <span className="grid h-6 w-6 place-items-center rounded-md bg-[var(--color-wine)] text-[13px] font-semibold text-[#131316]">
             D
           </span>
-          <span className="text-[15px] font-semibold tracking-tight">DevBrief</span>
+          <span className="font-serif text-[17px] tracking-tight">DevBrief</span>
         </Link>
 
         <nav className="mt-8 flex flex-col gap-1">

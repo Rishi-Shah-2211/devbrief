@@ -179,6 +179,12 @@ export function AgentCanvas({ agents }: Props) {
         }}
       />
 
+      {/* Observatory vignette — the void closes in at the edges. */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{ background: "radial-gradient(115% 95% at 50% 45%, transparent 55%, rgba(0,0,0,0.5) 100%)" }}
+      />
+
       <MissionBar agents={agents} />
 
       <div ref={outerRef} className="flex flex-1 items-center justify-center">
@@ -262,6 +268,8 @@ export function AgentCanvas({ agents }: Props) {
                         rotateX: activeCard ? 0 : t.rx,
                         rotateY: activeCard ? 0 : t.ry,
                         scale: activeCard ? 1.08 : 0.92,
+                        filter: activeCard || !anyWorking ? "blur(0px)" : "blur(1.8px)",
+                        opacity: activeCard || !anyWorking ? 1 : 0.55,
                         y: activeCard ? 0 : [0, -7, 0],
                       }}
                       transition={

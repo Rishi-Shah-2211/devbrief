@@ -91,12 +91,12 @@ export const AgentWindow = forwardRef<HTMLDivElement, Props>(function AgentWindo
         scale: active ? 1.03 : 1,
       }}
       transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-      className="relative overflow-visible rounded-xl border bg-[rgba(252,252,250,0.04)] backdrop-blur-sm"
+      className="relative overflow-visible rounded-xl border bg-[rgba(20,20,26,0.62)] backdrop-blur-md"
       style={{
         borderColor: status === "idle" ? "var(--color-stage-line)" : status === "working" ? meta.color : color,
         boxShadow: active
-          ? `0 0 0 1.5px ${meta.color}, 0 20px 48px -12px ${meta.color}55`
-          : "0 8px 30px -14px rgba(0,0,0,0.6)",
+          ? `inset 0 1px 0 rgba(255,255,255,0.16), 0 0 0 1.5px ${meta.color}, 0 20px 48px -12px ${meta.color}55`
+          : "inset 0 1px 0 rgba(255,255,255,0.12), 0 10px 34px -14px rgba(0,0,0,0.7)",
         width: variant === "hub" ? 204 : 186,
         zIndex: active ? 2 : 1,
       }}

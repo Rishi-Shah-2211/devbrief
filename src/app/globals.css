@@ -216,6 +216,12 @@ body::after {
   to { transform: rotate(360deg); }
 }
 
+html { scroll-behavior: smooth; }
+
+/* Cards acknowledge the cursor — quietly. */
+.card { transition: box-shadow 0.25s ease, border-color 0.25s ease; }
+.card:hover { border-color: var(--color-hairline-strong); }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;

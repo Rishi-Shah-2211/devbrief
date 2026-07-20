@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
 const fadeUp = {
@@ -10,6 +11,26 @@ const fadeUp = {
   viewport: { once: true, margin: "-80px" },
   transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
 };
+
+/** Types the hero out character by character behind a blinking gold caret. */
+function Typewriter({ text }: { text: string }) {
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    if (n >= text.length) return;
+    const t = setTimeout(() => setN(n + 1), 38);
+    return () => clearTimeout(t);
+  }, [n, text]);
+  return (
+    <>
+      {text.slice(0, n)}
+      <motion.span
+        className="ml-2 inline-block h-[0.75em] w-[4px] translate-y-[0.06em] bg-[var(--color-wine)]"
+        animate={{ opacity: [1, 0, 1] }}
+        transition={{ duration: 0.85, repeat: Infinity }}
+      />
+    </>
+  );
+}
 
 function Section({ children, className = "" }: { children: ReactNode; className?: string }) {
   return <section className={`mx-auto w-full max-w-6xl px-6 ${className}`}>{children}</section>;
@@ -49,7 +70,7 @@ export function Landing() {
             transition={{ ...fadeUp.transition, delay: 0.05 }}
             className="max-w-3xl font-serif text-6xl font-normal leading-[0.95] tracking-tight sm:text-8xl"
           >
-            Understand any codebase in under a minute.
+            <Typewriter text="Understand any codebase in under a minute." />
           </motion.h1>
           <motion.p
             {...fadeUp}

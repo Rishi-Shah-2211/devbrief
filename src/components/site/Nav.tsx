@@ -37,7 +37,7 @@ export function Nav() {
           <span className="grid h-6 w-6 place-items-center rounded-md bg-[var(--color-wine)] text-[13px] font-semibold text-[#131316] shadow-[var(--shadow-1)]">
             D
           </span>
-          <span className="text-[15px] font-semibold tracking-tight">DevBrief</span>
+          <span className="font-serif text-[17px] tracking-tight">DevBrief</span>
         </Link>
 
         <div className="hidden items-center gap-1 rounded-full border border-[var(--color-hairline)] bg-[var(--color-surface-2)] p-1 shadow-[var(--shadow-1)] sm:flex">
