@@ -112,7 +112,7 @@ export function ChatPanel({ repo, brief }: Props) {
                   {m.text}
                 </div>
               ) : (
-                <div key={i} className="brief self-start rounded-xl border border-[var(--color-hairline)] bg-[var(--color-surface-2)] px-4 py-2 text-sm">
+                <div key={i} className="brief self-start rounded-xl border border-[rgba(239,234,221,0.1)] bg-[rgba(255,255,255,0.045)] px-4 py-2 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-xl">
                   {m.text ? (
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>{m.text}</ReactMarkdown>
                   ) : (

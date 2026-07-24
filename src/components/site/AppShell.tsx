@@ -30,7 +30,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen">
       {/* Rail */}
-      <aside className="sticky top-0 hidden h-screen w-56 shrink-0 flex-col border-r border-[var(--color-hairline)] bg-[var(--color-surface-2)] px-4 py-5 md:flex">
+      <aside className="sticky top-0 hidden h-screen w-56 shrink-0 flex-col border-r border-[rgba(239,234,221,0.09)] bg-[color-mix(in_srgb,var(--color-surface-2)_42%,transparent)] px-4 py-5 shadow-[inset_-1px_0_0_rgba(255,255,255,0.03)] backdrop-blur-2xl backdrop-saturate-150 md:flex">
         <Link href="/" className="flex items-center gap-2.5 px-2">
           <span className="grid h-6 w-6 place-items-center rounded-md bg-[var(--color-wine)] text-[13px] font-semibold text-[#131316]">
             D
@@ -46,14 +46,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 key={item.href}
                 href={item.href}
                 className={`relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
-                  active ? "" : "text-[var(--color-muted)] hover:bg-[var(--color-surface)] hover:text-[var(--color-text)]"
+                  active ? "" : "text-[var(--color-muted)] hover:bg-[rgba(255,255,255,0.05)] hover:text-[var(--color-text)]"
                 }`}
                 style={active ? { color: item.color } : undefined}
               >
                 {active ? (
                   <motion.span
                     layoutId="rail-active"
-                    className="absolute inset-0 rounded-lg bg-[var(--color-surface)]"
+                    className="absolute inset-0 rounded-lg border border-[rgba(239,234,221,0.1)] bg-[rgba(255,255,255,0.06)] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-xl"
                     transition={{ type: "spring", stiffness: 400, damping: 32 }}
                   />
                 ) : null}
@@ -81,7 +81,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       {/* Workspace */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-40 flex h-12 items-center justify-between border-b border-[var(--color-hairline)] bg-[color-mix(in_srgb,var(--color-canvas)_88%,transparent)] px-4 backdrop-blur-md sm:px-6">
+        <header className="sticky top-0 z-40 flex h-12 items-center justify-between border-b border-[rgba(239,234,221,0.08)] bg-[color-mix(in_srgb,var(--color-canvas)_55%,transparent)] px-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-2xl backdrop-saturate-150 sm:px-6">
           <div className="flex min-w-0 items-center gap-2 font-mono text-xs text-[var(--color-faint)]">
             <Link href="/" className="text-[var(--color-muted)] hover:text-[var(--color-text)] md:hidden">
               DevBrief

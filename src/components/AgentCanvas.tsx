@@ -47,7 +47,7 @@ function MissionBar({ agents }: Props) {
       initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
       className="sticky top-3 z-30 mx-auto mb-2 flex w-fit items-center gap-6 rounded-full border px-5 py-2 font-mono text-[11px] backdrop-blur-md"
-      style={{ borderColor: "rgba(111,227,194,0.25)", background: "rgba(4,16,21,0.9)", color: "rgba(111,227,194,0.8)" }}
+      style={{ borderColor: "rgba(111,227,194,0.25)", background: "rgba(4,16,21,0.55)", color: "rgba(111,227,194,0.8)", backdropFilter: "blur(20px) saturate(1.5)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12)" }}
     >
       <span className="flex items-center gap-1.5">
         <motion.span
@@ -292,7 +292,7 @@ export function AgentCanvas({ agents }: Props) {
             exit={{ opacity: 0, x: -16 }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
             className="rounded-lg border px-4 py-3 font-mono text-[11px] backdrop-blur-md"
-            style={{ borderColor: `${focusMeta?.color ?? SONAR}44`, background: "rgba(2,10,14,0.82)" }}
+            style={{ borderColor: `${focusMeta?.color ?? SONAR}44`, background: "rgba(2,10,14,0.5)", backdropFilter: "blur(20px) saturate(1.5)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.1)" }}
           >
             <div className="mb-1.5 flex items-center gap-2 text-[9px] uppercase tracking-[0.2em]" style={{ color: focusMeta?.color ?? "rgba(111,227,194,0.5)" }}>
               <motion.span

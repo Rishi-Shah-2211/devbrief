@@ -86,7 +86,7 @@ export default function HowItWorksPage() {
         ))}
       </div>
 
-      <div className="mt-16 rounded-xl border border-[var(--color-hairline)] bg-[var(--color-surface)] p-6 text-center">
+      <div className="mt-16 glass p-6 text-center">
         <p className="text-[var(--color-muted)]">See it for yourself — the whole pipeline runs live.</p>
         <Link
           href="/analyze"

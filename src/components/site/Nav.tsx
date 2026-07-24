@@ -40,7 +40,7 @@ export function Nav() {
           <span className="font-serif text-[17px] tracking-tight">DevBrief</span>
         </Link>
 
-        <div className="hidden items-center gap-1 rounded-full border border-[var(--color-hairline)] bg-[var(--color-surface-2)] p-1 shadow-[var(--shadow-1)] sm:flex">
+        <div className="hidden items-center gap-1 rounded-full border border-[rgba(239,234,221,0.12)] bg-[color-mix(in_srgb,var(--color-surface-2)_45%,transparent)] p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_6px_18px_-8px_rgba(0,0,0,0.5)] backdrop-blur-2xl backdrop-saturate-150 sm:flex">
           {LINKS.map((l) => {
             const active = pathname === l.href || pathname.startsWith(`${l.href}/`);
             return (

@@ -61,7 +61,7 @@ export function Landing() {
         <div className="flex flex-col items-start gap-6 text-left">
           <motion.span
             {...fadeUp}
-            className="rounded-full border border-[var(--color-hairline)] bg-[var(--color-surface)] px-3 py-1 font-mono text-xs tracking-wide text-[var(--color-wine)]"
+            className="rounded-full border border-[rgba(239,234,221,0.12)] bg-[rgba(255,255,255,0.05)] px-3 py-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-xl font-mono text-xs tracking-wide text-[var(--color-wine)]"
           >
             OPERATIONS MANUAL · SEC 00 — OVERVIEW
           </motion.span>
@@ -131,7 +131,7 @@ export function Landing() {
 
       {/* How it works */}
       <Section>
-        <motion.div {...fadeUp} className="border border-[var(--color-hairline)] px-5 py-4">
+        <motion.div {...fadeUp} className="glass px-5 py-4">
           <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--color-wine)]">Section 01 — Normal procedures</div>
           <h2 className="mt-1 font-serif text-3xl sm:text-5xl">How it works</h2>
         </motion.div>
@@ -156,7 +156,7 @@ export function Landing() {
 
       {/* Features */}
       <Section>
-        <motion.div {...fadeUp} className="border border-[var(--color-hairline)] px-5 py-4">
+        <motion.div {...fadeUp} className="glass px-5 py-4">
           <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--color-wine)]">Section 02 — Exhibit hall</div>
           <h2 className="mt-1 font-serif text-3xl sm:text-5xl">Built like a product, not a demo</h2>
         </motion.div>
@@ -166,12 +166,12 @@ export function Landing() {
               key={f.title}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: (i % 3) * 0.06 }}
-              className="group overflow-hidden rounded-none border border-[var(--color-hairline)] bg-[var(--color-surface)] transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-3)]"
+              className="group overflow-hidden rounded-2xl border border-[rgba(239,234,221,0.1)] bg-[color-mix(in_srgb,var(--color-surface)_48%,transparent)] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-2xl backdrop-saturate-150 transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-3)]"
             >
               <div className="grid h-36 place-items-center" style={{ background: "radial-gradient(60% 70% at 50% 35%, rgba(200,169,106,0.16), transparent 70%)" }}>
                 <span className="font-serif text-4xl text-[var(--color-wine)] transition-transform duration-300 group-hover:scale-110">{f.icon}</span>
               </div>
-              <div className="border-t border-[var(--color-hairline)] bg-[#e9e4d6] px-5 py-4">
+              <div className="border-t border-[rgba(255,255,255,0.35)] bg-[rgba(233,228,214,0.9)] px-5 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] backdrop-blur-md">
                 <div className="font-serif text-lg text-[#1c1a14]">{f.title}</div>
                 <div className="mt-1 text-[13px] leading-relaxed text-[#57503e]">{f.body}</div>
                 <div className="mt-2 font-mono text-[9px] uppercase tracking-[0.18em] text-[#8a8371]">Exhibit 2.{i + 1} · DevBrief collection</div>
@@ -185,7 +185,7 @@ export function Landing() {
       <Section>
         <motion.div
           {...fadeUp}
-          className="relative overflow-hidden rounded-2xl border border-[var(--color-hairline)] bg-[var(--color-ink)] px-8 py-14 text-center"
+          className="relative overflow-hidden rounded-3xl border border-[rgba(239,234,221,0.12)] bg-[color-mix(in_srgb,var(--color-ink)_55%,transparent)] px-8 py-14 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_24px_60px_-20px_rgba(0,0,0,0.6)] backdrop-blur-2xl backdrop-saturate-150 text-center"
         >
           <div
             className="pointer-events-none absolute inset-0"

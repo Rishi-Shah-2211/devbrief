@@ -24,7 +24,7 @@ export default function ShowcasePage() {
           <Link
             key={e.slug}
             href={`/showcase/${e.slug}`}
-            className="group rounded-xl border border-[var(--color-hairline)] bg-[var(--color-surface-2)] p-6 transition-all hover:-translate-y-0.5 hover:shadow-[0_16px_48px_-16px_var(--color-wine-glow)]"
+            className="glass group p-6 transition-all hover:-translate-y-0.5 hover:shadow-[0_16px_48px_-16px_var(--color-wine-glow)]"
           >
             <div className="font-mono text-xs text-[var(--color-wine)]">{e.repo}</div>
             <p className="mt-2 line-clamp-2 min-h-[2.6em] text-sm text-[var(--color-muted)]">
