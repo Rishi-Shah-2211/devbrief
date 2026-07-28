@@ -61,7 +61,7 @@ export function Landing() {
         <div className="flex flex-col items-start gap-6 text-left">
           <motion.span
             {...fadeUp}
-            className="rounded-full border border-[rgba(255,255,255,0.85)] bg-[rgba(255,255,255,0.6)] px-3 py-1 shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_0_0_1px_rgba(22,20,15,0.05)] backdrop-blur-xl font-mono text-xs tracking-wide text-[var(--color-wine)]"
+            className="rounded-full border border-[rgba(255,255,255,0.85)] bg-[rgba(255,255,255,0.6)] px-3 py-1 shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_0_0_1px_rgba(22,20,15,0.05)] backdrop-blur-md font-mono text-xs tracking-wide text-[var(--color-wine)]"
           >
             OPERATIONS MANUAL · SEC 00 — OVERVIEW
           </motion.span>
@@ -166,7 +166,7 @@ export function Landing() {
               key={f.title}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: (i % 3) * 0.06 }}
-              className="group overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.75)] bg-[color-mix(in_srgb,#ffffff_55%,transparent)] shadow-[inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_0_1px_rgba(22,20,15,0.05)] backdrop-blur-2xl backdrop-saturate-150 transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-3)]"
+              className="group overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.75)] bg-[color-mix(in_srgb,#ffffff_55%,transparent)] shadow-[inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_0_1px_rgba(22,20,15,0.05)] backdrop-blur-md backdrop-saturate-150 transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-3)]"
             >
               <div className="grid h-36 place-items-center" style={{ background: "radial-gradient(60% 70% at 50% 35%, rgba(180,67,46,0.14), transparent 70%)" }}>
                 <span className="font-serif text-4xl text-[var(--color-wine)] transition-transform duration-300 group-hover:scale-110">{f.icon}</span>

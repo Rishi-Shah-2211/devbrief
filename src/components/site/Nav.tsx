@@ -28,7 +28,7 @@ export function Nav() {
       style={{
         borderColor: "var(--color-hairline)",
         background: "color-mix(in srgb, var(--color-canvas) 85%, transparent)",
-        backdropFilter: "blur(12px)",
+        backdropFilter: "blur(10px)",
         boxShadow: scrolled ? "var(--shadow-2)" : "none",
       }}
     >
@@ -40,7 +40,7 @@ export function Nav() {
           <span className="font-serif text-[17px] tracking-tight">DevBrief</span>
         </Link>
 
-        <div className="hidden items-center gap-1 rounded-full border border-[rgba(255,255,255,0.8)] bg-[color-mix(in_srgb,#ffffff_55%,transparent)] p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_0_1px_rgba(22,20,15,0.05),0_6px_18px_-8px_rgba(45,38,25,0.2)] backdrop-blur-2xl backdrop-saturate-150 sm:flex">
+        <div className="hidden items-center gap-1 rounded-full border border-[rgba(255,255,255,0.8)] bg-[color-mix(in_srgb,#ffffff_55%,transparent)] p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_0_1px_rgba(22,20,15,0.05),0_6px_18px_-8px_rgba(45,38,25,0.2)] backdrop-blur-md backdrop-saturate-150 sm:flex">
           {LINKS.map((l) => {
             const active = pathname === l.href || pathname.startsWith(`${l.href}/`);
             return (

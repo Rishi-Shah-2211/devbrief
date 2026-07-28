@@ -104,6 +104,7 @@ export function ChatPanel({ repo, brief }: Props) {
             ref={scrollRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
+            data-lenis-prevent
             className="mb-4 flex max-h-[28rem] min-w-0 flex-col gap-3 overflow-y-auto pr-1"
           >
             {messages.map((m, i) =>
@@ -112,7 +113,7 @@ export function ChatPanel({ repo, brief }: Props) {
                   {m.text}
                 </div>
               ) : (
-                <div key={i} className="brief max-w-[96%] min-w-0 self-start overflow-hidden rounded-xl border border-[rgba(255,255,255,0.9)] bg-[rgba(255,255,255,0.7)] px-4 py-2 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_0_0_1px_rgba(22,20,15,0.05)] backdrop-blur-xl">
+                <div key={i} className="brief max-w-[96%] min-w-0 self-start overflow-hidden rounded-xl border border-[rgba(255,255,255,0.9)] bg-[rgba(255,255,255,0.7)] px-4 py-2 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_0_0_1px_rgba(22,20,15,0.05)] backdrop-blur-md">
                   {m.text ? (
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>{m.text}</ReactMarkdown>
                   ) : (

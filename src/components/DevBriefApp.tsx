@@ -97,6 +97,7 @@ export function DevBriefApp() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 1.03, transition: { duration: 0.6 } }}
+            data-lenis-prevent
             className="fixed inset-0 z-[100] overflow-y-auto"
             style={{ background: "var(--color-stage-deep)" }}
           >

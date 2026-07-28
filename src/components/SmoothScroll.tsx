@@ -12,11 +12,14 @@ export function SmoothScroll() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+    // Lerp mode rather than duration+easing: every frame eases toward the live
+    // target, so a stream of wheel events blends instead of restarting a
+    // fixed-length tween — which is what read as stutter.
     const lenis = new Lenis({
-      duration: 1.15,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      lerp: 0.085,
       smoothWheel: true,
-      touchMultiplier: 1.6,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.8,
     });
 
     let frame = 0;

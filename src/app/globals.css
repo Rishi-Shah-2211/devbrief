@@ -69,7 +69,9 @@ body {
   background: rgba(180, 67, 46, 0.22);
 }
 
-/* Two warm washes drift behind the paper so the glass has something to refract. */
+/* Two warm washes drift behind the paper so the glass has something to refract.
+   Radial gradients are already soft, so no blur filter is used — filtering two
+   fixed full-viewport layers forced a re-raster on every scroll frame. */
 body::before,
 body::after {
   content: "";
@@ -78,18 +80,18 @@ body::after {
   z-index: -1;
   pointer-events: none;
   will-change: transform;
-  filter: blur(30px) saturate(1.15);
+  transform: translateZ(0);
 }
 body::before {
   background:
-    radial-gradient(820px 560px at 18% 18%, rgba(180, 67, 46, 0.1), transparent 64%),
-    radial-gradient(760px 540px at 84% 78%, rgba(47, 84, 104, 0.07), transparent 62%);
+    radial-gradient(880px 620px at 18% 18%, rgba(180, 67, 46, 0.11), transparent 68%),
+    radial-gradient(820px 580px at 84% 78%, rgba(47, 84, 104, 0.08), transparent 66%);
   animation: aurora-a 32s ease-in-out infinite alternate;
 }
 body::after {
   background:
-    radial-gradient(700px 500px at 80% 12%, rgba(165, 114, 42, 0.08), transparent 60%),
-    radial-gradient(640px 480px at 12% 86%, rgba(78, 123, 74, 0.06), transparent 60%);
+    radial-gradient(760px 560px at 80% 12%, rgba(165, 114, 42, 0.09), transparent 64%),
+    radial-gradient(700px 520px at 12% 86%, rgba(78, 123, 74, 0.07), transparent 64%);
   animation: aurora-b 40s ease-in-out infinite alternate;
 }
 @keyframes aurora-a {
@@ -123,8 +125,11 @@ body::after {
     color-mix(in srgb, var(--color-surface-2) 58%, transparent);
   border: 1px solid rgba(255, 255, 255, 0.75);
   border-radius: 18px;
-  backdrop-filter: blur(28px) saturate(1.9) brightness(1.03);
-  -webkit-backdrop-filter: blur(28px) saturate(1.9) brightness(1.03);
+  /* Blur radius is the dominant cost of a backdrop filter, and this page can
+     have a dozen glass panes on screen at once. 16px keeps the material and
+     keeps scrolling on the compositor. */
+  backdrop-filter: blur(16px) saturate(1.75);
+  -webkit-backdrop-filter: blur(16px) saturate(1.75);
   /* Four lit edges, a hairline, and a bottom inner shade that reads as real
      glass thickness — this is what separates it from a flat translucent box. */
   box-shadow:
@@ -159,8 +164,9 @@ body::after {
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  opacity: 0.32;
-  mix-blend-mode: overlay;
+  /* No blend mode: blending forces every pane into its own compositing group,
+     which showed up as scroll jank. Plain low-opacity grain reads the same. */
+  opacity: 0.16;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
 }
 
