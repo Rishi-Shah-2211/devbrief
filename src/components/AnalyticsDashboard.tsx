@@ -69,9 +69,9 @@ function Bars({ data, color }: { data: { label: string; value: number; note: str
     <div className="flex flex-col gap-2.5">
       {data.map((d, i) => (
         <div key={d.label}>
-          <div className="mb-1 flex items-baseline justify-between">
-            <span className="text-xs font-medium">{d.label}</span>
-            <span className="font-mono text-[10px] text-[var(--color-faint)]">{d.note}</span>
+          <div className="mb-1 flex items-baseline justify-between gap-3">
+            <span className="min-w-0 truncate text-xs font-medium">{d.label}</span>
+            <span className="shrink-0 font-mono text-[10px] text-[var(--color-faint)]">{d.note}</span>
           </div>
           <div className="glass-well h-1.5 overflow-hidden rounded-full">
             <motion.div
@@ -110,7 +110,7 @@ export function AnalyticsDashboard({ analytics: a }: { analytics: RepoAnalytics 
           ].map(([label, value, color]) => (
             <div key={label}>
               <div className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-faint)]">{label}</div>
-              <div className="font-serif text-2xl capitalize tracking-tight" style={{ color }}>
+              <div className="truncate font-serif text-2xl capitalize tracking-tight" style={{ color }}>
                 {value}
               </div>
             </div>

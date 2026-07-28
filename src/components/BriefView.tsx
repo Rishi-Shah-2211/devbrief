@@ -118,7 +118,7 @@ export function BriefView({ result, onReset }: Props) {
           <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-faint)]">
             Onboarding dossier · file {repoSlug}
           </div>
-          <h1 className="mt-1 truncate font-serif text-3xl tracking-tight sm:text-4xl">{result.repo}</h1>
+          <h1 className="mt-1 break-words font-serif text-3xl tracking-tight sm:text-4xl">{result.repo}</h1>
           <div className="mt-1 font-mono text-[11px] text-[var(--color-faint)]">
             {result.tokensUsed.toLocaleString()} tokens · generated on the free tier
           </div>
@@ -144,8 +144,8 @@ export function BriefView({ result, onReset }: Props) {
       </div>
 
       {/* Index · document · margin */}
-      <div className="grid items-start gap-6 lg:grid-cols-[186px_minmax(0,1fr)_380px]">
-        <aside className="hidden lg:sticky lg:top-20 lg:block">
+      <div className="grid items-start gap-6 lg:grid-cols-[168px_minmax(0,1fr)_336px] xl:grid-cols-[196px_minmax(0,1fr)_396px]">
+        <aside className="hidden min-w-0 lg:sticky lg:top-20 lg:block">
           <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-faint)]">
             Contents
           </div>
@@ -159,7 +159,7 @@ export function BriefView({ result, onReset }: Props) {
                 <span className="font-mono text-[10px] text-[var(--color-faint)]">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className="min-w-0">{s.text}</span>
+                <span className="min-w-0 break-words">{s.text}</span>
               </a>
             ))}
           </nav>
@@ -167,7 +167,7 @@ export function BriefView({ result, onReset }: Props) {
 
         <div className="flex min-w-0 flex-col gap-4">
           <AnalyticsDashboard analytics={result.analytics} />
-          <article className="brief glass px-6 py-6 sm:px-9 sm:py-8">
+          <article className="brief glass min-w-0 overflow-hidden px-6 py-6 sm:px-9 sm:py-8">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={{
@@ -179,7 +179,7 @@ export function BriefView({ result, onReset }: Props) {
           </article>
         </div>
 
-        <div className="flex flex-col gap-3 lg:sticky lg:top-20">
+        <div className="flex min-w-0 flex-col gap-3 lg:sticky lg:top-20">
           {cited.length > 0 ? (
             <div className="card p-5">
               <div className="mb-3 font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-faint)]">

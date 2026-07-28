@@ -104,15 +104,15 @@ export function ChatPanel({ repo, brief }: Props) {
             ref={scrollRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="mb-4 flex max-h-[28rem] flex-col gap-3 overflow-y-auto pr-1"
+            className="mb-4 flex max-h-[28rem] min-w-0 flex-col gap-3 overflow-y-auto pr-1"
           >
             {messages.map((m, i) =>
               m.role === "user" ? (
-                <div key={i} className="self-end rounded-xl bg-[var(--color-wine)] px-4 py-2 text-sm text-[#fbf8f1]">
+                <div key={i} className="max-w-[92%] self-end break-words rounded-xl bg-[var(--color-wine)] px-4 py-2 text-sm text-[#fbf8f1]">
                   {m.text}
                 </div>
               ) : (
-                <div key={i} className="brief self-start rounded-xl border border-[rgba(255,255,255,0.9)] bg-[rgba(255,255,255,0.7)] px-4 py-2 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_0_0_1px_rgba(22,20,15,0.05)] backdrop-blur-xl">
+                <div key={i} className="brief max-w-[96%] min-w-0 self-start overflow-hidden rounded-xl border border-[rgba(255,255,255,0.9)] bg-[rgba(255,255,255,0.7)] px-4 py-2 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_0_0_1px_rgba(22,20,15,0.05)] backdrop-blur-xl">
                   {m.text ? (
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>{m.text}</ReactMarkdown>
                   ) : (
