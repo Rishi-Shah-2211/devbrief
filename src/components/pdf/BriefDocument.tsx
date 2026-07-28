@@ -13,15 +13,15 @@ import { parseMarkdown, type Block, type Span } from "./markdown";
 
 /** Brand palette, mirrored from globals.css so the PDF reads as the same product. */
 const C = {
-  canvas: "#f8f9fc",
-  surface: "#eef1f8",
-  hairline: "#dfe3ee",
-  ink: "#2d2a2e",
-  muted: "#57545a",
-  faint: "#939293",
-  wine: "#9a7b00",
-  gold: "#0e7490",
-  done: "#33805d",
+  canvas: "#f7f4ec",
+  surface: "#e9e4d8",
+  hairline: "#dcd5c4",
+  ink: "#16140f",
+  muted: "#6e6857",
+  faint: "#948c77",
+  wine: "#b4432e",
+  gold: "#2f5468",
+  done: "#4e7b4a",
 };
 
 const s = StyleSheet.create({

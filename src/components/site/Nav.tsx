@@ -34,13 +34,13 @@ export function Nav() {
     >
       <nav className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-2.5">
-          <span className="grid h-6 w-6 place-items-center rounded-md bg-[var(--color-wine)] text-[13px] font-semibold text-[#131316] shadow-[var(--shadow-1)]">
+          <span className="grid h-6 w-6 place-items-center rounded-md bg-[var(--color-wine)] text-[13px] font-semibold text-[#fbf8f1] shadow-[var(--shadow-1)]">
             D
           </span>
           <span className="font-serif text-[17px] tracking-tight">DevBrief</span>
         </Link>
 
-        <div className="hidden items-center gap-1 rounded-full border border-[rgba(239,234,221,0.12)] bg-[color-mix(in_srgb,var(--color-surface-2)_45%,transparent)] p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_6px_18px_-8px_rgba(0,0,0,0.5)] backdrop-blur-2xl backdrop-saturate-150 sm:flex">
+        <div className="hidden items-center gap-1 rounded-full border border-[rgba(255,255,255,0.8)] bg-[color-mix(in_srgb,#ffffff_55%,transparent)] p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_0_1px_rgba(22,20,15,0.05),0_6px_18px_-8px_rgba(45,38,25,0.2)] backdrop-blur-2xl backdrop-saturate-150 sm:flex">
           {LINKS.map((l) => {
             const active = pathname === l.href || pathname.startsWith(`${l.href}/`);
             return (

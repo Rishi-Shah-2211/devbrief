@@ -37,10 +37,10 @@ function Section({ children, className = "" }: { children: ReactNode; className?
 }
 
 const STEPS = [
-  { n: "01", c: "#c8a96a", title: "Paste a repo", body: "Drop any public GitHub URL. DevBrief fetches the tree and the highest-value files." },
-  { n: "02", c: "#c8a96a", title: "Agents fan out", body: "Specialized agents map structure, dependencies, docs, and a reading path — in parallel." },
-  { n: "03", c: "#c8a96a", title: "A critic reviews", body: "A reviewer agent checks for gaps and self-corrects before anything ships." },
-  { n: "04", c: "#c8a96a", title: "Get your brief", body: "One cohesive onboarding document, with analytics, ready to read or share." },
+  { n: "01", c: "#b4432e", title: "Paste a repo", body: "Drop any public GitHub URL. DevBrief fetches the tree and the highest-value files." },
+  { n: "02", c: "#b4432e", title: "Agents fan out", body: "Specialized agents map structure, dependencies, docs, and a reading path — in parallel." },
+  { n: "03", c: "#b4432e", title: "A critic reviews", body: "A reviewer agent checks for gaps and self-corrects before anything ships." },
+  { n: "04", c: "#b4432e", title: "Get your brief", body: "One cohesive onboarding document, with analytics, ready to read or share." },
 ];
 
 const FEATURES = [
@@ -61,7 +61,7 @@ export function Landing() {
         <div className="flex flex-col items-start gap-6 text-left">
           <motion.span
             {...fadeUp}
-            className="rounded-full border border-[rgba(239,234,221,0.12)] bg-[rgba(255,255,255,0.05)] px-3 py-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-xl font-mono text-xs tracking-wide text-[var(--color-wine)]"
+            className="rounded-full border border-[rgba(255,255,255,0.85)] bg-[rgba(255,255,255,0.6)] px-3 py-1 shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_0_0_1px_rgba(22,20,15,0.05)] backdrop-blur-xl font-mono text-xs tracking-wide text-[var(--color-wine)]"
           >
             OPERATIONS MANUAL · SEC 00 — OVERVIEW
           </motion.span>
@@ -116,10 +116,10 @@ export function Landing() {
       <Section>
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
           {[
-            ["5", "specialized agents", "#c8a96a"],
-            ["3", "LLM providers", "#c8a96a"],
-            ["<60s", "to a full brief", "#c8a96a"],
-            ["$0", "on the free tier", "#c8a96a"],
+            ["5", "specialized agents", "#b4432e"],
+            ["3", "LLM providers", "#b4432e"],
+            ["<60s", "to a full brief", "#b4432e"],
+            ["$0", "on the free tier", "#b4432e"],
           ].map(([n, l, c]) => (
             <div key={l} className="text-center">
               <div className="font-serif text-4xl" style={{ color: c }}>{n}</div>
@@ -166,15 +166,15 @@ export function Landing() {
               key={f.title}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: (i % 3) * 0.06 }}
-              className="group overflow-hidden rounded-2xl border border-[rgba(239,234,221,0.1)] bg-[color-mix(in_srgb,var(--color-surface)_48%,transparent)] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-2xl backdrop-saturate-150 transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-3)]"
+              className="group overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.75)] bg-[color-mix(in_srgb,#ffffff_55%,transparent)] shadow-[inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_0_1px_rgba(22,20,15,0.05)] backdrop-blur-2xl backdrop-saturate-150 transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-3)]"
             >
-              <div className="grid h-36 place-items-center" style={{ background: "radial-gradient(60% 70% at 50% 35%, rgba(200,169,106,0.16), transparent 70%)" }}>
+              <div className="grid h-36 place-items-center" style={{ background: "radial-gradient(60% 70% at 50% 35%, rgba(180,67,46,0.14), transparent 70%)" }}>
                 <span className="font-serif text-4xl text-[var(--color-wine)] transition-transform duration-300 group-hover:scale-110">{f.icon}</span>
               </div>
-              <div className="border-t border-[rgba(255,255,255,0.35)] bg-[rgba(233,228,214,0.9)] px-5 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] backdrop-blur-md">
-                <div className="font-serif text-lg text-[#1c1a14]">{f.title}</div>
-                <div className="mt-1 text-[13px] leading-relaxed text-[#57503e]">{f.body}</div>
-                <div className="mt-2 font-mono text-[9px] uppercase tracking-[0.18em] text-[#8a8371]">Exhibit 2.{i + 1} · DevBrief collection</div>
+              <div className="border-t border-[rgba(22,20,15,0.1)] bg-[var(--color-ink)] px-5 py-4">
+                <div className="font-serif text-lg text-[#f4f1e8]">{f.title}</div>
+                <div className="mt-1 text-[13px] leading-relaxed text-[#a8a091]">{f.body}</div>
+                <div className="mt-2 font-mono text-[9px] uppercase tracking-[0.18em] text-[#7d7466]">Exhibit 2.{i + 1} · DevBrief collection</div>
               </div>
             </motion.div>
           ))}
@@ -185,16 +185,16 @@ export function Landing() {
       <Section>
         <motion.div
           {...fadeUp}
-          className="relative overflow-hidden rounded-3xl border border-[rgba(239,234,221,0.12)] bg-[color-mix(in_srgb,var(--color-ink)_55%,transparent)] px-8 py-14 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_24px_60px_-20px_rgba(0,0,0,0.6)] backdrop-blur-2xl backdrop-saturate-150 text-center"
+          className="relative overflow-hidden rounded-3xl border border-[rgba(22,20,15,0.2)] bg-[var(--color-ink)] px-8 py-14 shadow-[var(--shadow-3)] text-center"
         >
           <div
             className="pointer-events-none absolute inset-0"
-            style={{ background: "radial-gradient(80% 120% at 50% 0%, rgba(200,169,106,0.22), transparent 60%)" }}
+            style={{ background: "radial-gradient(80% 120% at 50% 0%, rgba(180,67,46,0.32), transparent 60%)" }}
           />
-          <h2 className="relative font-serif text-3xl text-[#efeadd] sm:text-4xl">
+          <h2 className="relative font-serif text-3xl text-[#f4f1e8] sm:text-4xl">
             Point it at a repository.
           </h2>
-          <p className="relative mx-auto mt-3 max-w-md text-[var(--color-muted)]">
+          <p className="relative mx-auto mt-3 max-w-md text-[#a8a091]">
             See the agents work, read the brief, and never lose a day to onboarding again.
           </p>
           <Link

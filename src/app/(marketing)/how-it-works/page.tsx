@@ -90,7 +90,7 @@ export default function HowItWorksPage() {
         <p className="text-[var(--color-muted)]">See it for yourself — the whole pipeline runs live.</p>
         <Link
           href="/analyze"
-          className="mt-4 inline-block rounded-lg bg-[var(--color-wine)] px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
+          className="mt-4 inline-block rounded-lg btn-primary px-5 py-2.5 text-sm"
         >
           Analyze a repository →
         </Link>

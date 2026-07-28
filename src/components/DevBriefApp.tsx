@@ -63,7 +63,7 @@ export function DevBriefApp() {
           <button
             type="submit"
             disabled={phase === "running"}
-            className="rounded-lg bg-[var(--color-wine)] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+            className="rounded-lg btn-primary px-5 py-3 text-sm transition-opacity hover:opacity-90 disabled:opacity-50"
           >
             {phase === "running" ? "Analyzing…" : "Analyze"}
           </button>
@@ -105,7 +105,7 @@ export function DevBriefApp() {
                 <motion.span
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="font-mono text-xs tracking-[0.3em] text-[var(--color-gold)]"
+                  className="font-mono text-xs tracking-[0.3em] text-[#c8c3b6]"
                 >
                   INITIALIZING AGENTS
                 </motion.span>
@@ -117,7 +117,7 @@ export function DevBriefApp() {
                 >
                   {repoLabel}
                   <motion.span
-                    className="ml-1 inline-block h-5 w-2.5 translate-y-0.5 bg-[var(--color-gold)]"
+                    className="ml-1 inline-block h-5 w-2.5 translate-y-0.5 bg-[#c8c3b6]"
                     animate={{ opacity: [1, 0, 1] }}
                     transition={{ duration: 0.8, repeat: Infinity }}
                   />

@@ -19,13 +19,13 @@ interface Props {
 const QUICK_ACTIONS: { label: string; color: string; question: string }[] = [
   {
     label: "Day-1 checklist",
-    color: "#a9dc76",
+    color: "#4e7b4a",
     question:
       "Generate a practical day-1 onboarding checklist for a developer joining this project: environment setup, the files to read in order, and a small first task to attempt. Use checkboxes.",
   },
-  { label: "Where do I start?", color: "#78dce8", question: "Which single file should I open first, and why?" },
-  { label: "Explain the architecture", color: "#ab9df2", question: "Explain the architecture in three short paragraphs." },
-  { label: "What should I watch out for?", color: "#fc9867", question: "What are the sharp edges or gotchas a newcomer should watch out for in this codebase?" },
+  { label: "Where do I start?", color: "#2f5468", question: "Which single file should I open first, and why?" },
+  { label: "Explain the architecture", color: "#7a4a86", question: "Explain the architecture in three short paragraphs." },
+  { label: "What should I watch out for?", color: "#a5722a", question: "What are the sharp edges or gotchas a newcomer should watch out for in this codebase?" },
 ];
 
 export function ChatPanel({ repo, brief }: Props) {
@@ -108,11 +108,11 @@ export function ChatPanel({ repo, brief }: Props) {
           >
             {messages.map((m, i) =>
               m.role === "user" ? (
-                <div key={i} className="self-end rounded-xl bg-[var(--color-wine)] px-4 py-2 text-sm text-white">
+                <div key={i} className="self-end rounded-xl bg-[var(--color-wine)] px-4 py-2 text-sm text-[#fbf8f1]">
                   {m.text}
                 </div>
               ) : (
-                <div key={i} className="brief self-start rounded-xl border border-[rgba(239,234,221,0.1)] bg-[rgba(255,255,255,0.045)] px-4 py-2 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-xl">
+                <div key={i} className="brief self-start rounded-xl border border-[rgba(255,255,255,0.9)] bg-[rgba(255,255,255,0.7)] px-4 py-2 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_0_0_0_1px_rgba(22,20,15,0.05)] backdrop-blur-xl">
                   {m.text ? (
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>{m.text}</ReactMarkdown>
                   ) : (
@@ -149,7 +149,7 @@ export function ChatPanel({ repo, brief }: Props) {
         <button
           type="submit"
           disabled={busy || !input.trim()}
-          className="rounded-lg bg-[var(--color-wine)] px-4 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+          className="rounded-lg bg-[var(--color-wine)] px-4 py-2.5 text-sm font-medium text-[#fbf8f1] transition-opacity hover:opacity-90 disabled:opacity-50"
         >
           {busy ? "…" : "Ask"}
         </button>
